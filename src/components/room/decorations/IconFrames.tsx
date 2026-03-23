@@ -1,3 +1,4 @@
+import { MAT } from "../materials";
 "use client";
 
 import { HoverLift } from "../AnimatedWrapper";
@@ -24,7 +25,7 @@ export default function IconFrames() {
               <group rotation={[-lean, 0, 0]}>
                 <mesh castShadow>
                   <boxGeometry args={[0.46, 0.46, 0.022]} />
-                  <meshStandardMaterial color={COLOR.woodDark} />
+                  <meshStandardMaterial color={COLOR.woodDark} {...MAT.woodDark} />
                 </mesh>
                 <mesh position={[0, 0, 0.012]}>
                   <boxGeometry args={[0.40, 0.40, 0.006]} />

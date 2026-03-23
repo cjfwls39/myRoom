@@ -5,18 +5,20 @@ import { createContext, useContext, useState, useCallback } from "react";
 // ── 낮/밤 조명 프리셋 ─────────────────────────────────────
 export const PRESETS = {
   day: {
-    ambientColor:     "#FFF8F0",
-    ambientIntensity: 0.35,
-    dirColor:         "#FFE8C0",
-    dirIntensity:     2.2,
-    pointColor:       "#D4884A",
-    pointIntensity:   1.2,
+    // ambient 낮게 → 그림자 살아남, 재질 차이 드러남
+    // dir 강하게 + 따뜻한 색 → 햇살 느낌
+    ambientColor:     "#FFE8D0",
+    ambientIntensity: 0.10,
+    dirColor:         "#FFF0D0",
+    dirIntensity:     3.2,
+    pointColor:       "#FF9944",
+    pointIntensity:   1.8,
   },
   night: {
-    ambientColor:     "#0A0A1A",
-    ambientIntensity: 0.04,
-    dirColor:         "#1A2040",
-    dirIntensity:     0.08,
+    ambientColor:     "#1A1525",
+    ambientIntensity: 0.10,    // 완전 암흑 방지
+    dirColor:         "#2A3060",
+    dirIntensity:     0.15,
     pointColor:       "#FFD580",
     pointIntensity:   3.5,
   },

@@ -2,6 +2,7 @@
 
 import { Text } from "@react-three/drei";
 import AnimatedWrapper from "../AnimatedWrapper";
+import { MAT } from "../materials";
 import { COLOR, DELAY, ROOM } from "../constants";
 
 /** 바닥 + 웰컴 러그 */

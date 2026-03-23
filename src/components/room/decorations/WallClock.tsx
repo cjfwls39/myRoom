@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import AnimatedWrapper from "../AnimatedWrapper";
+import { MAT } from "../materials";
 import { COLOR, DELAY } from "../constants";
 
 interface WallClockProps {
@@ -84,7 +85,7 @@ export default function WallClock({ position }: WallClockProps) {
               rotation={[0, 0, angle - Math.PI / 2]}
             >
               <boxGeometry args={[w, len, 0.005]} />
-              <meshStandardMaterial color="#1A1A1A" />
+              <meshStandardMaterial color="#1A1A1A" {...MAT.darkBody} />
             </mesh>
           );
         })}

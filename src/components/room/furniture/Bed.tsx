@@ -1,6 +1,7 @@
 "use client";
 
 import AnimatedWrapper from "../AnimatedWrapper";
+import { MAT } from "../materials";
 import { COLOR, DELAY, WALL_HALF } from "../constants";
 
 /**
@@ -26,79 +27,79 @@ function TuxedoCat() {
       {/* ── 하체 ── */}
       <mesh position={[0, LH / 2, 0]} castShadow>
         <boxGeometry args={[LW, LH, LD]} />
-        <meshStandardMaterial color={COLOR.catBlack} />
+        <meshStandardMaterial color={COLOR.catBlack} {...MAT.catFur} />
       </mesh>
 
       {/* 앞발: 돌출량 0.10 → 0.05 */}
       <mesh position={[-LW * 0.17, LH * 0.5, LD / 2 + 0.025]} castShadow>
         <boxGeometry args={[0.11, LH * 0.85, 0.05]} />
-        <meshStandardMaterial color={COLOR.catWhite} />
+        <meshStandardMaterial color={COLOR.catWhite} {...MAT.catFur} />
       </mesh>
       <mesh position={[ LW * 0.17, LH * 0.5, LD / 2 + 0.025]} castShadow>
         <boxGeometry args={[0.11, LH * 0.85, 0.05]} />
-        <meshStandardMaterial color={COLOR.catWhite} />
+        <meshStandardMaterial color={COLOR.catWhite} {...MAT.catFur} />
       </mesh>
 
       {/* ── 몸통 ── */}
       <mesh position={[0, lowerTop + BH / 2, 0]} castShadow>
         <boxGeometry args={[BW, BH, BD]} />
-        <meshStandardMaterial color={COLOR.catBlack} />
+        <meshStandardMaterial color={COLOR.catBlack} {...MAT.catFur} />
       </mesh>
 
       {/* 가슴 흰털: 돌출량 0.06 → 0.03 */}
       <mesh position={[0, lowerTop + BH * 0.52, BD / 2 + 0.015]}>
         <boxGeometry args={[BW * 0.42, BH * 0.70, 0.03]} />
-        <meshStandardMaterial color={COLOR.catWhite} />
+        <meshStandardMaterial color={COLOR.catWhite} {...MAT.catFur} />
       </mesh>
 
       {/* ── 머리 ── */}
       <group position={[0, headCY, BD * 0.08]}>
         <mesh castShadow>
           <boxGeometry args={[HW, HH, HD]} />
-          <meshStandardMaterial color={COLOR.catBlack} />
+          <meshStandardMaterial color={COLOR.catBlack} {...MAT.catFur} />
         </mesh>
 
         {/* 귀 */}
         <mesh position={[-HW * 0.28, HH / 2 + 0.05, -HD * 0.1]}>
           <boxGeometry args={[0.07, 0.12, 0.07]} />
-          <meshStandardMaterial color={COLOR.catBlack} />
+          <meshStandardMaterial color={COLOR.catBlack} {...MAT.catFur} />
         </mesh>
         <mesh position={[ HW * 0.28, HH / 2 + 0.05, -HD * 0.1]}>
           <boxGeometry args={[0.07, 0.12, 0.07]} />
-          <meshStandardMaterial color={COLOR.catBlack} />
+          <meshStandardMaterial color={COLOR.catBlack} {...MAT.catFur} />
         </mesh>
 
         {/* muzzle: 돌출량 0.08 → 0.04 */}
         <mesh position={[0, -HH * 0.08, hf + 0.02]}>
           <boxGeometry args={[HW * 0.48, HH * 0.38, 0.04]} />
-          <meshStandardMaterial color={COLOR.catWhite} />
+          <meshStandardMaterial color={COLOR.catWhite} {...MAT.catFur} />
         </mesh>
 
         {/* 눈: 돌출량 0.06 → 0.03 */}
         <mesh position={[-HW * 0.24, HH * 0.10, hf + 0.02]}>
           <boxGeometry args={[0.09, 0.035, 0.03]} />
-          <meshStandardMaterial color={COLOR.catEye} />
+          <meshStandardMaterial color={COLOR.catEye} {...MAT.catEye} />
         </mesh>
         <mesh position={[ HW * 0.24, HH * 0.10, hf + 0.02]}>
           <boxGeometry args={[0.09, 0.035, 0.03]} />
-          <meshStandardMaterial color={COLOR.catEye} />
+          <meshStandardMaterial color={COLOR.catEye} {...MAT.catEye} />
         </mesh>
 
         {/* 코: muzzle 앞면에 붙음 */}
         <mesh position={[0, -HH * 0.06, hf + 0.04 + 0.007]}>
           <boxGeometry args={[0.055, 0.042, 0.014]} />
-          <meshStandardMaterial color={COLOR.catNose} />
+          <meshStandardMaterial color={COLOR.catNose} {...MAT.catNose} />
         </mesh>
       </group>
 
       {/* 꼬리 */}
       <mesh position={[LW / 2 + 0.04, LH * 0.6, 0]}>
         <boxGeometry args={[0.08, 0.08, LD * 0.8]} />
-        <meshStandardMaterial color={COLOR.catBlack} />
+        <meshStandardMaterial color={COLOR.catBlack} {...MAT.catFur} />
       </mesh>
       <mesh position={[LW / 2 + 0.04, LH * 0.6, LD * 0.4 + 0.04]} rotation={[0, Math.PI / 2, 0]}>
         <boxGeometry args={[0.08, 0.08, 0.14]} />
-        <meshStandardMaterial color={COLOR.catBlack} />
+        <meshStandardMaterial color={COLOR.catBlack} {...MAT.catFur} />
       </mesh>
     </group>
   );
@@ -118,22 +119,22 @@ export default function Bed() {
         {/* 침대 프레임 */}
         <mesh position={[0, 0.2, 0]} receiveShadow>
           <boxGeometry args={[2.5, 0.4, 4.5]} />
-          <meshStandardMaterial color={COLOR.bedFrame} />
+          <meshStandardMaterial color={COLOR.bedFrame} roughness={0.75} metalness={0} />
         </mesh>
         {/* 매트리스 */}
         <mesh position={[0, 0.6, 0]} castShadow>
           <boxGeometry args={[2.3, 0.4, 4.3]} />
-          <meshStandardMaterial color={COLOR.mattress} />
+          <meshStandardMaterial color={COLOR.mattress} roughness={1.0} />
         </mesh>
         {/* 베개 */}
         <mesh position={[0, 0.85, -1.5]} castShadow>
           <boxGeometry args={[1.5, 0.2, 0.8]} />
-          <meshStandardMaterial color={COLOR.pillow} />
+          <meshStandardMaterial color={COLOR.pillow} roughness={1.0} />
         </mesh>
         {/* 이불 */}
         <mesh position={[0, 0.85, 0.5]} castShadow>
           <boxGeometry args={[2.4, 0.1, 3.0]} />
-          <meshStandardMaterial color={COLOR.blanket} />
+          <meshStandardMaterial color={COLOR.blanket} roughness={1.0} />
         </mesh>
 
         {/* 고양이 — 식빵 자세, 매트리스 위(y=0.8)에 세워서 배치 */}

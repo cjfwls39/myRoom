@@ -5,6 +5,7 @@ import AnimatedWrapper, { AppearGroup, HoverLift, SceneItem } from "../AnimatedW
 import IconFrames from "../decorations/IconFrames";
 import WallClock from "../decorations/WallClock";
 import { COLOR, DELAY, ROOM, WALL_HALF, WIN } from "../constants";
+import { MAT } from "../materials";
 
 // ── 창문 + 커튼 ──────────────────────────────
 function WindowWithCurtains() {
@@ -19,12 +20,12 @@ function WindowWithCurtains() {
       {/* 십자 프레임 세로 */}
       <mesh position={[0, 0, 0.02]} castShadow>
         <boxGeometry args={[0.05, WIN.h, 0.06]} />
-        <meshStandardMaterial color={COLOR.windowFrame} />
+        <meshStandardMaterial color={COLOR.windowFrame} {...MAT.windowFrame} />
       </mesh>
       {/* 십자 프레임 가로 */}
       <mesh position={[0, 0, 0.02]} castShadow>
         <boxGeometry args={[WIN.w, 0.05, 0.06]} />
-        <meshStandardMaterial color={COLOR.windowFrame} />
+        <meshStandardMaterial color={COLOR.windowFrame} {...MAT.windowFrame} />
       </mesh>
 
       {/* 외곽 프레임 — 상/하/좌/우 */}
@@ -36,7 +37,7 @@ function WindowWithCurtains() {
       ].map(({ pos, size }, i) => (
         <mesh key={i} position={pos} castShadow>
           <boxGeometry args={size} />
-          <meshStandardMaterial color={COLOR.windowFrame} />
+          <meshStandardMaterial color={COLOR.windowFrame} {...MAT.windowFrame} />
         </mesh>
       ))}
 
@@ -50,19 +51,19 @@ function WindowWithCurtains() {
         {/* 커튼봉 */}
         <mesh position={[0, WIN.h / 2 + 0.25, 0.2]} rotation={[0, 0, Math.PI / 2]}>
           <cylinderGeometry args={[0.025, 0.025, WIN.w + 1.6, 16]} />
-          <meshStandardMaterial color={COLOR.woodDark} />
+          <meshStandardMaterial color={COLOR.woodDark} {...MAT.woodDark} />
         </mesh>
 
         {/* 왼쪽 커튼 */}
         <group position={[-WIN.w / 2 - 0.35, 0, 0.15]}>
           <mesh castShadow>
             <boxGeometry args={[0.75, WIN.h + 0.5, 0.04]} />
-            <meshStandardMaterial color={COLOR.curtain} />
+            <meshStandardMaterial color={COLOR.curtain} {...MAT.curtain} />
           </mesh>
           {([-0.18, 0.05, 0.25] as number[]).map((x, i) => (
             <mesh key={i} position={[x, 0, 0.04 + i * 0.01]} castShadow>
               <boxGeometry args={[0.15, WIN.h + 0.5, 0.05]} />
-              <meshStandardMaterial color={COLOR.curtainFold} />
+              <meshStandardMaterial color={COLOR.curtainFold} {...MAT.curtain} />
             </mesh>
           ))}
         </group>
@@ -71,12 +72,12 @@ function WindowWithCurtains() {
         <group position={[WIN.w / 2 + 0.35, 0, 0.15]}>
           <mesh castShadow>
             <boxGeometry args={[0.75, WIN.h + 0.5, 0.04]} />
-            <meshStandardMaterial color={COLOR.curtain} />
+            <meshStandardMaterial color={COLOR.curtain} {...MAT.curtain} />
           </mesh>
           {([0.18, -0.05, -0.25] as number[]).map((x, i) => (
             <mesh key={i} position={[x, 0, 0.04 + i * 0.01]} castShadow>
               <boxGeometry args={[0.15, WIN.h + 0.5, 0.05]} />
-              <meshStandardMaterial color={COLOR.curtainFold} />
+              <meshStandardMaterial color={COLOR.curtainFold} {...MAT.curtain} />
             </mesh>
           ))}
         </group>
@@ -98,19 +99,19 @@ function BackWall() {
         <group>
           <mesh position={[-1.875, ht / 2, 0]} receiveShadow>
             <boxGeometry args={[4.25, ht, wt]} />
-            <meshStandardMaterial color={COLOR.wall} />
+            <meshStandardMaterial color={COLOR.wall} {...MAT.wall} />
           </mesh>
           <mesh position={[3.375, ht / 2, 0]} receiveShadow>
             <boxGeometry args={[1.25, ht, wt]} />
-            <meshStandardMaterial color={COLOR.wall} />
+            <meshStandardMaterial color={COLOR.wall} {...MAT.wall} />
           </mesh>
           <mesh position={[WIN.x, 0.875, 0]} receiveShadow>
             <boxGeometry args={[WIN.w, 1.75, wt]} />
-            <meshStandardMaterial color={COLOR.wall} />
+            <meshStandardMaterial color={COLOR.wall} {...MAT.wall} />
           </mesh>
           <mesh position={[WIN.x, ht - 0.875, 0]} receiveShadow>
             <boxGeometry args={[WIN.w, 1.75, wt]} />
-            <meshStandardMaterial color={COLOR.wall} />
+            <meshStandardMaterial color={COLOR.wall} {...MAT.wall} />
           </mesh>
         </group>
       </AppearGroup>
@@ -133,7 +134,7 @@ function LeftWall() {
       <AppearGroup delay={DELAY.wallLeft}>
         <mesh position={[x, ht / 2, 0]} receiveShadow castShadow>
           <boxGeometry args={[wt, ht, ROOM.size]} />
-          <meshStandardMaterial color={COLOR.wall} />
+          <meshStandardMaterial color={COLOR.wall} {...MAT.wall} />
         </mesh>
       </AppearGroup>
 
@@ -148,7 +149,7 @@ function LeftWall() {
         <group>
           <mesh rotation={[0, Math.PI / 2, 0]} castShadow>
             <boxGeometry args={[2.2, 1.6, 0.05]} />
-            <meshStandardMaterial color={COLOR.noticeboard} />
+            <meshStandardMaterial color={COLOR.noticeboard} {...MAT.woodDark} />
           </mesh>
           <mesh position={[0.03, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
             <planeGeometry args={[2.0, 1.4]} />
@@ -156,7 +157,7 @@ function LeftWall() {
           </mesh>
           <mesh position={[0.035, 0.3, 0.4]} rotation={[0, Math.PI / 2, 0]}>
             <planeGeometry args={[0.3, 0.4]} />
-            <meshStandardMaterial color="#FFF9C4" />
+            <meshStandardMaterial color="#FFF9C4" roughness={0.9} />
           </mesh>
           <group position={[0.04, 0, -0.4]} rotation={[0, Math.PI / 2, 0.08]}>
             <mesh castShadow>
@@ -168,7 +169,7 @@ function LeftWall() {
             </Text>
             <mesh position={[0, 0.35, 0.015]}>
               <sphereGeometry args={[0.015, 16, 16]} />
-              <meshStandardMaterial color="#E91E63" />
+              <meshStandardMaterial color="#E91E63" roughness={0.4} metalness={0.3} />
             </mesh>
           </group>
         </group>
@@ -184,7 +185,7 @@ function LeftWall() {
             <HoverLift liftHeight={0.04}>
               <mesh castShadow receiveShadow>
                 <boxGeometry args={[0.55, 0.06, 2.1]} />
-                <meshStandardMaterial color={COLOR.woodMid} />
+                <meshStandardMaterial color={COLOR.woodMid} {...MAT.woodMid} />
               </mesh>
             </HoverLift>
           </group>
@@ -199,7 +200,7 @@ function LeftWall() {
             <HoverLift liftHeight={0.04}>
               <mesh castShadow receiveShadow>
                 <boxGeometry args={[0.55, 0.06, 2.1]} />
-                <meshStandardMaterial color={COLOR.woodMid} />
+                <meshStandardMaterial color={COLOR.woodMid} {...MAT.woodMid} />
               </mesh>
             </HoverLift>
           </group>
@@ -208,11 +209,11 @@ function LeftWall() {
             <HoverLift liftHeight={0.05}>
               <mesh position={[0, 0.12, 0]} castShadow>
                 <cylinderGeometry args={[0.07, 0.05, 0.14, 16]} />
-                <meshStandardMaterial color={COLOR.pot} />
+                <meshStandardMaterial color={COLOR.pot} {...MAT.pot} />
               </mesh>
               <mesh position={[0, 0.22, 0]} castShadow>
                 <sphereGeometry args={[0.08, 16, 16]} />
-                <meshStandardMaterial color={COLOR.plant} />
+                <meshStandardMaterial color={COLOR.plant} {...MAT.plant} />
               </mesh>
             </HoverLift>
           </group>
@@ -221,7 +222,7 @@ function LeftWall() {
             <HoverLift liftHeight={0.05}>
               <mesh rotation={[0, 0.1, 0]} castShadow>
                 <boxGeometry args={[0.06, 0.22, 0.14]} />
-                <meshStandardMaterial color={COLOR.bookRed} />
+                <meshStandardMaterial color={COLOR.bookRed} {...MAT.book} />
               </mesh>
             </HoverLift>
           </group>
@@ -230,7 +231,7 @@ function LeftWall() {
             <HoverLift liftHeight={0.05}>
               <mesh rotation={[0, -0.05, 0]} castShadow>
                 <boxGeometry args={[0.06, 0.22, 0.15]} />
-                <meshStandardMaterial color={COLOR.bookBlue} />
+                <meshStandardMaterial color={COLOR.bookBlue} {...MAT.book} />
               </mesh>
             </HoverLift>
           </group>

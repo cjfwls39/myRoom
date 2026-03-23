@@ -2,43 +2,73 @@
 
 import { Suspense, useMemo, useState, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { PerspectiveCamera, Environment, OrbitControls } from "@react-three/drei";
+import { PerspectiveCamera, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import Room from "@/components/room/Room";
-import { CANVAS_PERF, ENV_PERF } from "@/components/room/Performance";
+import SpaceBackground from "@/components/room/SpaceBackground";
+import SpaceObjects    from "@/components/room/SpaceObjects";
+import { CANVAS_PERF } from "@/components/room/Performance";
 import { useDayNight, PRESETS } from "./DayNightContext";
 
 // ── 카메라 인트로 ─────────────────────────────
-const CAMERA_TARGET = new THREE.Vector3(14, 16, 14);
+const CAMERA_START  = new THREE.Vector3(0, 8, 280);   // 정면 아주 멀리 — 워프 시작점
+const CAMERA_TARGET = new THREE.Vector3(14, 16, 14);   // 최종 도착 위치
 const LOOK_AT       = new THREE.Vector3(0, 2.8, 0);
-const ARRIVE_DIST   = 0.05;
+const ARRIVE_DIST   = 0.08;
 
 function CameraManager({ isFinished, setIsFinished }: {
   isFinished: boolean;
   setIsFinished: (v: boolean) => void;
 }) {
-  useFrame(({ camera }) => {
+  const fovRef     = useRef(90);  // 시작 fov 넓게 — 워프 느낌 강조
+  const camRef     = useRef<THREE.PerspectiveCamera>(null!);
+
+  useFrame(({ camera }, delta) => {
     if (isFinished) return;
-    (camera as THREE.PerspectiveCamera).position.lerp(CAMERA_TARGET, 0.05);
+
+    const dist     = camera.position.distanceTo(CAMERA_TARGET);
+
+    // 거리에 따라 lerp 속도 동적 조절
+    //   멀리 있을 때: 빠르게 돌진 (0.06)
+    //   가까워질수록: 서서히 감속 (0.03)
+    const speed    = dist > 100 ? 0.055 : dist > 30 ? 0.045 : 0.035;
+    (camera as THREE.PerspectiveCamera).position.lerp(CAMERA_TARGET, speed);
     camera.lookAt(LOOK_AT);
-    if (camera.position.distanceTo(CAMERA_TARGET) < ARRIVE_DIST) {
+
+    // fov: 시작 90 → 도착 32 으로 좁혀짐 (줌인 + 워프 강조)
+    const targetFov = 32;
+    fovRef.current += (targetFov - fovRef.current) * 0.04;
+    (camera as THREE.PerspectiveCamera).fov = fovRef.current;
+    (camera as THREE.PerspectiveCamera).updateProjectionMatrix();
+
+    if (dist < ARRIVE_DIST) {
       camera.position.copy(CAMERA_TARGET);
+      (camera as THREE.PerspectiveCamera).fov = 32;
+      (camera as THREE.PerspectiveCamera).updateProjectionMatrix();
       setIsFinished(true);
     }
   });
-  return <PerspectiveCamera makeDefault position={[40, 40, 40]} fov={32} />;
+
+  return (
+    <PerspectiveCamera
+      ref={camRef}
+      makeDefault
+      position={CAMERA_START.toArray() as [number,number,number]}
+      fov={90}
+    />
+  );
 }
 
 // ── Fog 전환 ──────────────────────────────────
 const FOG_PRESETS = {
-  day:   { color: new THREE.Color("#F2E0C8"), near: 28, far: 80 },
-  night: { color: new THREE.Color("#08080F"), near: 14, far: 50 },
+  day:   { color: new THREE.Color("#000000"), near: 35, far: 95 },
+  night: { color: new THREE.Color("#000000"), near: 20, far: 60 },
 } as const;
 
 function FogController() {
   const { mode }  = useDayNight();
-  const curColor  = useRef(new THREE.Color("#F2E0C8"));
-  const bgColor   = useRef(new THREE.Color("#F2E0C8"));
+  const curColor  = useRef(new THREE.Color("#000000"));
+  const bgColor   = useRef(new THREE.Color("#000000"));
   const curNear   = useRef(28);
   const curFar    = useRef(80);
   const tmpColor  = useRef(new THREE.Color());
@@ -83,7 +113,7 @@ function FogController() {
     }
   });
 
-  return <fog attach="fog" args={["#F2E0C8", 28, 80]} />;
+  return <fog attach="fog" args={["#000000", 35, 95]} />;
 }
 
 // ── 조명 리그 ─────────────────────────────────
@@ -132,20 +162,24 @@ function LightRig() {
   return (
     <>
       <ambientLight ref={ambientRef} />
+      {/* hemisphere — 하늘(따뜻)과 바닥(어두운) 분리로 공간감 향상 */}
+      <hemisphereLight
+        args={["#FFE8C0", "#3A2208", 0.6]}
+      />
       <directionalLight
         ref={dirRef}
-        position={[15, 20, -10]}
+        position={[60, 45, 55]}
         castShadow
-        shadow-mapSize-width={1024}
-        shadow-mapSize-height={1024}
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
         shadow-camera-near={0.5}
         shadow-camera-far={60}
-        shadow-camera-left={-7}
-        shadow-camera-right={7}
-        shadow-camera-top={7}
-        shadow-camera-bottom={-7}
-        shadow-bias={-0.0003}
-        shadow-radius={3}
+        shadow-camera-left={-8}
+        shadow-camera-right={8}
+        shadow-camera-top={8}
+        shadow-camera-bottom={-8}
+        shadow-bias={-0.0002}
+        shadow-radius={4}
       />
       <pointLight ref={pointRef} position={[1.5, 3.5, -3.5]} distance={18} />
     </>
@@ -173,8 +207,8 @@ export default function SceneContainer() {
         gl.toneMappingExposure = 1.0;
         // sRGB 출력 — 색 정확도
         gl.outputColorSpace   = THREE.SRGBColorSpace;
-        gl.setClearColor("#F2E0C8", 1);
-        scene.background = new THREE.Color("#F2E0C8");
+        gl.setClearColor("#000000", 1);
+        scene.background = new THREE.Color("#000000");
       }}
     >
       <FogController />
@@ -182,7 +216,8 @@ export default function SceneContainer() {
       <LightRig />
 
       <Suspense fallback={null}>
-        <Environment {...ENV_PERF} />
+        <SpaceBackground />
+        <SpaceObjects />
         <Room />
       </Suspense>
 
@@ -198,6 +233,15 @@ export default function SceneContainer() {
         dampingFactor={0.05}
         enablePan
         mouseButtons={mouseButtons}
+        onChange={(e) => {
+          // pan target 범위 제한 — 방 밖으로 못 나가게
+          const ctrl = e?.target as any;
+          if (!ctrl?.target) return;
+          const t = ctrl.target as THREE.Vector3;
+          t.x = Math.max(-2, Math.min(3, t.x));
+          t.y = Math.max(1,  Math.min(5, t.y));
+          t.z = Math.max(-2, Math.min(3, t.z));
+        }}
       />
     </Canvas>
   );

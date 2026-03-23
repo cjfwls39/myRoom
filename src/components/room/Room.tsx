@@ -3,18 +3,18 @@
 import { Float } from "@react-three/drei";
 import { HoverLift } from "./AnimatedWrapper";
 
-// structure
 import Floor    from "./structure/Floor";
 import Walls    from "./structure/Walls";
 import Moulding from "./structure/Moulding";
 
-// furniture
 import Desk           from "./furniture/Desk";
 import Bed            from "./furniture/Bed";
 import Storage, { DrawerChest } from "./furniture/Storage";
 import SunbathingCat  from "./furniture/SunbathingCat";
 import CatBowls       from "./furniture/CatBowls";
 import DeskLamp       from "./furniture/DeskLamp";
+import Nightstand     from "./furniture/Nightstand";
+import Trashcan       from "./furniture/Trashcan";
 
 export default function Room() {
   return (
@@ -25,20 +25,19 @@ export default function Room() {
         <Moulding />
         <Desk />
         <Bed />
+        <Nightstand />
+        <Trashcan />
 
-        {/* 서랍장 + 무드등 — 함께 hover */}
         <HoverLift
           liftHeight={0.06}
-          hitbox={[1.3, 2.4, 1.3]}
-          hitboxPos={[-2.7, 1.2, 1.5]}
+          hitbox={[1.3, 2.2, 1.0]}
+          hitboxPos={[-3.2, 1.1, 1.5]}
         >
           <DrawerChest />
           <DeskLamp />
         </HoverLift>
 
-        {/* 냉장고 — 독립 hover */}
         <Storage />
-
         <SunbathingCat />
         <CatBowls />
       </group>

@@ -5,6 +5,7 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { AppearGroup } from "../AnimatedWrapper";
 import AnimatedWrapper from "../AnimatedWrapper";
+import { MAT } from "../materials";
 import { COLOR, DELAY, WALL_HALF } from "../constants";
 
 function createBeastTexture(): THREE.CanvasTexture {
@@ -41,7 +42,7 @@ function BeastCan({ position }: { position: [number,number,number] }) {
       {[1,-1].map((s,i)=>(
         <mesh key={i} position={[0, s*(H2/2+0.004), 0]}>
           <cylinderGeometry args={[R2*0.86,R2,0.008,16]} />
-          <meshStandardMaterial color="#CCCCCC" metalness={0.9} roughness={0.1} />
+          <meshStandardMaterial color="#CCCCCC" {...MAT.metalBright} />
         </mesh>
       ))}
     </group>
@@ -96,57 +97,57 @@ function MiniFridge() {
       <group
         onPointerDown={handlePointerDown}
         onClick={handleClick}
-        onPointerOver={()=>{document.body.style.cursor="pointer";}}
-        onPointerOut={()=>{document.body.style.cursor="default";}}
+        onPointerOver={(e)=>{e.stopPropagation(); document.body.style.cursor="pointer";}}
+        onPointerOut={(e)=>{e.stopPropagation(); document.body.style.cursor="default";}}
       >
         {/* 본체 5면 — 앞면(+X)만 없음 */}
         {/* 뒷면(-X, 벽쪽) */}
         <mesh position={[-W/2+T/2, H/2, 0]} castShadow>
           <boxGeometry args={[T,H,D]} />
-          <meshStandardMaterial color={COLOR.fridgeBody} />
+          <meshStandardMaterial color={COLOR.fridgeBody} {...MAT.fridge} />
         </mesh>
         {/* 앞면(+X, 카메라쪽) — 없음, 문이 대신 */}
         {/* 왼쪽(-Z) */}
         <mesh position={[0, H/2, -D/2+T/2]} castShadow>
           <boxGeometry args={[W,H,T]} />
-          <meshStandardMaterial color={COLOR.fridgeBody} />
+          <meshStandardMaterial color={COLOR.fridgeBody} {...MAT.fridge} />
         </mesh>
         {/* 오른쪽(+Z) */}
         <mesh position={[0, H/2, D/2-T/2]} castShadow>
           <boxGeometry args={[W,H,T]} />
-          <meshStandardMaterial color={COLOR.fridgeBody} />
+          <meshStandardMaterial color={COLOR.fridgeBody} {...MAT.fridge} />
         </mesh>
         {/* 바닥 */}
         <mesh position={[0, T/2, 0]} receiveShadow castShadow>
           <boxGeometry args={[W,T,D]} />
-          <meshStandardMaterial color={COLOR.fridgeBody} />
+          <meshStandardMaterial color={COLOR.fridgeBody} {...MAT.fridge} />
         </mesh>
         {/* 천장 */}
         <mesh position={[0, H-T/2, 0]} castShadow>
           <boxGeometry args={[W,T,D]} />
-          <meshStandardMaterial color={COLOR.fridgeBody} />
+          <meshStandardMaterial color={COLOR.fridgeBody} {...MAT.fridge} />
         </mesh>
 
         {/* 내부 벽 */}
         <mesh position={[-W/2+T+0.005, H/2, 0]}>
           <boxGeometry args={[0.008, H-T*2, D-T*2]} />
-          <meshStandardMaterial color="#E0EEE0" />
+          <meshStandardMaterial color="#E0EEE0" {...MAT.wall} />
         </mesh>
         <mesh position={[0, H/2, -D/2+T+0.005]}>
           <boxGeometry args={[W-T*2, H-T*2, 0.008]} />
-          <meshStandardMaterial color="#E0EEE0" />
+          <meshStandardMaterial color="#E0EEE0" {...MAT.wall} />
         </mesh>
         <mesh position={[0, H/2, D/2-T-0.005]}>
           <boxGeometry args={[W-T*2, H-T*2, 0.008]} />
-          <meshStandardMaterial color="#E0EEE0" />
+          <meshStandardMaterial color="#E0EEE0" {...MAT.wall} />
         </mesh>
         <mesh position={[0, T+0.005, 0]}>
           <boxGeometry args={[W-T*2, 0.008, D-T*2]} />
-          <meshStandardMaterial color="#D8ECD8" />
+          <meshStandardMaterial color="#D8ECD8" {...MAT.wall} />
         </mesh>
         <mesh position={[0, H-T-0.005, 0]}>
           <boxGeometry args={[W-T*2, 0.008, D-T*2]} />
-          <meshStandardMaterial color="#E0EEE0" />
+          <meshStandardMaterial color="#E0EEE0" {...MAT.wall} />
         </mesh>
 
         {/* 선반 */}
@@ -177,13 +178,13 @@ function MiniFridge() {
           {/* 문 패널 — 힌지에서 +Z 방향으로 뻗음 */}
           <mesh position={[0, 0, D/2-T/2]} castShadow>
             <boxGeometry args={[T, H-T, D-T]} />
-            <meshStandardMaterial color={COLOR.fridgeBody} />
+            <meshStandardMaterial color={COLOR.fridgeBody} {...MAT.fridge} />
           </mesh>
           {/* 손잡이 */}
           {/* 손잡이 — 문 바깥면(+X)에서 앞으로 돌출 */}
           <mesh position={[T + 0.04, 0, D/2 - T - -0.35]} castShadow>
             <boxGeometry args={[0.04, 0.42, 0.04]} />
-            <meshStandardMaterial color={COLOR.fridgeHandle} roughness={0.5} />
+            <meshStandardMaterial color={COLOR.fridgeHandle} {...MAT.metalHandle} />
           </mesh>
         </group>
 
@@ -198,17 +199,17 @@ export function DrawerChest() {
       <group>
         <mesh position={[0,0.8,0]} castShadow receiveShadow>
           <boxGeometry args={[1.2,1.6,1.2]} />
-          <meshStandardMaterial color={COLOR.drawerBody} />
+          <meshStandardMaterial color={COLOR.drawerBody} {...MAT.drawer} />
         </mesh>
         {([0.4,0.8,1.2] as number[]).map((h,i)=>(
           <group key={i} position={[0.61,h,0]}>
             <mesh>
               <boxGeometry args={[0.01,0.02,1.1]} />
-              <meshStandardMaterial color={COLOR.curtainFold} />
+              <meshStandardMaterial color={COLOR.curtainFold} {...MAT.fabric} />
             </mesh>
             <mesh position={[0,-0.1,0]}>
               <boxGeometry args={[0.05,0.1,0.3]} />
-              <meshStandardMaterial color={COLOR.drawerHandle} />
+              <meshStandardMaterial color={COLOR.drawerHandle} {...MAT.metalHandle} />
             </mesh>
           </group>
         ))}
