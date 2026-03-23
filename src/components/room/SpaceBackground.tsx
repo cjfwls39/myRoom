@@ -35,7 +35,7 @@ function Stars() {
         r * Math.sin(phi) * Math.sin(theta),
         r * Math.cos(phi)
       );
-      const s = 0.06 + Math.random() * 0.18;
+      const s = 0.02 + Math.random() * 0.12;
       d.scale.setScalar(s);
       d.updateMatrix();
       mats.push(d.matrix.clone());

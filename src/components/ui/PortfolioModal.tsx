@@ -43,11 +43,11 @@ function AboutContent() {
       {ABOUT_DATA.bio.map((p, i) => (
         <p key={i} style={styles.body}>{p}</p>
       ))}
-      {ABOUT_DATA.currently.length > 0 && (
+      {ABOUT_DATA.ps.length > 0 && (
         <>
-          <p style={styles.subheading}>✦ Currently</p>
+          <p style={styles.subheading}>✦ PS.</p>
           <ul style={styles.list}>
-            {ABOUT_DATA.currently.map((item, i) => (
+            {ABOUT_DATA.ps.map((item, i) => (
               <li key={i} style={styles.listItem}>▸ {item}</li>
             ))}
           </ul>
@@ -83,11 +83,18 @@ function ProjectsContent() {
         <div key={i} style={styles.projectCard}>
           <div style={styles.projectHeader}>
             <p style={styles.projectTitle}>{proj.title}</p>
-            {proj.link && (
-              <a href={proj.link} target="_blank" rel="noreferrer" style={styles.link}>
-                ↗ 보기
-              </a>
-            )}
+            <div style={{ display: "flex", gap: "0.6rem" }}>
+              {proj.github && (
+                <a href={proj.github} target="_blank" rel="noreferrer" style={styles.link}>
+                  ◈ GitHub
+                </a>
+              )}
+              {proj.link && (
+                <a href={proj.link} target="_blank" rel="noreferrer" style={styles.link}>
+                  ↗ 링크
+                </a>
+              )}
+            </div>
           </div>
           <p style={styles.body}>{proj.description}</p>
           <div style={styles.tagRow}>

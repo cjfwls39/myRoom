@@ -6,16 +6,18 @@
 
 // ── About Me ──────────────────────────────────
 export const ABOUT_DATA = {
-  name:     "이름",
-  role:     "Frontend Developer",
-  intro:    "안녕하세요! 한 줄 자기소개를 여기에 작성하세요.",
+  name:     "정철진",
+  role:     "Full Stack Developer",
+  intro:    "안녕하세요! 아이디어를 실천으로 만드는 주니어 개발자 정철진 입니다!",
   bio: [
-    "자신에 대한 설명을 여기에 작성하세요.",
-    "두 번째 단락을 여기에 작성하세요.",
+    "어떤 아이디어를 가지고 사이트를 만들어야 모두에게 도움이 될까",
+    "어떻게 만들어야 사이트를 이용하는 모두가 불편하지 않을까",
+    "항상 생각하며 웹 개발에 임하고 있습니다",
+    "저는 이러한 생각이 회사에, 개발에, 그리고 모두에 도움이 된다고 생각됩니다."
   ],
-  currently: [
-    "현재 하고 있는 것 1",
-    "현재 하고 있는 것 2",
+  ps: [
+    "PROJECTS탭 에서는 지금까지의 제 발자취를 볼 수 있습니다.",
+    "편하게 보시고 마음에 드신다면 연락 주세요!",
   ],
 };
 
@@ -23,39 +25,41 @@ export const ABOUT_DATA = {
 export const SKILLS_DATA = [
   {
     category: "Frontend",
-    items: ["React", "Next.js", "TypeScript", "Three.js"],
+    items: ["JavaScript","React", "Next.js", "TypeScript", "Three.js"],
   },
   {
     category: "Backend",
-    items: ["Node.js", "항목 추가"],
+    items: ["Node.js", "Java"],
   },
   {
-    category: "Tools",
-    items: ["Git", "항목 추가"],
+    category: "DevOps",
+    items: ["AWS","Render","Git",],
   },
 ];
 
 // ── Projects ──────────────────────────────────
 export const PROJECTS_DATA = [
   {
-    title:       "프로젝트 이름",
-    description: "프로젝트 설명을 여기에 작성하세요.",
-    skills:      ["React", "Three.js"],
-    link:        "https://github.com",   // 링크 없으면 "" 로 비워두세요
+    title:       "ShieldBox.io: Security Simulator",
+    description: "추상적인 암호학 개념을 직접 체험할 수 있는 인터랙티브 보안 교육 플랫폼입니다.",
+    skills:      ["React", "Tailwind CSS","Node.js","Socket.io","Render"],
+    link:        "https://shieldbox-io.onrender.com/",  // 호스팅 링크, 없으면 "" 로 비워두세요
+    github:      "https://github.com/cjfwls39/ShieldBox.io.git",  // 깃허브 링크, 없으면 "" 로 비워두세요
   },
   {
     title:       "프로젝트 이름 2",
     description: "프로젝트 설명을 여기에 작성하세요.",
     skills:      ["Next.js", "TypeScript"],
     link:        "",
+    github:      "",
   },
 ];
 
 // ── Contact ───────────────────────────────────
 export const CONTACT_DATA = {
-  email:    "your@email.com",
-  phone:    "010-0000-0000",  // 없으면 "" 로 비워두세요
-  github:   "https://github.com/yourname",
+  email:    "cjfwls39@naver.com",
+  phone:    "010-8464-6539",  // 없으면 "" 로 비워두세요
+  github:   "https://github.com/cjfwls39",
   linkedin: "",               // 없으면 "" 로 비워두세요
   twitter:  "",
   other:    [] as { label: string; url: string }[],

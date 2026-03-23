@@ -1,7 +1,6 @@
 "use client";
 
 import { Float } from "@react-three/drei";
-import { HoverLift } from "./AnimatedWrapper";
 
 import Floor    from "./structure/Floor";
 import Walls    from "./structure/Walls";
@@ -27,16 +26,8 @@ export default function Room() {
         <Bed />
         <Nightstand />
         <Trashcan />
-
-        <HoverLift
-          liftHeight={0.06}
-          hitbox={[1.3, 2.2, 1.0]}
-          hitboxPos={[-3.2, 1.1, 1.5]}
-        >
-          <DrawerChest />
-          <DeskLamp />
-        </HoverLift>
-
+        <DrawerChest />
+        <DeskLamp />
         <Storage />
         <SunbathingCat />
         <CatBowls />

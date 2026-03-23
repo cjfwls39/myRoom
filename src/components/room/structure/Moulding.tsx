@@ -104,10 +104,14 @@ function SignBoard({ label, icon, color, onClick, delay, isFirst = true }: {
             <boxGeometry args={[W - 0.04, H - 0.04, 0.002]} />
             <meshStandardMaterial color="#F5EFE6" {...MAT.paper} />
           </mesh>
-          <Text position={[-W * 0.25, 0, D / 2 + 0.01]} fontSize={0.12} anchorX="center" anchorY="middle">
-            {icon}
-          </Text>
-          <Text position={[W * 0.12, 0, D / 2 + 0.01]} fontSize={0.09} color="#3A2208" anchorX="center" anchorY="middle" letterSpacing={0.04}>
+          <Text
+            position={[0, 0, D / 2 + 0.01]}
+            fontSize={0.13}
+            color="#ff00ea"
+            anchorX="center"
+            anchorY="middle"
+            letterSpacing={0.08}
+          >
             {label}
           </Text>
         </group>

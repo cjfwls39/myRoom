@@ -24,6 +24,9 @@ export default function DeskLamp() {
   const tColorNight  = useRef(new THREE.Color("#C0D0F0"));
   const tLightDay    = useRef(new THREE.Color("#FFD060"));
   const tLightNight  = useRef(new THREE.Color("#88AAFF"));
+  const hovered      = useRef(false);
+  const hoverY       = useRef(0);
+  const groupRef     = useRef<THREE.Group>(null!);
 
   useFrame((_, delta) => {
     const tp = pressed ? -0.05 : 0;
@@ -48,6 +51,12 @@ export default function DeskLamp() {
       const tC = isNight ? tLightNight.current : tLightDay.current;
       glowRef.current.intensity += (tI - glowRef.current.intensity) * 0.05;
       glowRef.current.color.lerp(tC, 0.05);
+    }
+    // hover lift
+    if (groupRef.current) {
+      const targetY = hovered.current ? 0.06 : 0;
+      hoverY.current += (targetY - hoverY.current) * 0.12;
+      groupRef.current.position.y = hoverY.current;
     }
   });
 
@@ -74,12 +83,7 @@ export default function DeskLamp() {
 
   return (
     <AppearGroup delay={DELAY.drawer + 0.3} position={[-WALL_HALF + 0.8, 1.6, 1.5]}>
-      <group
-        onPointerOver={() => { document.body.style.cursor = "pointer"; }}
-        onPointerOut={()  => { document.body.style.cursor = "default"; }}
-        onPointerDown={handlePointerDown}
-        onClick={handleClick}
-      >
+      <group ref={groupRef}>
         {/* 받침대 왼쪽 다리 */}
         <mesh position={[0, 0.10, -0.01]} rotation={[Math.PI * 0.22, 0, 0]}>
           <boxGeometry args={[0.06, 0.06, 0.26]} />
@@ -102,7 +106,15 @@ export default function DeskLamp() {
         </mesh>
 
         {/* 구 — 낮: 형태가 보이는 은은한 빛 / 밤: 충분히 빛남 */}
-        <mesh ref={sphereRef} position={[0, 0.30, 0]} castShadow>
+        <mesh
+          ref={sphereRef}
+          position={[0, 0.30, 0]}
+          castShadow
+          onPointerOver={(e) => { e.stopPropagation(); hovered.current = true; document.body.style.cursor = "pointer"; }}
+          onPointerOut={(e)  => { e.stopPropagation(); hovered.current = false; document.body.style.cursor = "default"; }}
+          onPointerDown={handlePointerDown}
+          onClick={handleClick}
+        >
           <sphereGeometry args={[0.22, 48, 48]} />
           <meshStandardMaterial
             color="#FFF8D0"
