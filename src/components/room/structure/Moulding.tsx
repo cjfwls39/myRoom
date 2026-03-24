@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { Text } from "@react-three/drei";
 import { AppearGroup, HoverLift } from "../AnimatedWrapper";
 import { COLOR, DELAY, ROOM, WALL_HALF } from "../constants";
+import { SIGN } from "../layout";
 import { MAT } from "../materials";
 
 export const SIGNS_DATA = [
@@ -53,11 +54,15 @@ function SignBoard({ label, icon, color, onClick, delay, isFirst = true }: {
     onClick();
   };
 
-  const W = 1.40, H = 0.32, D = 0.05;
-  const ROD_Y   = H / 2 + 0.22;
+  const W = SIGN.w, H = SIGN.h, D = SIGN.d;
+  const ROD_Y   = H / 2 + SIGN.rodOffset;
   const CHAIN_C = "#888888";
-  const chainXs = [-W * 0.32, W * 0.32];
-  const chainLinks = [{ y: ROD_Y - 0.06 }, { y: ROD_Y - 0.12 }, { y: ROD_Y - 0.18 }];
+  const chainXs = [-W * SIGN.chainXRatio, W * SIGN.chainXRatio];
+  const chainLinks = [
+    { y: ROD_Y - SIGN.chainStep },
+    { y: ROD_Y - SIGN.chainStep * 2 },
+    { y: ROD_Y - SIGN.chainStep * 3 },
+  ];
 
   return (
     <AppearGroup delay={delay}>
@@ -126,23 +131,23 @@ export default function Moulding() {
   return (
     <>
       {/* 뒷벽 몰딩 */}
-      <mesh position={[0.05, height - 0.1, -WALL_HALF + wt / 2 + 0.005]}>
-        <boxGeometry args={[ROOM.size + 0.1, 0.25, wt + 0.061]} />
+      <mesh position={[0.05, height - 0.08, -WALL_HALF + wt / 2 + 0.004]}>
+        <boxGeometry args={[ROOM.size + 0.08, 0.20, wt + 0.05]} />
         <meshStandardMaterial color={COLOR.moulding} {...MAT.moulding} />
       </mesh>
 
       {/* 왼쪽 벽 몰딩 */}
-      <mesh position={[-WALL_HALF + wt / 2 + 0.004, height - 0.1, 0.05]}>
-        <boxGeometry args={[wt + 0.06, 0.25, ROOM.size + 0.1]} />
+      <mesh position={[-WALL_HALF + wt / 2 + 0.003, height - 0.08, 0.05]}>
+        <boxGeometry args={[wt + 0.05, 0.20, ROOM.size + 0.08]} />
         <meshStandardMaterial color={COLOR.moulding} {...MAT.moulding} />
 
         {SIGNS_DATA.map((sign, i) => (
           <group
             key={sign.id}
             position={[
-              (wt + 0.06) / 2 - 0.04,
-              -0.25 / 2 - 0.32 / 2 - 0.02 - i * 0.55,
-              4.85,
+              (wt + 0.05) / 2 - 0.03,
+              -0.20 / 2 - SIGN.h / 2 - 0.015 - i * SIGN.gap,
+              3.827,
             ]}
             rotation={[0, Math.PI / 2, 0]}
           >

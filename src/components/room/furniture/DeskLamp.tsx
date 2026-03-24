@@ -4,7 +4,8 @@ import { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { AppearGroup } from "../AnimatedWrapper";
-import { DELAY, WALL_HALF, COLOR } from "../constants";
+import { DELAY, COLOR } from "../constants";
+import { POS, SIZE } from "../layout";
 import { useDayNight } from "../../canvas/DayNightContext";
 import { SunParticles, MoonParticles } from "../particles/LampParticles";
 
@@ -82,40 +83,40 @@ export default function DeskLamp() {
   };
 
   return (
-    <AppearGroup delay={DELAY.drawer + 0.3} position={[-WALL_HALF + 0.8, 1.6, 1.5]}>
+    <AppearGroup delay={DELAY.drawer + 0.3} position={POS.deskLamp}>
       <group ref={groupRef}>
         {/* 받침대 왼쪽 다리 */}
-        <mesh position={[0, 0.10, -0.01]} rotation={[Math.PI * 0.22, 0, 0]}>
-          <boxGeometry args={[0.06, 0.06, 0.26]} />
+        <mesh position={[0, SIZE.deskLamp.legW, -0.008]} rotation={[Math.PI * 0.22, 0, 0]}>
+          <boxGeometry args={[SIZE.deskLamp.legW, SIZE.deskLamp.legW, SIZE.deskLamp.legD]} />
           <meshStandardMaterial color={COLOR.woodMid} roughness={0.85} />
         </mesh>
         {/* 받침대 오른쪽 다리 */}
-        <mesh position={[0, 0.10, 0.01]} rotation={[-Math.PI * 0.22, 0, 0]}>
-          <boxGeometry args={[0.06, 0.06, 0.26]} />
+        <mesh position={[0, SIZE.deskLamp.legW, 0.008]} rotation={[-Math.PI * 0.22, 0, 0]}>
+          <boxGeometry args={[SIZE.deskLamp.legW, SIZE.deskLamp.legW, SIZE.deskLamp.legD]} />
           <meshStandardMaterial color={COLOR.woodMid} roughness={0.85} />
         </mesh>
         {/* 바닥 가로대 */}
-        <mesh position={[0, 0.022, 0]} receiveShadow>
-          <boxGeometry args={[0.06, 0.022, 0.32]} />
+        <mesh position={[0, SIZE.deskLamp.legW * 0.36, 0]} receiveShadow>
+          <boxGeometry args={[SIZE.deskLamp.legW, SIZE.deskLamp.legW * 0.36, SIZE.deskLamp.baseD]} />
           <meshStandardMaterial color={COLOR.woodLight} roughness={0.85} />
         </mesh>
         {/* 상단 가로대 */}
-        <mesh position={[0, 0.21, 0]}>
-          <boxGeometry args={[0.06, 0.022, 0.24]} />
+        <mesh position={[0, SIZE.deskLamp.sphereY * 0.70, 0]}>
+          <boxGeometry args={[SIZE.deskLamp.legW, SIZE.deskLamp.legW * 0.36, SIZE.deskLamp.topD]} />
           <meshStandardMaterial color={COLOR.woodLight} roughness={0.85} />
         </mesh>
 
         {/* 구 — 낮: 형태가 보이는 은은한 빛 / 밤: 충분히 빛남 */}
         <mesh
           ref={sphereRef}
-          position={[0, 0.30, 0]}
+          position={[0, SIZE.deskLamp.sphereY, 0]}
           castShadow
           onPointerOver={(e) => { e.stopPropagation(); hovered.current = true; document.body.style.cursor = "pointer"; }}
           onPointerOut={(e)  => { e.stopPropagation(); hovered.current = false; document.body.style.cursor = "default"; }}
           onPointerDown={handlePointerDown}
           onClick={handleClick}
         >
-          <sphereGeometry args={[0.22, 48, 48]} />
+          <sphereGeometry args={[SIZE.deskLamp.sphereR, 48, 48]} />
           <meshStandardMaterial
             color="#FFF8D0"
             emissive="#FF7700"
@@ -125,7 +126,7 @@ export default function DeskLamp() {
         </mesh>
 
         {/* 파티클 — 구와 같은 위치 기준 */}
-        <group position={[0, 0.30, 0]}>
+        <group position={[0, SIZE.deskLamp.sphereY, 0]}>
           <SunParticles  visible={!isNight} />
           <MoonParticles visible={isNight}  />
         </group>
@@ -133,10 +134,10 @@ export default function DeskLamp() {
         {/* 발광 */}
         <pointLight
           ref={glowRef}
-          position={[0, 0.52, 0]}
+          position={[0, SIZE.deskLamp.glowY, 0]}
           color="#FFD060"
           intensity={1.6}
-          distance={6}
+          distance={SIZE.deskLamp.glowDist}
           decay={2}
         />
       </group>

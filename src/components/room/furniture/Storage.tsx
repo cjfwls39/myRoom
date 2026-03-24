@@ -6,7 +6,8 @@ import * as THREE from "three";
 import { AppearGroup } from "../AnimatedWrapper";
 import AnimatedWrapper from "../AnimatedWrapper";
 import { MAT } from "../materials";
-import { COLOR, DELAY, WALL_HALF } from "../constants";
+import { COLOR, DELAY } from "../constants";
+import { POS, SIZE } from "../layout";
 
 function createBeastTexture(): THREE.CanvasTexture {
   const size = 256;
@@ -31,8 +32,8 @@ function createBeastTexture(): THREE.CanvasTexture {
 
 function BeastCan({ position }: { position: [number,number,number] }) {
   const texture = useMemo(() => createBeastTexture(), []);
-  const R = 0.052, H_CAN = 0.22;  // 캔 반지름, 높이
-  const R2 = 0.052, H2 = 0.22;
+  const R = SIZE.fridge.canR, H_CAN = SIZE.fridge.canH;
+  const R2 = SIZE.fridge.canR, H2 = SIZE.fridge.canH;
   return (
     <group position={position}>
       <mesh>
@@ -74,25 +75,23 @@ function MiniFridge() {
     setOpen(p=>!p);
   };
 
-  const W=1.20, H=1.80, D=1.10, T=0.055;
+  const W = SIZE.fridge.w, H = SIZE.fridge.h, D = SIZE.fridge.d, T = SIZE.fridge.wallT;
 
   // 냉장고는 왼쪽 벽(-X)에 붙어있고 카메라는 +X,+Z에서 봄
   // 문은 +X 면에 있어야 카메라에서 보임
   // 힌지: -Z 끝, 열리면 Z축 기준 +X 방향으로 스윙
 
-  const shelfYs = [0.28, 0.78, 1.28];
-  // 냉장고 가로(Z축, D=1.1): 4캔 촘촘하게
-  // 냉장고 깊이(X축, W=1.2): 3캔
-  const canZs = [-0.36, -0.12, 0.12, 0.36];   // Z축 가로 4열
-  const canXs = [-0.28, 0, 0.28];              // X축 깊이 3줄
+  const shelfYs = SIZE.fridge.shelfYs;
+  const canZs   = SIZE.fridge.canZs;
+  const canXs   = SIZE.fridge.canXs;
 
   return (
     <AnimatedWrapper
       delay={DELAY.fridge}
-      position={[-WALL_HALF+0.8, 0, 2.8]}
+      position={POS.fridge}
       liftHeight={0.06}
-      hitbox={[W+0.1, H+0.1, D+0.1]}
-      hitboxPos={[0, H/2, 0]}
+      hitbox={[SIZE.fridge.w+0.1, SIZE.fridge.h+0.1, SIZE.fridge.d+0.1]}
+      hitboxPos={[0, SIZE.fridge.h/2, 0]}
     >
       <group
         onPointerDown={handlePointerDown}
@@ -194,21 +193,22 @@ function MiniFridge() {
 }
 
 export function DrawerChest() {
+  const { w, h, d } = SIZE.drawer;
   return (
-    <AppearGroup delay={DELAY.drawer} position={[-WALL_HALF+0.8, 0, 1.5]}>
+    <AppearGroup delay={DELAY.drawer} position={POS.drawer}>
       <group>
-        <mesh position={[0,0.8,0]} castShadow receiveShadow>
-          <boxGeometry args={[1.2,1.6,1.2]} />
+        <mesh position={[0, h/2, 0]} castShadow receiveShadow>
+          <boxGeometry args={[w, h, d]} />
           <meshStandardMaterial color={COLOR.drawerBody} {...MAT.drawer} />
         </mesh>
-        {([0.4,0.8,1.2] as number[]).map((h,i)=>(
-          <group key={i} position={[0.61,h,0]}>
+        {([h*0.25, h*0.50, h*0.75] as number[]).map((yh, i) => (
+          <group key={i} position={[w/2 + 0.005, yh, 0]}>
             <mesh>
-              <boxGeometry args={[0.01,0.02,1.1]} />
+              <boxGeometry args={[0.008, 0.016, d * 0.9]} />
               <meshStandardMaterial color={COLOR.curtainFold} {...MAT.fabric} />
             </mesh>
-            <mesh position={[0,-0.1,0]}>
-              <boxGeometry args={[0.05,0.1,0.3]} />
+            <mesh position={[0, -0.08, 0]}>
+              <boxGeometry args={[0.04, 0.08, 0.24]} />
               <meshStandardMaterial color={COLOR.drawerHandle} {...MAT.metalHandle} />
             </mesh>
           </group>

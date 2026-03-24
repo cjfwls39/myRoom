@@ -5,6 +5,7 @@ import AnimatedWrapper, { AppearGroup, HoverLift, SceneItem } from "../AnimatedW
 import IconFrames from "../decorations/IconFrames";
 import WallClock from "../decorations/WallClock";
 import { COLOR, DELAY, ROOM, WALL_HALF, WIN } from "../constants";
+import { POS, SIZE } from "../layout";
 import { MAT } from "../materials";
 
 // ── 창문 + 커튼 ──────────────────────────────
@@ -45,38 +46,38 @@ function WindowWithCurtains() {
       <SceneItem
         delay={DELAY.curtainL}
         liftHeight={0.06}
-        hitbox={[2.2, 5.0, 0.5]}
-        hitboxPos={[0, 0, 0.15]}
+        hitbox={[WIN.w + 1.4, WIN.h + 0.8, 0.4]}
+        hitboxPos={[0, 0, 0.12]}
       >
         {/* 커튼봉 */}
-        <mesh position={[0, WIN.h / 2 + 0.25, 0.2]} rotation={[0, 0, Math.PI / 2]}>
-          <cylinderGeometry args={[0.025, 0.025, WIN.w + 1.6, 16]} />
+        <mesh position={[0, WIN.h / 2 + 0.20, 0.16]} rotation={[0, 0, Math.PI / 2]}>
+          <cylinderGeometry args={[0.020, 0.020, WIN.w + 1.3, 16]} />
           <meshStandardMaterial color={COLOR.woodDark} {...MAT.woodDark} />
         </mesh>
 
         {/* 왼쪽 커튼 */}
-        <group position={[-WIN.w / 2 - 0.35, 0, 0.15]}>
+        <group position={[-WIN.w / 2 - 0.28, 0, 0.12]}>
           <mesh castShadow>
-            <boxGeometry args={[0.75, WIN.h + 0.5, 0.04]} />
+            <boxGeometry args={[0.58, WIN.h + 0.4, 0.032]} />
             <meshStandardMaterial color={COLOR.curtain} {...MAT.curtain} />
           </mesh>
-          {([-0.18, 0.05, 0.25] as number[]).map((x, i) => (
-            <mesh key={i} position={[x, 0, 0.04 + i * 0.01]} castShadow>
-              <boxGeometry args={[0.15, WIN.h + 0.5, 0.05]} />
+          {([-0.14, 0.04, 0.19] as number[]).map((x, i) => (
+            <mesh key={i} position={[x, 0, 0.032 + i * 0.008]} castShadow>
+              <boxGeometry args={[0.12, WIN.h + 0.4, 0.04]} />
               <meshStandardMaterial color={COLOR.curtainFold} {...MAT.curtain} />
             </mesh>
           ))}
         </group>
 
         {/* 오른쪽 커튼 */}
-        <group position={[WIN.w / 2 + 0.35, 0, 0.15]}>
+        <group position={[WIN.w / 2 + 0.28, 0, 0.12]}>
           <mesh castShadow>
-            <boxGeometry args={[0.75, WIN.h + 0.5, 0.04]} />
+            <boxGeometry args={[0.58, WIN.h + 0.4, 0.032]} />
             <meshStandardMaterial color={COLOR.curtain} {...MAT.curtain} />
           </mesh>
-          {([0.18, -0.05, -0.25] as number[]).map((x, i) => (
-            <mesh key={i} position={[x, 0, 0.04 + i * 0.01]} castShadow>
-              <boxGeometry args={[0.15, WIN.h + 0.5, 0.05]} />
+          {([0.14, -0.04, -0.19] as number[]).map((x, i) => (
+            <mesh key={i} position={[x, 0, 0.032 + i * 0.008]} castShadow>
+              <boxGeometry args={[0.12, WIN.h + 0.4, 0.04]} />
               <meshStandardMaterial color={COLOR.curtainFold} {...MAT.curtain} />
             </mesh>
           ))}
@@ -97,27 +98,31 @@ function BackWall() {
       {/* 벽 — hover 없음 */}
       <AppearGroup delay={DELAY.wallBack}>
         <group>
-          <mesh position={[-1.875, ht / 2, 0]} receiveShadow>
-            <boxGeometry args={[4.25, ht, wt]} />
+          {/* 창문 왼쪽 벽 */}
+          <mesh position={[WIN.x - WIN.w / 2 - (WALL_HALF + WIN.x - WIN.w / 2) / 2, ht / 2, 0]} receiveShadow>
+            <boxGeometry args={[WALL_HALF + WIN.x - WIN.w / 2, ht, wt]} />
             <meshStandardMaterial color={COLOR.wall} {...MAT.wall} />
           </mesh>
-          <mesh position={[3.375, ht / 2, 0]} receiveShadow>
-            <boxGeometry args={[1.25, ht, wt]} />
+          {/* 창문 오른쪽 벽 */}
+          <mesh position={[(WALL_HALF - WIN.x - WIN.w / 2) / 2 + WIN.x + WIN.w / 2, ht / 2, 0]} receiveShadow>
+            <boxGeometry args={[WALL_HALF - WIN.x - WIN.w / 2, ht, wt]} />
             <meshStandardMaterial color={COLOR.wall} {...MAT.wall} />
           </mesh>
-          <mesh position={[WIN.x, 0.875, 0]} receiveShadow>
-            <boxGeometry args={[WIN.w, 1.75, wt]} />
+          {/* 창문 아래 벽 */}
+          <mesh position={[WIN.x, (WIN.y - WIN.h / 2) / 2, 0]} receiveShadow>
+            <boxGeometry args={[WIN.w, WIN.y - WIN.h / 2, wt]} />
             <meshStandardMaterial color={COLOR.wall} {...MAT.wall} />
           </mesh>
-          <mesh position={[WIN.x, ht - 0.875, 0]} receiveShadow>
-            <boxGeometry args={[WIN.w, 1.75, wt]} />
+          {/* 창문 위 벽 */}
+          <mesh position={[WIN.x, WIN.y + WIN.h / 2 + (ht - WIN.y - WIN.h / 2) / 2, 0]} receiveShadow>
+            <boxGeometry args={[WIN.w, ht - WIN.y - WIN.h / 2, wt]} />
             <meshStandardMaterial color={COLOR.wall} {...MAT.wall} />
           </mesh>
         </group>
       </AppearGroup>
 
       <WindowWithCurtains />
-      <WallClock position={[-2.5, 4.8, wt / 2 + 0.03]} />
+      <WallClock position={[-1.6, 3.8, wt / 2 + 0.025]} />
     </group>
   );
 }
@@ -141,34 +146,34 @@ function LeftWall() {
       {/* 게시판 — hover 있음 */}
       <AnimatedWrapper
         delay={DELAY.noticeboard}
-        position={[-WALL_HALF + wt + 0.01, 4.2, -0.5]}
+        position={[-WALL_HALF + wt + 0.008, 3.1, -0.4]}
         liftHeight={0.06}
-        hitbox={[0.1, 1.7, 2.3]}
-        hitboxPos={[0.03, 0, 0]}
+        hitbox={[0.08, 1.35, 1.85]}
+        hitboxPos={[0.025, 0, 0]}
       >
         <group>
           <mesh rotation={[0, Math.PI / 2, 0]} castShadow>
-            <boxGeometry args={[2.2, 1.6, 0.05]} />
+            <boxGeometry args={[SIZE.noticeboard.w, SIZE.noticeboard.h, SIZE.noticeboard.d]} />
             <meshStandardMaterial color={COLOR.noticeboard} {...MAT.woodDark} />
           </mesh>
-          <mesh position={[0.03, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
-            <planeGeometry args={[2.0, 1.4]} />
+          <mesh position={[0.024, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
+            <planeGeometry args={[SIZE.noticeboard.corkW, SIZE.noticeboard.corkH]} />
             <meshStandardMaterial color={COLOR.corkboard} roughness={1} />
           </mesh>
-          <mesh position={[0.035, 0.3, 0.4]} rotation={[0, Math.PI / 2, 0]}>
-            <planeGeometry args={[0.3, 0.4]} />
+          <mesh position={[0.028, 0.22, 0.32]} rotation={[0, Math.PI / 2, 0]}>
+            <planeGeometry args={[0.24, 0.32]} />
             <meshStandardMaterial color="#FFF9C4" roughness={0.9} />
           </mesh>
-          <group position={[0.04, 0, -0.4]} rotation={[0, Math.PI / 2, 0.08]}>
+          <group position={[0.032, 0, -0.32]} rotation={[0, Math.PI / 2, 0.06]}>
             <mesh castShadow>
-              <boxGeometry args={[0.6, 0.8, 0.02]} />
+              <boxGeometry args={[0.48, 0.64, 0.016]} />
               <meshStandardMaterial color="#D7B588" roughness={0.8} />
             </mesh>
-            <Text position={[0, 0, 0.014]} fontSize={0.07} color="#3A2208" anchorX="center" anchorY="middle">
+            <Text position={[0, 0, 0.011]} fontSize={0.056} color="#3A2208" anchorX="center" anchorY="middle">
               RESUME
             </Text>
-            <mesh position={[0, 0.35, 0.015]}>
-              <sphereGeometry args={[0.015, 16, 16]} />
+            <mesh position={[0, 0.28, 0.012]}>
+              <sphereGeometry args={[0.012, 16, 16]} />
               <meshStandardMaterial color="#E91E63" roughness={0.4} metalness={0.3} />
             </mesh>
           </group>
@@ -176,61 +181,58 @@ function LeftWall() {
       </AnimatedWrapper>
 
       {/* 선반 세트 */}
-      <group position={[-WALL_HALF + wt, 0, 1.8]}>
+      <group position={[-WALL_HALF + wt, 0, POS.shelfGroup]}>
 
-        {/* 위 선반 — 선반판 hover + 아이콘 개별 hover */}
-        <AppearGroup delay={DELAY.shelfUpper} position={[0, 4.55, 0]}>
-          {/* 선반판 개별 hover */}
-          <group position={[0.275, 0, 0]}>
+        {/* 위 선반 */}
+        <AppearGroup delay={DELAY.shelfUpper} position={[0, POS.shelfUpperY, 0]}>
+          <group position={[SIZE.shelf.xOff, 0, 0]}>
             <HoverLift liftHeight={0.04}>
               <mesh castShadow receiveShadow>
-                <boxGeometry args={[0.55, 0.06, 2.1]} />
+                <boxGeometry args={[SIZE.shelf.w, SIZE.shelf.h, SIZE.shelf.d]} />
                 <meshStandardMaterial color={COLOR.woodMid} {...MAT.woodMid} />
               </mesh>
             </HoverLift>
           </group>
-          {/* 아이콘 액자 — 각각 개별 hover (IconFrames 내부에서 HoverLift 사용) */}
           <IconFrames />
         </AppearGroup>
 
-        {/* 아래 선반 — 선반판 + 소품 각각 개별 hover */}
-        <AppearGroup delay={DELAY.shelfLower} position={[0, 3.25, 0]}>
-          {/* 선반판 */}
-          <group position={[0.275, 0, 0]}>
+        {/* 아래 선반 */}
+        <AppearGroup delay={DELAY.shelfLower} position={[0, POS.shelfLowerY, 0]}>
+          <group position={[0.215, 0, 0]}>
             <HoverLift liftHeight={0.04}>
               <mesh castShadow receiveShadow>
-                <boxGeometry args={[0.55, 0.06, 2.1]} />
+                <boxGeometry args={[0.43, 0.05, 1.65]} />
                 <meshStandardMaterial color={COLOR.woodMid} {...MAT.woodMid} />
               </mesh>
             </HoverLift>
           </group>
           {/* 화분 */}
-          <group position={[0.275, 0, -0.55]}>
+          <group position={[SIZE.shelf.xOff, 0, SIZE.shelfProps.potZ]}>
             <HoverLift liftHeight={0.05}>
-              <mesh position={[0, 0.12, 0]} castShadow>
-                <cylinderGeometry args={[0.07, 0.05, 0.14, 16]} />
+              <mesh position={[0, SIZE.shelfProps.potH / 2, 0]} castShadow>
+                <cylinderGeometry args={[SIZE.shelfProps.potR, SIZE.shelfProps.potRBot, SIZE.shelfProps.potH, 16]} />
                 <meshStandardMaterial color={COLOR.pot} {...MAT.pot} />
               </mesh>
-              <mesh position={[0, 0.22, 0]} castShadow>
-                <sphereGeometry args={[0.08, 16, 16]} />
+              <mesh position={[0, SIZE.shelfProps.potH + SIZE.shelfProps.plantR, 0]} castShadow>
+                <sphereGeometry args={[SIZE.shelfProps.plantR, 16, 16]} />
                 <meshStandardMaterial color={COLOR.plant} {...MAT.plant} />
               </mesh>
             </HoverLift>
           </group>
           {/* 책 빨강 */}
-          <group position={[0.275, 0.14, 0.32]}>
+          <group position={[SIZE.shelf.xOff, SIZE.shelfProps.bookY, SIZE.shelfProps.bookRedZ]}>
             <HoverLift liftHeight={0.05}>
               <mesh rotation={[0, 0.1, 0]} castShadow>
-                <boxGeometry args={[0.06, 0.22, 0.14]} />
+                <boxGeometry args={[SIZE.shelfProps.bookW, SIZE.shelfProps.bookH, 0.112]} />
                 <meshStandardMaterial color={COLOR.bookRed} {...MAT.book} />
               </mesh>
             </HoverLift>
           </group>
           {/* 책 파랑 */}
-          <group position={[0.275, 0.14, 0.50]}>
+          <group position={[SIZE.shelf.xOff, SIZE.shelfProps.bookY, SIZE.shelfProps.bookBlueZ]}>
             <HoverLift liftHeight={0.05}>
               <mesh rotation={[0, -0.05, 0]} castShadow>
-                <boxGeometry args={[0.06, 0.22, 0.15]} />
+                <boxGeometry args={[SIZE.shelfProps.bookW, SIZE.shelfProps.bookH, 0.120]} />
                 <meshStandardMaterial color={COLOR.bookBlue} {...MAT.book} />
               </mesh>
             </HoverLift>

@@ -70,18 +70,27 @@ export function HoverLift({
   const currentY = useRef(0);
   const moving   = useRef(false);
 
+  const currentScale = useRef(1);
+
   useFrame(() => {
     if (!ref.current || !moving.current) return;
-    const targetY = (!disabled && hovered.current) ? liftHeight : 0;
-    const diff    = targetY - currentY.current;
-    if (Math.abs(diff) < DONE_THRESH) {
-      currentY.current       = targetY;
-      ref.current.position.y = targetY;
-      moving.current         = false;
+    const targetY     = (!disabled && hovered.current) ? liftHeight * 0.4 : 0;
+    const targetScale = (!disabled && hovered.current) ? 1.08 : 1.0;
+    const diffY       = targetY     - currentY.current;
+    const diffS       = targetScale - currentScale.current;
+
+    if (Math.abs(diffY) < DONE_THRESH && Math.abs(diffS) < DONE_THRESH) {
+      currentY.current        = targetY;
+      currentScale.current    = targetScale;
+      ref.current.position.y  = targetY;
+      ref.current.scale.setScalar(targetScale);
+      moving.current          = false;
       return;
     }
-    currentY.current       += diff * LERP_HOVER;
+    currentY.current       += diffY * LERP_HOVER;
+    currentScale.current   += diffS * LERP_HOVER;
     ref.current.position.y  = currentY.current;
+    ref.current.scale.setScalar(currentScale.current);
   });
 
   const handleOver = (e: any) => {

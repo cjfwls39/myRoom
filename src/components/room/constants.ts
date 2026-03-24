@@ -6,23 +6,23 @@
 
 // ── 방 구조 ──────────────────────────────────
 export const ROOM = {
-  size:           8,      // 가로·깊이
-  height:         7,      // 천장 높이
-  wallThickness:  0.3,
-  floorThickness: 0.5,
+  size:           6,      // 가로·깊이 (8 → 6)
+  height:         5.5,    // 천장 높이 (7 → 5.5)
+  wallThickness:  0.25,
+  floorThickness: 0.4,
 } as const;
 
 // 자주 쓰는 파생값 (함수보다 상수가 더 예측 가능)
-export const WALL_HALF  = ROOM.size / 2;                          //  4
-export const WALL_LEFT  = -WALL_HALF + ROOM.wallThickness / 2;   // -3.85
-export const WALL_BACK  = -WALL_HALF + ROOM.wallThickness / 2;   // -3.85
+export const WALL_HALF  = ROOM.size / 2;                          //  3
+export const WALL_LEFT  = -WALL_HALF + ROOM.wallThickness / 2;   // -2.875
+export const WALL_BACK  = -WALL_HALF + ROOM.wallThickness / 2;   // -2.875
 
 // ── 창문 ─────────────────────────────────────
 export const WIN = {
-  w:  2.5,
-  h:  3.5,
-  x:  1.5,   // 뒷벽 기준 X 오프셋
-  y:  3.5,   // 높이 중심
+  w:  1.8,   // 2.5 → 1.8
+  h:  2.6,   // 3.5 → 2.6
+  x:  0.9,   // 뒷벽 기준 X 오프셋
+  y:  2.8,   // 높이 중심
 } as const;
 
 // ── 색상 팔레트 — 미드톤 브라운/웜베이지 단색계열 ───

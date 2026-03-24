@@ -1,63 +1,48 @@
 "use client";
 
-/**
- * Nightstand.tsx — 침대 옆 협탁 + 스탠드 조명
- *
- * 협탁: 작은 서랍 2단
- * 스탠드: 얇은 기둥 + 갓
- * 낮/밤에 따라 스탠드 조명 on/off
- */
-
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { SceneItem } from "../AnimatedWrapper";
-import { COLOR, DELAY, WALL_HALF } from "../constants";
+import { COLOR, DELAY } from "../constants";
+import { POS, SIZE, ROT } from "../layout";
 import { MAT } from "../materials";
 import { useDayNight } from "@/components/canvas/DayNightContext";
 
-// ── 스탠드 조명 ───────────────────────────────
 function StandLight() {
-  const { mode }   = useDayNight();
-  const lightRef   = useRef<THREE.PointLight>(null!);
-  const shadeRef   = useRef<THREE.Mesh>(null!);
-  const curI       = useRef(0);
+  const { mode }    = useDayNight();
+  const lightRef    = useRef<THREE.PointLight>(null!);
+  const shadeRef    = useRef<THREE.Mesh>(null!);
+  const curI        = useRef(0);
   const curEmissive = useRef(0);
 
+  const { poleH, armH, shadeR, shadeH, baseR, baseH, poleR } = SIZE.standLight;
+
   useFrame((_, delta) => {
-    const isNight   = mode === "night";
-    const t         = 1 - Math.pow(0.001, delta * 3);
-    const targetI   = isNight ? 1.8 : 0;
-    const targetE   = isNight ? 0.6 : 0.05;
-
-    curI.current       += (targetI - curI.current)       * t;
-    curEmissive.current += (targetE - curEmissive.current) * t;
-
+    const isNight = mode === "night";
+    const t = 1 - Math.pow(0.001, delta * 3);
+    curI.current        += ((isNight ? 1.8 : 0)    - curI.current)        * t;
+    curEmissive.current += ((isNight ? 0.6 : 0.05) - curEmissive.current) * t;
     if (lightRef.current) lightRef.current.intensity = curI.current;
     if (shadeRef.current)
       (shadeRef.current.material as THREE.MeshStandardMaterial).emissiveIntensity = curEmissive.current;
   });
 
-  const POLE_H  = 0.55;
-  const ARM_H   = 0.12;
-
   return (
     <group>
       {/* 받침대 */}
-      <mesh position={[0, 0.015, 0]}>
-        <cylinderGeometry args={[0.07, 0.08, 0.03, 16]} />
+      <mesh position={[0, baseH / 2, 0]}>
+        <cylinderGeometry args={[baseR, baseR * 1.14, baseH, 16]} />
         <meshStandardMaterial color="#5A4030" {...MAT.woodDark} />
       </mesh>
-
       {/* 기둥 */}
-      <mesh position={[0, POLE_H / 2 + 0.03, 0]}>
-        <cylinderGeometry args={[0.012, 0.012, POLE_H, 8]} />
+      <mesh position={[0, poleH / 2 + baseH, 0]}>
+        <cylinderGeometry args={[poleR, poleR, poleH, 8]} />
         <meshStandardMaterial color="#8A7060" {...MAT.metalHandle} />
       </mesh>
-
       {/* 갓 */}
-      <mesh ref={shadeRef} position={[0, POLE_H + 0.03 + ARM_H, 0]}>
-        <coneGeometry args={[0.14, 0.18, 16, 1, true]} />
+      <mesh ref={shadeRef} position={[0, poleH + baseH + armH, 0]}>
+        <coneGeometry args={[shadeR, shadeH, 16, 1, true]} />
         <meshStandardMaterial
           color="#E8D8A0"
           emissive="#FFD080"
@@ -66,17 +51,15 @@ function StandLight() {
           side={THREE.DoubleSide}
         />
       </mesh>
-
-      {/* 갓 윗면 막기 */}
-      <mesh position={[0, POLE_H + 0.03 + ARM_H + 0.09, 0]}>
+      {/* 갓 윗면 */}
+      <mesh position={[0, poleH + baseH + armH + shadeH / 2, 0]}>
         <cylinderGeometry args={[0.02, 0.02, 0.01, 12]} />
         <meshStandardMaterial color="#8A7060" {...MAT.metalHandle} />
       </mesh>
-
       {/* 조명 */}
       <pointLight
         ref={lightRef}
-        position={[0, POLE_H + 0.03 + ARM_H, 0]}
+        position={[0, poleH + baseH + armH, 0]}
         intensity={0}
         distance={4.5}
         color="#FFD080"
@@ -86,35 +69,30 @@ function StandLight() {
   );
 }
 
-// ── 협탁 ─────────────────────────────────────
 function NightstandBody() {
-  const W = 0.55, H = 0.52, D = 0.45;
+  const { w, h, d } = SIZE.nightstand;
 
   return (
     <group>
       {/* 본체 */}
-      <mesh position={[0, H / 2, 0]} castShadow receiveShadow>
-        <boxGeometry args={[W, H, D]} />
+      <mesh position={[0, h / 2, 0]} castShadow receiveShadow>
+        <boxGeometry args={[w, h, d]} />
         <meshStandardMaterial color={COLOR.drawerBody} {...MAT.drawer} />
       </mesh>
-
-      {/* 상판 — 살짝 돌출 */}
-      <mesh position={[0, H + 0.01, 0]} castShadow>
-        <boxGeometry args={[W + 0.03, 0.03, D + 0.03]} />
+      {/* 상판 */}
+      <mesh position={[0, h + 0.008, 0]} castShadow>
+        <boxGeometry args={[w + 0.025, 0.024, d + 0.025]} />
         <meshStandardMaterial color={COLOR.woodMid} {...MAT.woodMid} />
       </mesh>
-
       {/* 서랍 2개 */}
-      {[0.18, 0.38].map((y, i) => (
+      {[h * 0.32, h * 0.68].map((y, i) => (
         <group key={i}>
-          {/* 서랍 구분선 */}
-          <mesh position={[W / 2 + 0.001, y, 0]}>
-            <boxGeometry args={[0.005, 0.02, D * 0.85]} />
+          <mesh position={[w / 2 + 0.001, y, 0]}>
+            <boxGeometry args={[0.004, 0.016, d * 0.85]} />
             <meshStandardMaterial color={COLOR.curtainFold} {...MAT.fabric} />
           </mesh>
-          {/* 손잡이 */}
-          <mesh position={[W / 2 + 0.025, y, 0]} castShadow>
-            <boxGeometry args={[0.04, 0.025, 0.008]} />
+          <mesh position={[w / 2 + 0.02, y, 0]} castShadow>
+            <boxGeometry args={[0.032, 0.020, 0.006]} />
             <meshStandardMaterial color={COLOR.drawerHandle} {...MAT.metalHandle} />
           </mesh>
         </group>
@@ -123,25 +101,21 @@ function NightstandBody() {
   );
 }
 
-// ── 메인 컴포넌트 ─────────────────────────────
 export default function Nightstand() {
-  // 침대: x=2.5, z=-WALL_HALF+2.5=-1.5, 침대 폭 2.5
-  // 협탁은 침대 카메라 쪽 측면(+z)에 배치
-  const H = 0.52;
+  const { h, standOffsetX, standOffsetY, standOffsetZ } = SIZE.nightstand;
 
   return (
     <SceneItem
       delay={DELAY.bed + 0.2}
-      position={[0.95, 0, -3.4]}
+      position={POS.nightstand}
       liftHeight={0.05}
-      hitbox={[0.6, 0.6, 0.5]}
-      hitboxPos={[0, 0.3, 0]}
-      rotation={[0, -Math.PI / 2, 0]}
+      hitbox={[SIZE.nightstand.w + 0.05, h + 0.05, SIZE.nightstand.d + 0.05]}
+      hitboxPos={[0, h / 2, 0]}
+      rotation={ROT.nightstand}
     >
       <group>
         <NightstandBody />
-        {/* 스탠드는 협탁 상판 위 오른쪽 */}
-        <group position={[0.1, H + 0.04, 0.05]}>
+        <group position={[standOffsetX, h + standOffsetY, standOffsetZ]}>
           <StandLight />
         </group>
       </group>

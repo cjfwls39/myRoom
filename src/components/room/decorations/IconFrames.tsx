@@ -3,13 +3,13 @@ import { MAT } from "../materials";
 
 import { HoverLift } from "../AnimatedWrapper";
 import { COLOR } from "../constants";
+import { SIZE } from "../layout";
 import { ICON_META, getIconTexture } from "./iconTextures";
 
 export default function IconFrames() {
-  const lean = 0.3;
-  const half = 0.23;
-  const px   = 0.08 + Math.sin(lean) * half;
-  const py   = 0.12 + Math.cos(lean) * half;
+  const { size, gap, lean, half } = SIZE.icon;
+  const px = 0.08 + Math.sin(lean) * half;
+  const py = 0.12 + Math.cos(lean) * half;
 
   return (
     <>
@@ -18,21 +18,21 @@ export default function IconFrames() {
         return (
           <group
             key={key}
-            position={[px, py, (i - 1) * 0.68]}
+            position={[px, py, (i - 1) * gap]}
             rotation={[0, Math.PI / 2, 0]}
           >
             <HoverLift liftHeight={0.05}>
               <group rotation={[-lean, 0, 0]}>
                 <mesh castShadow>
-                  <boxGeometry args={[0.46, 0.46, 0.022]} />
+                  <boxGeometry args={[size, size, 0.022]} />
                   <meshStandardMaterial color={COLOR.woodDark} {...MAT.woodDark} />
                 </mesh>
                 <mesh position={[0, 0, 0.012]}>
-                  <boxGeometry args={[0.40, 0.40, 0.006]} />
+                  <boxGeometry args={[size * 0.87, size * 0.87, 0.006]} />
                   <meshStandardMaterial color={bg} />
                 </mesh>
                 <mesh position={[0, 0, 0.016]}>
-                  <planeGeometry args={[0.38, 0.38]} />
+                  <planeGeometry args={[size * 0.83, size * 0.83]} />
                   <meshStandardMaterial map={tex} transparent />
                 </mesh>
               </group>

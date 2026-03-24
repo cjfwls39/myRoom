@@ -4,11 +4,12 @@ import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { useDayNight } from "@/components/canvas/DayNightContext";
+import { SPACE, LIGHTS } from "@/components/room/layout";
 
 // ── 별 — InstancedMesh로 구 형태 ─────────────
 function Stars() {
   const ref   = useRef<THREE.InstancedMesh>(null!);
-  const COUNT = 3000;
+  const COUNT = SPACE.starCount;
 
   // 각 별의 위치/크기 행렬 계산
   const dummy = useMemo(() => new THREE.Object3D(), []);
@@ -27,7 +28,7 @@ function Stars() {
     const mats = [];
     const d = new THREE.Object3D();
     for (let i = 0; i < COUNT; i++) {
-      const r     = 25 + Math.random() * 35;
+      const r     = SPACE.starMinDist + Math.random() * SPACE.starMaxDist;
       const theta = Math.random() * Math.PI * 2;
       const phi   = Math.acos(2 * Math.random() - 1);
       d.position.set(
@@ -35,7 +36,7 @@ function Stars() {
         r * Math.sin(phi) * Math.sin(theta),
         r * Math.cos(phi)
       );
-      const s = 0.02 + Math.random() * 0.12;
+      const s = SPACE.starMinSize + Math.random() * SPACE.starMaxSize;
       d.scale.setScalar(s);
       d.updateMatrix();
       mats.push(d.matrix.clone());
@@ -79,16 +80,15 @@ function Sun() {
       lightRef.current.intensity = curIntensity.current;
   });
 
-  // 태양 위치 — 창문 방향과 맞게 오른쪽 앞 위
-  const SUN_POS: [number, number, number] = [60, 45, 55];
+
 
   return (
-    <group position={SUN_POS}>
+    <group position={SPACE.sunPos}>
       {/* 태양 광원 */}
       <pointLight
         ref={lightRef}
         intensity={0}
-        distance={200}
+        distance={SPACE.sunDist}
         color="#FFF5D0"
         decay={0.5}
       />
@@ -102,7 +102,7 @@ function Sun() {
 function SpaceSkybox() {
   return (
     <mesh>
-      <sphereGeometry args={[120, 32, 32]} />
+      <sphereGeometry args={[SPACE.skyboxR, 32, 32]} />
       <meshBasicMaterial
         color="#000000"
         side={THREE.BackSide}
