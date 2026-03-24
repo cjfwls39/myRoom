@@ -88,7 +88,7 @@ export const POS = {
   sunCat:     [-0.30, 0,     1.50] as [number, number, number],
 
   // ── 러그 ──────────────────────────────────────────────
-  rug:        [ 1.80, 0.04,  1.80] as [number, number, number],
+  rug:        [ 2.20, 0.005,  2.10] as [number, number, number],
 
   // ── 시계 (BackWall 로컬) ──────────────────────────────
   clock:      [-1.60, 3.80,  -INNER + 0.02] as [number, number, number],
@@ -308,7 +308,7 @@ export const SIZE = {
   rug: {
     w:        1.20,
     h:        0.08,
-    d:        2.00,
+    d:        1.50,
     fontSize: 0.28,
   },
 
@@ -330,7 +330,7 @@ export const SIZE = {
   shelf: {
     w:      0.43,   // 선반판 가로 (X, 벽 두께방향)
     h:      0.05,   // 선반판 두께
-    d:      1.65,   // 선반판 깊이 (Z)
+    d:      1.95,   // 선반판 깊이 (Z)
     xOff:   0.215,  // 벽에서 선반 중심까지 X 오프셋
   },
 
