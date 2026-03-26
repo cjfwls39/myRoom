@@ -1,7 +1,7 @@
 "use client";
 
-import { Text } from "@react-three/drei";
-import AnimatedWrapper, { AppearGroup, HoverLift, SceneItem } from "../AnimatedWrapper";
+import { AppearGroup, HoverLift, SceneItem } from "../AnimatedWrapper";
+import CatFrames from "../decorations/CatFrames";
 import IconFrames from "../decorations/IconFrames";
 import WallClock from "../decorations/WallClock";
 import { COLOR, DELAY, ROOM, WALL_HALF, WIN } from "../constants";
@@ -143,42 +143,8 @@ function LeftWall() {
         </mesh>
       </AppearGroup>
 
-      {/* 게시판 — hover 있음 */}
-      <AnimatedWrapper
-        delay={DELAY.noticeboard}
-        position={[-WALL_HALF + wt + 0.008, 3.1, -0.4]}
-        liftHeight={0.06}
-        hitbox={[0.08, 1.35, 1.85]}
-        hitboxPos={[0.025, 0, 0]}
-      >
-        <group>
-          <mesh rotation={[0, Math.PI / 2, 0]} castShadow>
-            <boxGeometry args={[SIZE.noticeboard.w, SIZE.noticeboard.h, SIZE.noticeboard.d]} />
-            <meshStandardMaterial color={COLOR.noticeboard} {...MAT.woodDark} />
-          </mesh>
-          <mesh position={[0.024, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
-            <planeGeometry args={[SIZE.noticeboard.corkW, SIZE.noticeboard.corkH]} />
-            <meshStandardMaterial color={COLOR.corkboard} roughness={1} />
-          </mesh>
-          <mesh position={[0.028, 0.22, 0.32]} rotation={[0, Math.PI / 2, 0]}>
-            <planeGeometry args={[0.24, 0.32]} />
-            <meshStandardMaterial color="#FFF9C4" roughness={0.9} />
-          </mesh>
-          <group position={[0.032, 0, -0.32]} rotation={[0, Math.PI / 2, 0.06]}>
-            <mesh castShadow>
-              <boxGeometry args={[0.48, 0.64, 0.016]} />
-              <meshStandardMaterial color="#D7B588" roughness={0.8} />
-            </mesh>
-            <Text position={[0, 0, 0.011]} fontSize={0.056} color="#3A2208" anchorX="center" anchorY="middle">
-              RESUME
-            </Text>
-            <mesh position={[0, 0.28, 0.012]}>
-              <sphereGeometry args={[0.012, 16, 16]} />
-              <meshStandardMaterial color="#E91E63" roughness={0.4} metalness={0.3} />
-            </mesh>
-          </group>
-        </group>
-      </AnimatedWrapper>
+      {/* 고양이 액자 */}
+      <CatFrames />
 
       {/* 선반 세트 */}
       <group position={[-WALL_HALF + wt, 0, POS.shelfGroup]}>

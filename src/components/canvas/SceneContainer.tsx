@@ -173,10 +173,16 @@ export default function SceneContainer() {
         makeDefault
         enabled={introFinished}
         target={CAMERA.lookAt}
-        // ── 수정 포인트: 에러 나던 중복 선언을 제거하고 layout.ts의 설정을 한 번에 적용합니다. ──
-        {...ORBIT} 
+        minPolarAngle={ORBIT.minPolarAngle}
+        maxPolarAngle={ORBIT.maxPolarAngle}
+        minAzimuthAngle={ORBIT.minAzimuthAngle}
+        maxAzimuthAngle={ORBIT.maxAzimuthAngle}
+        minDistance={ORBIT.minDistance}
+        maxDistance={ORBIT.maxDistance}
+        zoomSpeed={1.5}
         mouseButtons={mouseButtons}
         onChange={(e) => {
+          // pan 범위 제한 — 벽 뒤쪽 시점 방지
           const ctrl = e?.target as any;
           if (!ctrl?.target) return;
           const t = ctrl.target as THREE.Vector3;

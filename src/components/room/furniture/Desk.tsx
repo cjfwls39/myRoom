@@ -1,10 +1,9 @@
 "use client";
 
 import { useRef } from "react";
-import { Text } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import AnimatedWrapper from "../AnimatedWrapper";
+import AnimatedWrapper, { SceneItem } from "../AnimatedWrapper";
 import { MAT } from "../materials";
 import { COLOR, DELAY } from "../constants";
 import { POS, SIZE } from "../layout";
@@ -340,31 +339,111 @@ function PcTower({ deskTopY, pcLightRef }: {
 function Monitor({ deskTopY }: { deskTopY: number }) {
   const m = SIZE.monitor;
   const screenCY = deskTopY + m.standH + m.riseY + m.frameH / 2;
+  const sZ = m.frameZ * 0.5 + 0.004;
+
+  const W = m.frameX;  // 1.44
+  const H = m.frameH;  // 0.63
+
+  // 별 위치 (화면 로컬 좌표 — 화면 중심 기준)
+  const stars = [
+    [-0.55,  0.22], [-0.38,  0.08], [-0.20,  0.25], [ 0.02,  0.18],
+    [ 0.18,  0.27], [ 0.35,  0.10], [ 0.52,  0.20], [ 0.60, -0.05],
+    [-0.62, -0.10], [-0.45, -0.20], [-0.28, -0.08], [-0.10, -0.22],
+    [ 0.12, -0.14], [ 0.28, -0.24], [ 0.48, -0.18], [ 0.64,  0.22],
+    [-0.50,  0.01], [ 0.40, -0.06], [-0.15,  0.12], [ 0.22,  0.03],
+    [-0.66,  0.15], [ 0.55, -0.25], [-0.32,  0.20], [ 0.08, -0.05],
+  ] as [number, number][];
+
   return (
     <group position={[m.offsetX, 0, m.offsetZ]}>
+      {/* 스탠드 받침 */}
       <mesh position={[0, deskTopY + 0.007, 0]} receiveShadow>
         <boxGeometry args={[m.frameX * 0.3, 0.014, m.baseZ]} />
         <meshStandardMaterial color="#222" />
       </mesh>
+      {/* 스탠드 기둥 */}
       <mesh position={[0, deskTopY + m.standH / 2, 0]}>
         <boxGeometry args={[m.standW, m.standH, m.standW]} />
         <meshStandardMaterial color="#1a1a1a" />
       </mesh>
+      {/* 모니터 프레임 */}
       <mesh position={[0, screenCY, 0]} castShadow>
         <boxGeometry args={[m.frameX + 0.05, m.frameH + 0.05, m.frameZ]} />
         <meshStandardMaterial color="#111" />
       </mesh>
-      <mesh position={[0, screenCY, m.frameZ * 0.5 + 0.003]}>
-        <boxGeometry args={[m.frameX, m.frameH, 0.007]} />
-        <meshStandardMaterial emissive={COLOR.screenBlue} emissiveIntensity={1.5} />
+
+      {/* ── 우주 배경 (검은 하늘) ── */}
+      <mesh position={[0, screenCY, sZ]}>
+        <boxGeometry args={[W, H, 0.001]} />
+        <meshStandardMaterial color="#03020f" emissive="#03020f" emissiveIntensity={0.3} />
       </mesh>
-      <Text
-        position={[0, screenCY + 0.06, m.frameZ * 0.5 + 0.01]}
-        fontSize={0.06}
-        color={COLOR.textBlue}
-      >
-        {"Portfolio"}
-      </Text>
+
+      {/* ── 성운 글로우 — 보라/파랑 겹쳐서 안개 느낌 ── */}
+      <mesh position={[-0.18, screenCY + 0.06, sZ + 0.001]}>
+        <planeGeometry args={[0.55, 0.32]} />
+        <meshStandardMaterial
+          color="#2a0840" emissive="#5010a0" emissiveIntensity={0.28}
+          transparent opacity={0.45} depthWrite={false}
+        />
+      </mesh>
+      <mesh position={[0.22, screenCY - 0.08, sZ + 0.001]}>
+        <planeGeometry args={[0.48, 0.26]} />
+        <meshStandardMaterial
+          color="#081428" emissive="#1040a0" emissiveIntensity={0.22}
+          transparent opacity={0.40} depthWrite={false}
+        />
+      </mesh>
+      <mesh position={[0.10, screenCY + 0.04, sZ + 0.0015]}>
+        <planeGeometry args={[0.30, 0.20]} />
+        <meshStandardMaterial
+          color="#140828" emissive="#8020c0" emissiveIntensity={0.20}
+          transparent opacity={0.30} depthWrite={false}
+        />
+      </mesh>
+
+      {/* ── 별들 ── */}
+      {stars.map(([sx, sy], i) => {
+        const size = i % 5 === 0 ? 0.008 : i % 3 === 0 ? 0.006 : 0.004;
+        const bright = i % 4 === 0 ? 4.0 : i % 3 === 0 ? 2.5 : 1.5;
+        const col = i % 5 === 0 ? "#ffe8c0" : i % 3 === 0 ? "#c0d8ff" : "#ffffff";
+        return (
+          <mesh key={i} position={[sx, screenCY + sy, sZ + 0.002]}>
+            <planeGeometry args={[size, size]} />
+            <meshStandardMaterial color={col} emissive={col} emissiveIntensity={bright} depthWrite={false} />
+          </mesh>
+        );
+      })}
+
+      {/* ── 행성 1 — 보라빛 가스 행성 (중앙 우상단) ── */}
+      <mesh position={[0.28, screenCY + 0.10, sZ + 0.002]}>
+        <planeGeometry args={[0.18, 0.18]} />
+        <meshStandardMaterial color="#4a2870" emissive="#7030c0" emissiveIntensity={0.55} roughness={0.6} transparent opacity={0.95} depthWrite={false} />
+      </mesh>
+      {/* 행성 1 고리 — 얇은 타원형 플레인 */}
+      <mesh position={[0.28, screenCY + 0.08, sZ + 0.0025]}>
+        <planeGeometry args={[0.34, 0.06]} />
+        <meshStandardMaterial color="#9060d0" emissive="#a070e0" emissiveIntensity={0.6} transparent opacity={0.45} depthWrite={false} />
+      </mesh>
+
+      {/* ── 행성 2 — 파란 얼음 행성 (좌하단) ── */}
+      <mesh position={[-0.38, screenCY - 0.14, sZ + 0.002]}>
+        <planeGeometry args={[0.12, 0.12]} />
+        <meshStandardMaterial color="#1a3a6a" emissive="#2060b0" emissiveIntensity={0.50} roughness={0.5} transparent opacity={0.95} depthWrite={false} />
+      </mesh>
+
+      {/* ── 행성 3 — 작은 붉은 행성 (우하단) ── */}
+      <mesh position={[0.52, screenCY - 0.18, sZ + 0.002]}>
+        <planeGeometry args={[0.07, 0.07]} />
+        <meshStandardMaterial color="#6a1a10" emissive="#c04030" emissiveIntensity={0.55} roughness={0.7} transparent opacity={0.95} depthWrite={false} />
+      </mesh>
+
+      {/* ── 화면 발광 — 보라빛이 책상 앞으로 ── */}
+      <pointLight
+        position={[0, screenCY, sZ + 0.18]}
+        color="#6030b0"
+        intensity={0.40}
+        distance={1.4}
+      />
     </group>
   );
 }
@@ -478,8 +557,13 @@ function DeskBody({ deskTopY }: { deskTopY: number }) {
 // ─────────────────────────────────────────────────────
 export default function Desk() {
   const pcLightRef = useRef<THREE.PointLight>(null!);
-  const { legH, topH } = SIZE.desk;
+  const { legH, topH, topW, topD } = SIZE.desk;
   const deskTopY = legH + topH;
+
+  // 히트박스: 책상 상판 + 의자까지 포함한 영역
+  const hitW = topW + 0.1;
+  const hitH = legH + topH + 0.1;
+  const hitD = topD + 1.4;
 
   useFrame((state) => {
     if (pcLightRef.current) {
@@ -489,11 +573,12 @@ export default function Desk() {
   });
 
   return (
-    <AnimatedWrapper
+    <SceneItem
       delay={DELAY.desk}
       position={POS.desk as [number, number, number]}
       liftHeight={0.05}
-      hover={false}
+      hitbox={[hitW, hitH, hitD] as [number, number, number]}
+      hitboxPos={[0, hitH / 2, 0.6] as [number, number, number]}
     >
       <group rotation={[0, Math.PI / 2, 0]}>
         <DeskBody deskTopY={deskTopY} />
@@ -503,6 +588,6 @@ export default function Desk() {
         <MouseArea deskTopY={deskTopY} />
         <Chair />
       </group>
-    </AnimatedWrapper>
+    </SceneItem>
   );
 }

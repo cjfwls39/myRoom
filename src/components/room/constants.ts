@@ -71,7 +71,7 @@ export const COLOR = {
   drawerHandle: "#6B4C2E",   // 손잡이 — 딥 월넛
   fridgeBody:   "#B8C4B0",   // 냉장고 — 세이지 그레이
   fridgeHandle: "#8A9882",   // 냉장고 손잡이 — 딥 세이지
-  noticeboard:  "#6B4C2E",   // 게시판 — 딥 월넛
+  catFrames:    "#6B4C2E",   // 액자 프레임 — 딥 월넛
   corkboard:    "#C4A882",   // 코르크 — 웜 샌드
 
   // ── PC (블루 RGB는 단색계열 내 유일한 포인트) ───
@@ -91,7 +91,7 @@ export const DELAY = {
   wallBack:     0.3,
   desk:         0.5,
   bed:          0.7,
-  noticeboard:  0.8,
+  catFrames:    0.8,
   shelfLower:   1.1,
   shelfUpper:   1.0,
   drawer:       1.1,

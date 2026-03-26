@@ -75,7 +75,7 @@ export function HoverLift({
   useFrame(() => {
     if (!ref.current || !moving.current) return;
     const targetY     = (!disabled && hovered.current) ? liftHeight * 0.4 : 0;
-    const targetScale = (!disabled && hovered.current) ? 1.08 : 1.0;
+    const targetScale = (!disabled && hovered.current) ? 1.03 : 1.0;
     const diffY       = targetY     - currentY.current;
     const diffS       = targetScale - currentScale.current;
 
