@@ -96,7 +96,12 @@ function ProjectsContent() {
               )}
             </div>
           </div>
-          <p style={styles.body}>{proj.description}</p>
+          <p style={styles.body}>{proj.description.map((line, i) => (
+            <span key={i}>
+              {line}
+              <br />
+            </span>
+          ))}</p>
           <div style={styles.tagRow}>
             {proj.skills.map((s, j) => (
               <span key={j} style={styles.tag}>{s}</span>

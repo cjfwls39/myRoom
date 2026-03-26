@@ -150,8 +150,8 @@ export function getIconTexture(key: IconKey): THREE.CanvasTexture {
   return textureCache.get(key)!;
 }
 
-export const ICON_META: { key: IconKey; bg: string }[] = [
-  { key: "discord", bg: "#5865F2" },
-  { key: "gmail",   bg: "#f8f8f8" },
-  { key: "github",  bg: "#181717" },
+export const ICON_META: { key: IconKey; bg: string; url: string }[] = [
+  { key: "discord", bg: "#5865F2", url: "" },  // 링크를 여기에 입력하세요
+  { key: "gmail",   bg: "#f8f8f8", url: "" },  // ex) "mailto:your@email.com"
+  { key: "github",  bg: "#181717", url: "https://github.com/cjfwls39" },  // ex) "https://github.com/yourname"
 ];

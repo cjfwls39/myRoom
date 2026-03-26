@@ -579,6 +579,7 @@ export default function Desk() {
       liftHeight={0.05}
       hitbox={[hitW, hitH, hitD] as [number, number, number]}
       hitboxPos={[0, hitH / 2, 0.6] as [number, number, number]}
+      onClick={() => (window as any).__openPortfolioModal?.("projects")}
     >
       <group rotation={[0, Math.PI / 2, 0]}>
         <DeskBody deskTopY={deskTopY} />
