@@ -3,7 +3,9 @@
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { DayNightProvider } from "@/components/canvas/DayNightContext";
+import { WeatherProvider } from "@/components/canvas/WeatherContext";
 import DayNightTransition from "@/components/canvas/DayNightButton";
+import WeatherButton from "@/components/canvas/WeatherButton";
 import PortfolioModal, { ModalType } from "@/components/ui/PortfolioModal";
 import NavigationGuide from "@/components/ui/NavigationGuide";
 
@@ -23,17 +25,20 @@ export default function Home() {
 
   return (
     <DayNightProvider>
+      <WeatherProvider>
       <OpenModalBridge onOpen={setModal} />
 
       <main style={{ width:"100vw", height:"100vh", overflow:"hidden", position:"relative", backgroundColor:"#000000" }}>
         <SceneContainer />
         <DayNightTransition />
         <NavigationGuide />
+        <WeatherButton />
       </main>
 
       {modal && (
         <PortfolioModal type={modal} onClose={() => setModal(null)} />
       )}
+      </WeatherProvider>
     </DayNightProvider>
   );
 }

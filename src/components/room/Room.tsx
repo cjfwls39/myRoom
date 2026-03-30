@@ -1,7 +1,5 @@
 "use client";
 
-import { Float } from "@react-three/drei";
-
 import Floor    from "./structure/Floor";
 import Walls    from "./structure/Walls";
 import Moulding from "./structure/Moulding";
@@ -17,21 +15,19 @@ import Trashcan       from "./furniture/Trashcan";
 
 export default function Room() {
   return (
-    <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.3} floatingRange={[0, 0.1]}>
-      <group>
-        <Floor />
-        <Walls />
-        <Moulding />
-        <Desk />
-        <Bed />
-        <Nightstand />
-        <Trashcan />
-        <DrawerChest />
-        <DeskLamp />
-        <Storage />
-        <SunbathingCat />
-        <CatBowls />
-      </group>
-    </Float>
+    <group>
+      <Floor />
+      <Walls />
+      <Moulding />
+      <Desk />
+      <Bed />
+      <Nightstand />
+      <Trashcan />
+      <DrawerChest />
+      <DeskLamp />
+      <Storage />
+      <SunbathingCat />
+      <CatBowls />
+    </group>
   );
 }

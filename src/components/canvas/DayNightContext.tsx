@@ -3,24 +3,23 @@
 import { createContext, useContext, useState, useCallback } from "react";
 
 // ── 낮/밤 조명 프리셋 ─────────────────────────────────────
+// DayNightContext.tsx 수정
 export const PRESETS = {
   day: {
-    // ambient 낮게 → 그림자 살아남, 재질 차이 드러남
-    // dir 강하게 + 따뜻한 색 → 햇살 느낌
-    ambientColor:     "#FFE8D0",
-    ambientIntensity: 0.10,
-    dirColor:         "#FFF0D0",
-    dirIntensity:     3.2,
+    ambientColor:     "#D0E0FF", // 차가운 겨울 조명
+    ambientIntensity: 0.5,       // 눈 반사를 고려해 상향
+    dirColor:         "#FFFAD0", 
+    dirIntensity:     2.5,
     pointColor:       "#FF9944",
     pointIntensity:   1.8,
   },
   night: {
-    ambientColor:     "#1A1525",
-    ambientIntensity: 0.10,    // 완전 암흑 방지
-    dirColor:         "#2A3060",
-    dirIntensity:     0.15,
+    ambientColor:     "#1A1A30", // 푸른빛이 도는 밤
+    ambientIntensity: 0.4,       // 0.1에서 0.4로 상향 (이게 핵심!)
+    dirColor:         "#405090", 
+    dirIntensity:     0.8,       // 달빛 강도 강화
     pointColor:       "#FFD580",
-    pointIntensity:   3.5,
+    pointIntensity:   4.5,       // 밤에 모닥불이 더 밝게 보이도록
   },
 } as const;
 
