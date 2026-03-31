@@ -9,7 +9,6 @@ import Bed            from "./furniture/Bed";
 import Storage, { DrawerChest } from "./furniture/Storage";
 import SunbathingCat  from "./furniture/SunbathingCat";
 import CatBowls       from "./furniture/CatBowls";
-import DeskLamp       from "./furniture/DeskLamp";
 import Nightstand     from "./furniture/Nightstand";
 import Trashcan       from "./furniture/Trashcan";
 
@@ -24,7 +23,6 @@ export default function Room() {
       <Nightstand />
       <Trashcan />
       <DrawerChest />
-      <DeskLamp />
       <Storage />
       <SunbathingCat />
       <CatBowls />

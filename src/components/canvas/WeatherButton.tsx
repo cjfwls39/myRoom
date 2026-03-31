@@ -11,10 +11,13 @@ export default function WeatherButton() {
 
   const isDark = mode === "night" || isStorm;
 
-  const baseColor   = isDark ? "rgba(180,210,255,0.15)" : "rgba(255,255,255,0.18)";
-  const borderColor = isDark ? "rgba(150,190,255,0.35)" : "rgba(200,230,255,0.45)";
-  const hoverBg     = isDark ? "rgba(180,210,255,0.25)" : "rgba(255,255,255,0.30)";
-  const textColor   = isDark ? "rgba(200,225,255,0.90)" : "rgba(60,80,120,0.90)";
+  const bg          = isDark ? "rgba(30,40,70,0.82)"  : "rgba(255,245,220,0.88)";
+  const hoverBg     = isDark ? "rgba(40,55,100,0.92)" : "rgba(255,252,235,0.95)";
+  const borderColor = isDark ? "rgba(120,160,255,0.5)" : "rgba(220,180,80,0.6)";
+  const textColor   = isDark ? "rgba(200,225,255,0.95)" : "rgba(80,55,20,0.95)";
+  const shadow      = isDark
+    ? "0 2px 12px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)"
+    : "0 2px 12px rgba(0,0,0,0.18), 0 1px 3px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.6)";
 
   return (
     <button
@@ -23,26 +26,27 @@ export default function WeatherButton() {
       onMouseLeave={() => setHovered(false)}
       style={{
         position:        "fixed",
-        top:             "1.4rem",    // 우측 상단으로 이동
-        right:           "1.4rem",    // 우측 상단으로 이동
+        top:             "1.4rem",
+        right:           "1.4rem",
         zIndex:          40,
         display:         "flex",
         alignItems:      "center",
         gap:             "0.55rem",
-        padding:         "0.55rem 1rem",
-        background:      hovered ? hoverBg : baseColor,
+        padding:         "0.6rem 1.1rem",
+        background:      hovered ? hoverBg : bg,
         border:          `1px solid ${borderColor}`,
         borderRadius:    "999px",
-        backdropFilter:  "blur(10px)",
-        WebkitBackdropFilter: "blur(10px)",
+        backdropFilter:  "blur(14px)",
+        WebkitBackdropFilter: "blur(14px)",
+        boxShadow:       shadow,
         cursor:          "pointer",
-        transition:      "all 0.3s ease",
-        transform:       hovered ? "translateY(2px)" : "translateY(0)", // 상단일 땐 아래로 살짝
+        transition:      "all 0.25s ease",
+        transform:       hovered ? "translateY(1px)" : "translateY(0)",
         userSelect:      "none",
       }}
     >
       <span style={{
-        fontSize:   "1.1rem",
+        fontSize:   "1.05rem",
         lineHeight: 1,
         transition: "transform 0.4s ease",
         display:    "inline-block",
@@ -52,20 +56,20 @@ export default function WeatherButton() {
       </span>
 
       <span style={{
-        fontSize:      "0.75rem",
-        fontWeight:    600,
+        fontSize:      "0.72rem",
+        fontWeight:    700,
         color:         textColor,
-        letterSpacing: "0.08em",
+        letterSpacing: "0.09em",
       }}>
         {isStorm ? "BLIZZARD" : "CLEAR"}
       </span>
 
       <span style={{
-        width:      "5px",
-        height:     "5px",
+        width:        "5px",
+        height:       "5px",
         borderRadius: "50%",
-        background: isStorm ? "#88aaff" : "#ffcc44",
-        boxShadow:  isStorm
+        background:   isStorm ? "#88aaff" : "#ffcc44",
+        boxShadow:    isStorm
           ? "0 0 8px rgba(120,160,255,1)"
           : "0 0 8px rgba(255,200,60,1)",
         transition: "all 0.5s ease",

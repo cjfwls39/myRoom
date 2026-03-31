@@ -4,6 +4,7 @@ import React, { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { useDayNight } from "../canvas/DayNightContext";
+import { PhaseGroup } from "../room/AnimatedWrapper";
 
 const SPARK_COUNT = 60;
 
@@ -15,7 +16,7 @@ interface SparkData {
   size: number;
 }
 
-export default function Bonfire({ position }: { position: [number, number, number] }) {
+export default function Bonfire({ position, baseDelay = 0 }: { position: [number, number, number]; baseDelay?: number }) {
   const lightRef = useRef<THREE.PointLight>(null!);
   const sparkRef = useRef<THREE.InstancedMesh>(null!);
   const fireRef  = useRef<THREE.Group>(null!);
@@ -90,37 +91,32 @@ export default function Bonfire({ position }: { position: [number, number, numbe
 
   return (
     <group position={position}>
-      {/* ── 장작 # 패턴 ─────────────────────────────────────
-          아래층: X축 방향으로 2개 (Z 방향으로 간격)
-          위층:   Z축 방향으로 2개 (X 방향으로 간격), 아래층 위에 얹힘  */}
+      {/* ── Phase 1: 장작 ── */}
+      <PhaseGroup delay={baseDelay}>
+        <mesh position={[0, 0.06,  0.18]} rotation={[0, 0, Math.PI / 2]} castShadow>
+          <cylinderGeometry args={[0.07, 0.09, 0.90, 6]} />
+          <meshStandardMaterial color="#2A1A0A" roughness={0.9} />
+        </mesh>
+        <mesh position={[0, 0.06, -0.18]} rotation={[0, 0, Math.PI / 2]} castShadow>
+          <cylinderGeometry args={[0.07, 0.09, 0.90, 6]} />
+          <meshStandardMaterial color="#2A1A0A" roughness={0.9} />
+        </mesh>
+        <mesh position={[ 0.18, 0.16, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+          <cylinderGeometry args={[0.07, 0.09, 0.90, 6]} />
+          <meshStandardMaterial color="#2A1A0A" roughness={0.9} />
+        </mesh>
+        <mesh position={[-0.18, 0.16, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+          <cylinderGeometry args={[0.07, 0.09, 0.90, 6]} />
+          <meshStandardMaterial color="#2A1A0A" roughness={0.9} />
+        </mesh>
+        <mesh rotation-x={-Math.PI / 2} position={[0, 0.01, 0]}>
+          <circleGeometry args={[0.22, 6]} />
+          <meshBasicMaterial color="#FF2200" transparent opacity={0.5} depthWrite={false} />
+        </mesh>
+      </PhaseGroup>
 
-      {/* 아래층 — X축으로 뉘인 장작 2개 */}
-      <mesh position={[0, 0.06,  0.18]} rotation={[0, 0, Math.PI / 2]} castShadow>
-        <cylinderGeometry args={[0.07, 0.09, 0.90, 6]} />
-        <meshStandardMaterial color="#2A1A0A" roughness={0.9} />
-      </mesh>
-      <mesh position={[0, 0.06, -0.18]} rotation={[0, 0, Math.PI / 2]} castShadow>
-        <cylinderGeometry args={[0.07, 0.09, 0.90, 6]} />
-        <meshStandardMaterial color="#2A1A0A" roughness={0.9} />
-      </mesh>
-
-      {/* 위층 — Z축으로 뉘인 장작 2개 */}
-      <mesh position={[ 0.18, 0.16, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
-        <cylinderGeometry args={[0.07, 0.09, 0.90, 6]} />
-        <meshStandardMaterial color="#2A1A0A" roughness={0.9} />
-      </mesh>
-      <mesh position={[-0.18, 0.16, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
-        <cylinderGeometry args={[0.07, 0.09, 0.90, 6]} />
-        <meshStandardMaterial color="#2A1A0A" roughness={0.9} />
-      </mesh>
-
-      {/* 잔불 글로우 */}
-      <mesh rotation-x={-Math.PI / 2} position={[0, 0.01, 0]}>
-        <circleGeometry args={[0.22, 6]} />
-        <meshBasicMaterial color="#FF2200" transparent opacity={0.5} depthWrite={false} />
-      </mesh>
-
-      {/* ── 불꽃 ─────────────────────────────────────────────── */}
+      {/* ── Phase 2: 불꽃 ── */}
+      <PhaseGroup delay={baseDelay + 0.3}>
       <group ref={fireRef} position={[0, 0.18, 0]}>
         {/* 베이스 */}
         <mesh position={[0, 0.10, 0]}>
@@ -176,15 +172,16 @@ export default function Bonfire({ position }: { position: [number, number, numbe
           <meshBasicMaterial color="#FFE566" />
         </mesh>
       </group>
+      </PhaseGroup>
 
-      {/* 불빛 */}
-      <pointLight ref={lightRef} color="#FF5500" distance={15} decay={2} />
-
-      {/* 스파크 */}
-      <instancedMesh ref={sparkRef} args={[null as any, null as any, SPARK_COUNT]}>
-        <octahedronGeometry args={[1, 0]} />
-        <meshBasicMaterial color="#FFB700" />
-      </instancedMesh>
+      {/* ── Phase 3: 스파크 + 불빛 ── */}
+      <PhaseGroup delay={baseDelay + 0.55}>
+        <pointLight ref={lightRef} color="#FF5500" distance={15} decay={2} />
+        <instancedMesh ref={sparkRef} args={[null as any, null as any, SPARK_COUNT]}>
+          <octahedronGeometry args={[1, 0]} />
+          <meshBasicMaterial color="#FFB700" />
+        </instancedMesh>
+      </PhaseGroup>
     </group>
   );
 }

@@ -314,19 +314,13 @@ function PcTower({ deskTopY, pcLightRef }: {
         <meshStandardMaterial color={rgbColor} emissive={rgbColor} emissiveIntensity={2.5} />
       </mesh>
 
-      {/* ── 내부 조명 ── */}
+      {/* ── 내부 조명 (2개 → 1개로 통합) ── */}
       <pointLight
         ref={pcLightRef}
-        position={[mbX + 0.06, hY * 0.6, 0]}
+        position={[mbX + 0.06, hY * 0.45, 0]}
         color={rgbColor}
-        intensity={1.6}
-        distance={1.8}
-      />
-      <pointLight
-        position={[mbX + 0.05, hY * 0.25, 0]}
-        color={rgbColor2}
-        intensity={0.7}
-        distance={1.2}
+        intensity={2.0}
+        distance={2.0}
       />
 
     </group>

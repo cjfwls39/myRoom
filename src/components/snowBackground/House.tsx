@@ -3,6 +3,7 @@
 import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { PhaseGroup } from "../room/AnimatedWrapper";
 
 // ── 굴뚝 연기 ──────────────────────────────────────────────
 function ChimneySmoke({ offset }: { offset: [number, number, number] }) {
@@ -44,23 +45,23 @@ function ChimneySmoke({ offset }: { offset: [number, number, number] }) {
 
 // ── 집 ────────────────────────────────────────────────────
 export interface HouseProps {
-  position:  [number, number, number];
-  rotationY: number;
-  wallColor: string;
-  roofColor: string;
-  scale?:    number;
+  position:   [number, number, number];
+  rotationY:  number;
+  wallColor:  string;
+  roofColor:  string;
+  scale?:     number;
+  baseDelay?: number;
 }
 
 export default function House({
-  position, rotationY, wallColor, roofColor, scale = 1,
+  position, rotationY, wallColor, roofColor, scale = 1, baseDelay = 0,
 }: HouseProps) {
-  const W  = 1.6  * scale; // 너비
-  const D  = 1.4  * scale; // 깊이
-  const BH = 1.0  * scale; // 몸체 높이
-  const RH = 0.65 * scale; // 지붕 높이
-  const CS = 0.13 * scale; // 굴뚝 단면
+  const W  = 1.6  * scale;
+  const D  = 1.4  * scale;
+  const BH = 1.0  * scale;
+  const RH = 0.65 * scale;
+  const CS = 0.13 * scale;
 
-  // 박공 지붕 — 삼각형을 Z 방향으로 압출한 프리즘
   const roofGeo = useMemo(() => {
     const shape = new THREE.Shape();
     shape.moveTo(-W / 2, 0);
@@ -72,7 +73,6 @@ export default function House({
     return geo;
   }, [W, D, RH]);
 
-  // 지붕 눈 — 살짝 큰 흰 프리즘 (지붕 뒤에 렌더링)
   const snowRoofGeo = useMemo(() => {
     const ov = 0.07 * scale;
     const shape = new THREE.Shape();
@@ -85,69 +85,65 @@ export default function House({
     return geo;
   }, [W, D, RH, scale]);
 
-  // 굴뚝 꼭대기 (local 좌표) — 연기 생성 기준점
-  const chX        = W * 0.22;
-  const chTopY     = BH + RH * 0.40 + CS * 1.55;
+  const chX    = W * 0.22;
+  const chTopY = BH + RH * 0.59 + CS * 1.45;
   const smokeOff: [number, number, number] = [chX, chTopY, 0];
   const ov = 0.07 * scale;
 
   return (
     <group position={position} rotation={[0, rotationY, 0]}>
 
-      {/* 몸체 */}
-      <mesh position={[0, BH / 2, 0]} castShadow receiveShadow>
-        <boxGeometry args={[W, BH, D]} />
-        <meshStandardMaterial color={wallColor} roughness={0.88} />
-      </mesh>
+      {/* ── Phase 1: 몸체 ── */}
+      <PhaseGroup delay={baseDelay}>
+        <mesh position={[0, BH / 2, 0]} castShadow receiveShadow>
+          <boxGeometry args={[W, BH, D]} />
+          <meshStandardMaterial color={wallColor} roughness={0.88} />
+        </mesh>
+      </PhaseGroup>
 
-      {/* 지붕 눈 (먼저 그려서 지붕 색으로 덮임 → 가장자리만 흰 테두리로 보임) */}
-      <mesh position={[0, BH - 0.01 * scale, -(D / 2 + ov)]} geometry={snowRoofGeo}>
-        <meshStandardMaterial color="#EDF3FF" roughness={1} side={THREE.DoubleSide} />
-      </mesh>
+      {/* ── Phase 2: 지붕 ── */}
+      <PhaseGroup delay={baseDelay + 0.2}>
+        <mesh position={[0, BH - 0.01 * scale, -(D / 2 + ov)]} geometry={snowRoofGeo}>
+          <meshStandardMaterial color="#EDF3FF" roughness={1} side={THREE.DoubleSide} />
+        </mesh>
+        <mesh position={[0, BH, -D / 2]} geometry={roofGeo} castShadow>
+          <meshStandardMaterial color={roofColor} roughness={0.85} side={THREE.DoubleSide} />
+        </mesh>
+      </PhaseGroup>
 
-      {/* 박공 지붕 */}
-      <mesh position={[0, BH, -D / 2]} geometry={roofGeo} castShadow>
-        <meshStandardMaterial color={roofColor} roughness={0.85} side={THREE.DoubleSide} />
-      </mesh>
+      {/* ── Phase 3: 굴뚝 ── */}
+      <PhaseGroup delay={baseDelay + 0.35}>
+        <mesh position={[chX, BH + RH * 0.60, 0]} castShadow>
+          <boxGeometry args={[CS, CS * 2.8, CS]} />
+          <meshStandardMaterial color="#4A4438" roughness={1} />
+        </mesh>
+        <mesh position={[chX, BH + RH * 0.59 + CS * 1.3, 0]}>
+          <boxGeometry args={[CS * 1.5, CS * 0.15, CS * 1.5]} />
+          <meshStandardMaterial color="#2E2C28" roughness={1} />
+        </mesh>
+      </PhaseGroup>
 
-      {/* 굴뚝 몸체 */}
-      <mesh position={[chX, BH + RH * 0.60, 0]} castShadow>
-        <boxGeometry args={[CS, CS * 2.8, CS]} />
-        <meshStandardMaterial color="#4A4438" roughness={1} />
-      </mesh>
-      {/* 굴뚝 캡 */}
-      <mesh position={[chX, BH + RH * 0.59 + CS * 1.3, 0]}>
-        <boxGeometry args={[CS * 1.5, CS * 0.15, CS * 1.5]} />
-        <meshStandardMaterial color="#2E2C28" roughness={1} />
-      </mesh>
+      {/* ── Phase 4: 창문 + 문 + 라이트 ── */}
+      <PhaseGroup delay={baseDelay + 0.48}>
+        <mesh position={[-W * 0.24, BH * 0.62, D / 2 + 0.002]}>
+          <planeGeometry args={[0.21 * scale, 0.19 * scale]} />
+          <meshStandardMaterial color="#FFE088" emissive="#FFAA22" emissiveIntensity={2.5} />
+        </mesh>
+        <mesh position={[ W * 0.24, BH * 0.62, D / 2 + 0.002]}>
+          <planeGeometry args={[0.21 * scale, 0.19 * scale]} />
+          <meshStandardMaterial color="#FFE088" emissive="#FFAA22" emissiveIntensity={2.5} />
+        </mesh>
+        <mesh position={[0, BH * 0.24, D / 2 + 0.002]}>
+          <planeGeometry args={[0.24 * scale, 0.44 * scale]} />
+          <meshStandardMaterial color="#3E2410" roughness={0.9} />
+        </mesh>
+      </PhaseGroup>
 
-      {/* 앞면 창문 ×2 (따뜻한 발광) */}
-      <mesh position={[-W * 0.24, BH * 0.62, D / 2 + 0.002]}>
-        <planeGeometry args={[0.21 * scale, 0.19 * scale]} />
-        <meshStandardMaterial color="#FFE088" emissive="#FFAA22" emissiveIntensity={2.5} />
-      </mesh>
-      <mesh position={[ W * 0.24, BH * 0.62, D / 2 + 0.002]}>
-        <planeGeometry args={[0.21 * scale, 0.19 * scale]} />
-        <meshStandardMaterial color="#FFE088" emissive="#FFAA22" emissiveIntensity={2.5} />
-      </mesh>
+      {/* ── Phase 5: 굴뚝 연기 ── */}
+      <PhaseGroup delay={baseDelay + 0.62}>
+        <ChimneySmoke offset={smokeOff} />
+      </PhaseGroup>
 
-      {/* 문 */}
-      <mesh position={[0, BH * 0.24, D / 2 + 0.002]}>
-        <planeGeometry args={[0.24 * scale, 0.44 * scale]} />
-        <meshStandardMaterial color="#3E2410" roughness={0.9} />
-      </mesh>
-
-      {/* 실내 따뜻한 포인트 라이트 */}
-      <pointLight
-        position={[0, BH * 0.5, D * 0.35]}
-        color="#FFBB44"
-        intensity={1.2 * scale}
-        distance={5 * scale}
-        decay={2}
-      />
-
-      {/* 굴뚝 연기 */}
-      <ChimneySmoke offset={smokeOff} />
     </group>
   );
 }

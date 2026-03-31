@@ -1,14 +1,16 @@
 "use client";
 
 import React from "react";
+import { PhaseGroup } from "../room/AnimatedWrapper";
 
-export default function Woodpile({ position }: { position: [number, number, number] }) {
+export default function Woodpile({ position, baseDelay = 0 }: { position: [number, number, number]; baseDelay?: number }) {
   const logMat = <meshStandardMaterial color="#2A1A0A" roughness={0.9} />;
   const endMat = <meshStandardMaterial color="#3D2510" roughness={0.85} />;
 
   return (
     <group position={position}>
-      {/* ── 아래층 — Z축 방향 장작 3개 ── */}
+      {/* ── Phase 1: 아래층 ── */}
+      <PhaseGroup delay={baseDelay}>
       {[-0.28, 0, 0.28].map((x, i) => (
         <group key={i} position={[x, 0.07, 0]} rotation={[Math.PI / 2, 0, 0]}>
           <mesh castShadow>
@@ -27,7 +29,10 @@ export default function Woodpile({ position }: { position: [number, number, numb
         </group>
       ))}
 
-      {/* ── 중간층 — X축 방향 장작 2개 (엇갈리게) ── */}
+      </PhaseGroup>
+
+      {/* ── Phase 2: 중간층 ── */}
+      <PhaseGroup delay={baseDelay + 0.2}>
       {[-0.14, 0.14].map((z, i) => (
         <group key={i} position={[0, 0.22, z]} rotation={[0, 0, Math.PI / 2]}>
           <mesh castShadow>
@@ -45,7 +50,10 @@ export default function Woodpile({ position }: { position: [number, number, numb
         </group>
       ))}
 
-      {/* ── 위층 — Z축 방향 장작 2개 ── */}
+      </PhaseGroup>
+
+      {/* ── Phase 3: 위층 + 눈 ── */}
+      <PhaseGroup delay={baseDelay + 0.38}>
       {[-0.14, 0.14].map((x, i) => (
         <group key={i} position={[x, 0.36, 0]} rotation={[Math.PI / 2, 0, 0]}>
           <mesh castShadow>
@@ -68,6 +76,7 @@ export default function Woodpile({ position }: { position: [number, number, numb
         <circleGeometry args={[0.52, 8]} />
         <meshStandardMaterial color="#EEF4FF" roughness={1} />
       </mesh>
+      </PhaseGroup>
     </group>
   );
 }

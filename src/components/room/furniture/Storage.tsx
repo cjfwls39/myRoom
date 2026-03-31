@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useMemo } from "react";
+import { useRef, useState, useMemo, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { AppearGroup } from "../AnimatedWrapper";
@@ -30,31 +30,52 @@ function createBeastTexture(): THREE.CanvasTexture {
   return tex;
 }
 
-function BeastCan({ position }: { position: [number,number,number] }) {
-  const texture = useMemo(() => createBeastTexture(), []);
-  const R = SIZE.fridge.canR, H_CAN = SIZE.fridge.canH;
-  const R2 = SIZE.fridge.canR, H2 = SIZE.fridge.canH;
-  return (
-    <group position={position}>
-      <mesh>
-        <cylinderGeometry args={[R2,R2,H2,16]} />
-        <meshStandardMaterial map={texture} metalness={0.5} roughness={0.4} />
-      </mesh>
-      {[1,-1].map((s,i)=>(
-        <mesh key={i} position={[0, s*(H2/2+0.004), 0]}>
-          <cylinderGeometry args={[R2*0.86,R2,0.008,16]} />
-          <meshStandardMaterial color="#CCCCCC" {...MAT.metalBright} />
-        </mesh>
-      ))}
-    </group>
-  );
-}
 
 function MiniFridge() {
   const [open, setOpen] = useState(false);
   const doorRef     = useRef<THREE.Group>(null!);
   const doorAngle   = useRef(0);
   const pointerDown = useRef<{x:number;y:number}|null>(null);
+
+  // 캔 instancedMesh refs
+  const canBodyRef = useRef<THREE.InstancedMesh>(null!);
+  const canCapRef  = useRef<THREE.InstancedMesh>(null!);
+  const beastTex   = useMemo(() => createBeastTexture(), []);
+
+  const R = SIZE.fridge.canR, H_CAN = SIZE.fridge.canH;
+  const { shelfYs, canZs, canXs } = SIZE.fridge;
+  const CAN_COUNT = shelfYs.length * canZs.length * canXs.length; // 18
+
+  // 캔 인스턴스 행렬 1회 설정
+  useEffect(() => {
+    if (!canBodyRef.current || !canCapRef.current) return;
+    const dummy = new THREE.Object3D();
+    let bi = 0, ci = 0;
+    shelfYs.forEach(sy => {
+      canZs.forEach(cz => {
+        canXs.forEach(cx => {
+          const y = sy + 0.12;
+          dummy.position.set(cx, y, cz);
+          dummy.scale.set(1, 1, 1);
+          dummy.rotation.set(0, 0, 0);
+          dummy.updateMatrix();
+          canBodyRef.current.setMatrixAt(bi++, dummy.matrix);
+
+          // 윗면 캡
+          dummy.position.set(cx, y + H_CAN / 2 + 0.004, cz);
+          dummy.updateMatrix();
+          canCapRef.current.setMatrixAt(ci++, dummy.matrix);
+          // 아랫면 캡
+          dummy.position.set(cx, y - H_CAN / 2 - 0.004, cz);
+          dummy.updateMatrix();
+          canCapRef.current.setMatrixAt(ci++, dummy.matrix);
+        });
+      });
+    });
+    canBodyRef.current.instanceMatrix.needsUpdate = true;
+    canCapRef.current.instanceMatrix.needsUpdate  = true;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useFrame((_,delta) => {
     if (!doorRef.current) return;
@@ -80,10 +101,6 @@ function MiniFridge() {
   // 냉장고는 왼쪽 벽(-X)에 붙어있고 카메라는 +X,+Z에서 봄
   // 문은 +X 면에 있어야 카메라에서 보임
   // 힌지: -Z 끝, 열리면 Z축 기준 +X 방향으로 스윙
-
-  const shelfYs = SIZE.fridge.shelfYs;
-  const canZs   = SIZE.fridge.canZs;
-  const canXs   = SIZE.fridge.canXs;
 
   return (
     <AnimatedWrapper
@@ -157,20 +174,19 @@ function MiniFridge() {
           </mesh>
         ))}
 
-        {/* 캔 — Z: 가로 4열, X: 깊이 3줄 */}
-        {shelfYs.map((sy,si)=>
-          canZs.map((cz,zi)=>
-            canXs.map((cx,xi)=>(
-              <BeastCan
-                key={`${si}-${zi}-${xi}`}
-                position={[cx, sy + 0.12, cz]}
-              />
-            ))
-          )
-        )}
-
         {/* 내부 조명 */}
         <pointLight position={[0, H*0.88, 0]} intensity={0.8} distance={1.8} color="#CCFFCC" />
+
+        {/* 캔 — instancedMesh (2 draw call) */}
+        <instancedMesh ref={canBodyRef} args={[undefined, undefined, CAN_COUNT]}>
+          <cylinderGeometry args={[R, R, H_CAN, 16]} />
+          <meshStandardMaterial map={beastTex} metalness={0.5} roughness={0.4} />
+        </instancedMesh>
+        <instancedMesh ref={canCapRef} args={[undefined, undefined, CAN_COUNT * 2]}>
+          <cylinderGeometry args={[R * 0.86, R, 0.008, 16]} />
+          <meshStandardMaterial color="#CCCCCC" {...MAT.metalBright} />
+        </instancedMesh>
+
 
         {/* 문 — 힌지: -Z 끝, 열리면 +X(카메라)방향으로 스윙 */}
         <group ref={doorRef} position={[W/2, H/2, -D/2]}>

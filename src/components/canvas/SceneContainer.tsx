@@ -6,6 +6,7 @@ import { PerspectiveCamera, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import SnowBackground from "@/components/snowBackground/SnowBackground";
 import Room from "@/components/room/Room";
+import { PhaseGroup } from "@/components/room/AnimatedWrapper";
 import { CAMERA, ORBIT } from "@/components/room/layout";
 import { CANVAS_PERF } from "@/components/room/Performance";
 
@@ -13,29 +14,17 @@ import { CANVAS_PERF } from "@/components/room/Performance";
 const CAMERA_START  = new THREE.Vector3(...CAMERA.start);
 const CAMERA_TARGET = new THREE.Vector3(...CAMERA.target);
 const LOOK_AT       = new THREE.Vector3(...CAMERA.lookAt);
-const ARRIVE_DIST   = 0.1;
 
 function CameraManager({ isFinished, setIsFinished }: {
   isFinished: boolean;
   setIsFinished: (v: boolean) => void;
 }) {
-  const fovRef = useRef(CAMERA.fovStart);
-
   useFrame(({ camera }) => {
     if (isFinished) return;
-    const dist = camera.position.distanceTo(CAMERA_TARGET);
-
-    camera.position.lerp(CAMERA_TARGET, 0.03);
+    camera.position.lerp(CAMERA_TARGET, 0.04);
     camera.lookAt(LOOK_AT);
-
-    fovRef.current += (CAMERA.fov - fovRef.current) * 0.04;
-    (camera as THREE.PerspectiveCamera).fov = fovRef.current;
-    (camera as THREE.PerspectiveCamera).updateProjectionMatrix();
-
-    if (dist < ARRIVE_DIST) {
+    if (camera.position.distanceTo(CAMERA_TARGET) < 0.5) {
       camera.position.copy(CAMERA_TARGET);
-      (camera as THREE.PerspectiveCamera).fov = CAMERA.fov;
-      (camera as THREE.PerspectiveCamera).updateProjectionMatrix();
       setIsFinished(true);
     }
   });
@@ -44,7 +33,7 @@ function CameraManager({ isFinished, setIsFinished }: {
     <PerspectiveCamera
       makeDefault
       position={CAMERA_START.toArray() as [number, number, number]}
-      fov={CAMERA.fovStart}
+      fov={CAMERA.fov}
       far={10000}
     />
   );
@@ -67,7 +56,6 @@ export default function SceneContainer() {
         gl.toneMapping        = THREE.ACESFilmicToneMapping;
         gl.toneMappingExposure = 1.1;
         gl.outputColorSpace   = THREE.SRGBColorSpace;
-        // scene.background는 SkyBackground에서 관리
       }}
     >
       <CameraManager isFinished={introFinished} setIsFinished={setIntroFinished} />
@@ -75,10 +63,12 @@ export default function SceneContainer() {
       <Suspense fallback={null}>
         <SnowBackground />
 
-        {/* 방: 구슬 내부 지면(Y=0.81)에 바닥 맞춤 */}
-        <group position={[0, 0.90, 0]} scale={0.55}>
-          <Room />
-        </group>
+        {/* 방: 배경 재구성 후 마지막에 등장 */}
+        <PhaseGroup delay={3.2}>
+          <group position={[0, 0.90, 0]} scale={0.55}>
+            <Room />
+          </group>
+        </PhaseGroup>
       </Suspense>
 
       <OrbitControls

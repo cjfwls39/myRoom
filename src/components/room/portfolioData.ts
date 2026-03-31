@@ -1,66 +1,125 @@
 /**
  * portfolioData.ts — 포트폴리오 콘텐츠 데이터
- *
- * 여기만 수정하면 팝업 내용이 바뀝니다.
+ * 여기만 수정하면 모달 내용이 전부 바뀝니다.
+ * 
+ * 줄바꿈은 텍스트 중간 \n 로 가능
+ * 
+ * 이미지는 고해상도로 정해진 경로에 정확히 저장할것
+ * 프로필 사진 = /public/images/
+ * 프로젝트 사진 = /public/images/projects/
  */
 
-// ── About Me ──────────────────────────────────
+// ── About Me ──────────────────────────────────────────────────
 export const ABOUT_DATA = {
-  name:     "정철진",
-  role:     "항상 흥미로운 일거리를 찾아다니는 개발자",
-  intro:    "안녕하세요! 아이디어를 실천으로 만드는 주니어 개발자 정철진 입니다!",
-  bio: [
-    "저는 웹이 정말 좋습니다.",
-    "기기와 인터넷만 있으면 누구든 제 작업물에 즉시 접근할 수 있기 때문입니다.",
-    "또한 작업물을 게시하고 공유하는 것도 아주 간단합니다",
-    "시간이 남으면 항상 흥미로운 아이디어를 찾아 나섭니다. 그 아이디어를 기반으로",
-    "웹 프로젝트를 많이 작업하고 있습니다. 아이디어와 디자인, 개발이 만나는 지점에서",
-    "큰 흥미를 느끼고 새로운 것을 배우고 주저없이 적용해 보는것을 좋아합니다.",
-  ],
+  name:   "정철진",
+  role:   "empty",
+  tagline: "아이디어를 실천으로 만드는 주니어 개발자",
+  avatar: "/images/profile.jpg",   // /public/images/ 에 사진 넣으면 표시됩니다. 없으면 이니셜 표시
+
+  intro:
+    "안녕하세요! 웹이 가진 접근성과 가능성에 매력을 느껴 개발을 시작했습니다.\n " +
+    "아이디어와 디자인, 개발이 만나는 지점에서 큰 흥미를 느끼며\n" +
+    "새로운 것을 빠르게 배우고 주저없이 적용해보는 것을 좋아합니다.",
+
+  experience: [
+    // 신입일때는 어차피 없을꺼라 비워도도 상관 없을거지만
+    // 나중에 이 사이트를 이직할때도 쓰겠다 하면 이부분 사용 고려
+    // {
+    //   role:    "Frontend Developer",
+    //   company: "회사명",
+    //   period:  "2024.03 — 현재",
+    //   desc:    "담당한 주요 업무나 성과를 간략히 작성하세요.",
+    // },
+  ] as { role: string; company: string; period: string; desc: string }[],
+
+  education: [
+    {
+      school: "안산대학교",
+      major:  "컴퓨터정보학과",
+      period: "2021.03 — 2026.02",
+    },
+    {
+      school: "경기모바일과학고등학교",
+      major:  "모바일컨텐츠과",
+      period: "2017.03 — 2020.01",
+    }
+  ] as { school: string; major: string; period: string }[],
+
   ps: [
-    "자유롭게 탐험해 보세요! 즐거운 시간 되시길 바랍니다!",
-    "PROJECT 탭에서는 제 멋진 결과물을 보실 수 있습니다!",
-    "방문해 주셔서 감사합니다!"
+    "자유롭게 탐험해 보세요! 즐거운 시간 되시길 바랍니다 :)",
+    "PROJECT 탭에서 제 작품들을 확인하실 수 있습니다!",
+    "방문해 주셔서 감사드립니다!"
   ],
 };
 
-// ── Skills ────────────────────────────────────
+// ── Skills ────────────────────────────────────────────────────
+// level: 1~5 (1=입문, 3=실무, 5=숙련)
 export const SKILLS_DATA = [
   {
     category: "Frontend",
-    items: ["JavaScript","React", "Next.js", "TypeScript", "Three.js"],
+    items: [
+      { name: "JavaScript", level: 4 },
+      { name: "TypeScript", level: 3 },
+      { name: "React",      level: 4 },
+      { name: "Next.js",    level: 3 },
+      { name: "Three.js",   level: 2 },
+      { name: "HTML/CSS",   level: 4 },
+    ],
   },
   {
     category: "Backend",
-    items: ["Node.js", "Java"],
+    items: [
+      { name: "Node.js", level: 3 },
+      { name: "Java",    level: 2 },
+    ],
   },
   {
-    category: "DevOps",
-    items: ["AWS","Render","Git",],
+    category: "DevOps & Tools",
+    items: [
+      { name: "Git",    level: 4 },
+      { name: "AWS",    level: 2 },
+      { name: "Render", level: 3 },
+    ],
   },
 ];
 
-// ── Projects ──────────────────────────────────
+// ── Projects ──────────────────────────────────────────────────
 export const PROJECTS_DATA = [
   {
-    title:       "ShieldBox.io: Security Simulator",
-    description: [
-    //3줄가면 너무 길어지니 딱 2줄까지만 입력하는게 가장 적당
-    "비밀번호를 왜 무작위로 길게 만들어야 안전한걸까?",
-    "추상적인 암호학 개념을 체험할 수 있는 인터랙티브 보안 교육 플랫폼입니다."
-    ],  
-    skills:      ["React", "Tailwind CSS","Node.js","Socket.io","Render"],
-    link:        "https://shieldbox-io.onrender.com/",  // 호스팅 링크, 없으면 "" 로 비워두세요
-    github:      "https://github.com/cjfwls39/ShieldBox.io.git",  // 깃허브 링크, 없으면 "" 로 비워두세요
-  }
+    title:    "ShieldBox.io: Security Simulator",
+    period:   "2026",
+    status:   "completed" as "completed" | "inprogress",
+
+    // /public/images/projects/ 에 이미지를 넣으세요
+    // 여러 장 넣으면 캐러셀로 표시됩니다. 없으면 placeholder 표시
+    images: [
+      "/images/projects/shieldBox.io_1.png",
+      "/images/projects/shieldBox.io_2.png",
+    ] as string[],
+
+    summary:
+      "왜 비밀번호를 무작위로 길게 만들면 안전하다! 대체 왜그럴까요?\n" +
+      "추상적인 암호학 개념을 직접 체험할 수 있는 인터랙티브 보안 교육 플랫폼입니다.",
+
+    features: [
+      "다양한 공격 기법 실시간 시뮬레이션",
+      "4개 섹션으로 구성된 인터랙티브 학습 콘텐츠",
+      "비밀번호 강도 시각화 및 해시 함수 체험",
+    ],
+
+    skills:  ["React", "Tailwind CSS", "Node.js", "Socket.io", "Render"],
+    link:    "https://shieldbox-io.onrender.com/",
+    github:  "https://github.com/cjfwls39/ShieldBox.io.git",
+  },
+  // 프로젝트 추가 시 위 형식을 복사해서 사용하세요
 ];
 
-// ── Contact ───────────────────────────────────
+// ── Contact ───────────────────────────────────────────────────
 export const CONTACT_DATA = {
   email:    "cjfwls39@naver.com",
-  phone:    "010-8464-6539",  // 없으면 "" 로 비워두세요
+  phone:    "010-8464-6539",
   github:   "https://github.com/cjfwls39",
-  linkedin: "",               // 없으면 "" 로 비워두세요
-  twitter:  "",               // 없으면 "" 로 비워두세요
+  linkedin: "",
+  twitter:  "",
   other:    [] as { label: string; url: string }[],
 };

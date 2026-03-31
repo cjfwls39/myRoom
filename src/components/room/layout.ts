@@ -25,11 +25,10 @@ const INNER = 2.85; // 벽 두께(0.25) 제외 실내 한계선
 //  카메라
 // =======================================================
 export const CAMERA = {
-  start:    [0, 6, 220]  as [number, number, number],  // 워프 시작 (멀리)
-  target:   [10, 11, 10] as [number, number, number],  // 워프 도착
-  lookAt:   [0, 1.8, 0]  as [number, number, number],  // 바라보는 중심
-  fov:      34,                                         // 도착 FOV
-  fovStart: 90,                                        // 시작 FOV (워프 강조)
+  start:  [18, 18, 24] as [number, number, number],  // 줌인 시작 (살짝 멀리)
+  target: [10, 11, 10] as [number, number, number],  // 도착 위치
+  lookAt: [0, 1.8, 0]  as [number, number, number],  // 바라보는 중심
+  fov:    34,                                         // FOV (고정)
 } as const;
 
 // =======================================================
