@@ -98,7 +98,7 @@ export const PROJECTS_DATA = [
     ] as string[],
 
     summary:
-      "왜 비밀번호를 무작위로 길게 만들면 안전하다! 대체 왜그럴까요?\n" +
+      "비밀번호를 무작위로 길게 만들면 안전하다! 대체 왜그럴까요?\n" +
       "추상적인 암호학 개념을 직접 체험할 수 있는 인터랙티브 보안 교육 플랫폼입니다.",
 
     features: [
@@ -111,7 +111,33 @@ export const PROJECTS_DATA = [
     link:    "https://shieldbox-io.onrender.com/",
     github:  "https://github.com/cjfwls39/ShieldBox.io.git",
   },
-  // 프로젝트 추가 시 위 형식을 복사해서 사용하세요
+  {
+    title:    "Cleanse",
+    period:   "2026",
+    status:   "completed" as "completed" | "inprogress",
+
+    // /public/images/projects/ 에 이미지를 넣으세요
+    // 여러 장 넣으면 캐러셀로 표시됩니다. 없으면 placeholder 표시
+    images: [
+      "/images/projects/cleanse_1.png",
+      "/images/projects/cleanse_2.png",
+    ] as string[],
+
+    summary:
+      "프로젝트를 오래 운영하다 보면 어느새 쌓이는 것들이 많습니다.\n" +
+      "일일이 찾는건 힘들고 귀찮고, AI는 비싸고 그래서 만들었습니다.",
+
+    features: [
+      "미사용 파일 탐지 / 데드 Export 탐지 / 순환 참조 탐지",
+      "미사용 패키지 탐지 / 반복 값 정리 / AI 판정",
+      "Cleanse는 TypeScript / JavaScript 프로젝트의 코드 품질을 자동으로 점검하고,",
+      "안전하게 정리할 수 있도록 돕는 데스크톱 애플리케이션입니다."
+    ],
+
+    skills:  ["Electron","React","TypeScript","Tailwind CSS","Zustand","ts-morph","Ollama (Qwen3:4b)"],
+    link:    "https://github.com/cjfwls39/cleanse/releases/tag/v1.0.0",
+    github:  "https://github.com/cjfwls39/cleanse.git",
+  },
 ];
 
 // ── Contact ───────────────────────────────────────────────────

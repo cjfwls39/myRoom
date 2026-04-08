@@ -1,0 +1,4 @@
+09:56:44.066 [INFO ] [entryPoints     ] 프레임워크 감지 완료  {"framework":"nextjs-app","projectRoot":"D:\\myRoom"}
+09:56:44.066 [INFO ] [entryPoints     ] 진입점 탐지 시작  {"framework":"nextjs-app","projectRoot":"D:\\myRoom"}
+09:56:44.070 [DEBUG] [entryPoints     ] Next.js App Router 라우트 파일 발견  {"count":3}
+09:56:44.074 [INFO ] [entryPoints     ] 진입점 탐지 완료  {"total":3,"entries":["app\\layout.tsx","app\\page.tsx","src\\app\\page.tsx"]}

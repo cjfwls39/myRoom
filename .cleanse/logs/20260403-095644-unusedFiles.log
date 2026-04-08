@@ -1,0 +1,385 @@
+09:56:44.036 [INFO ] [unusedFiles     ] 분석 시작  {"projectRoot":"D:\\myRoom"}
+09:56:44.047 [INFO ] [unusedFiles     ] 파일 수집 완료  {"totalFound":49,"sourceFiles":45,"hiddenTraversalNodes":4}
+09:56:44.048 [DEBUG] [unusedFiles     ] 소스 파일 목록  {"files":["app\\globals.css","app\\layout.tsx","app\\page.tsx","src\\app\\page.tsx","src\\components\\room\\AnimatedWrapper.tsx","src\\components\\room\\constants.ts","src\\components\\room\\layout.ts","src\\components\\room\\materials.ts","src\\components\\room\\Performance.ts","src\\components\\room\\portfolioData.ts","src\\components\\room\\Room.tsx","src\\components\\canvas\\DayNightButton.tsx","src\\components\\canvas\\DayNightContext.tsx","src\\components\\canvas\\SceneContainer.tsx","src\\components\\canvas\\WeatherButton.tsx","src\\components\\canvas\\WeatherContext.tsx","src\\components\\snowBackground\\Bonfire.tsx","src\\components\\snowBackground\\ChristmasTree.tsx","src\\components\\snowBackground\\ForestLights.tsx","src\\components\\snowBackground\\FrozenPond.tsx","src\\components\\snowBackground\\GlassSphere.tsx","src\\components\\snowBackground\\House.tsx","src\\components\\snowBackground\\LampPost.tsx","src\\components\\snowBackground\\Pedestal.tsx","src\\components\\snowBackground\\Snow.tsx","src\\components\\snowBackground\\SnowBackground.tsx","src\\components\\snowBackground\\Snowman.tsx","src\\components\\snowBackground\\Woodpile.tsx","src\\components\\ui\\NavigationGuide.tsx","src\\components\\ui\\PortfolioModal.tsx","src\\components\\room\\decorations\\CatFrames.tsx","src\\components\\room\\decorations\\catTextures.ts","src\\components\\room\\decorations\\IconFrames.tsx","src\\components\\room\\decorations\\iconTextures.ts","src\\components\\room\\decorations\\WallClock.tsx","src\\components\\room\\furniture\\Bed.tsx","src\\components\\room\\furniture\\CatBowls.tsx","src\\components\\room\\furniture\\Desk.tsx","src\\components\\room\\furniture\\Nightstand.tsx","src\\components\\room\\furniture\\Storage.tsx","src\\components\\room\\furniture\\SunbathingCat.tsx","src\\components\\room\\furniture\\Trashcan.tsx","src\\components\\room\\structure\\Floor.tsx","src\\components\\room\\structure\\Moulding.tsx","src\\components\\room\\structure\\Walls.tsx"]}
+09:56:44.048 [DEBUG] [unusedFiles     ] 숨김 순회 노드 목록 (설정·테스트 파일)  {"files":["eslint.config.mjs","next-env.d.ts","next.config.ts","postcss.config.mjs"]}
+09:56:44.074 [INFO ] [unusedFiles     ] 진입점 탐지 완료  {"count":3,"entryPoints":["app\\layout.tsx","app\\page.tsx","src\\app\\page.tsx"]}
+09:56:44.110 [DEBUG] [unusedFiles     ] tsconfig 로드 완료  {"paths":{"@/*":["./src/*"]},"baseUrl":"(없음)"}
+09:56:44.110 [DEBUG] [unusedFiles     ] Vite aliases 없음
+09:56:44.111 [INFO ] [unusedFiles     ] BFS 도달성 분석 시작  {"queueInitialSize":7}
+09:56:44.111 [DEBUG] [unusedFiles     ] BFS 방문  {"step":1,"file":"app\\layout.tsx","queueRemaining":6}
+09:56:44.139 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"app\\layout.tsx","importCount":3}
+09:56:44.252 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"next","from":"app\\layout.tsx"}
+09:56:44.262 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"next/font/google","from":"app\\layout.tsx"}
+09:56:44.262 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./globals.css","from":"app\\layout.tsx","resolved":"app\\globals.css","hasNamespace":false,"hasDefault":false,"isSideEffect":true,"names":[]}
+09:56:44.262 [DEBUG] [unusedFiles     ] namespace/side-effect import → 전체 export safe  {"file":"app\\globals.css"}
+09:56:44.262 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"app\\globals.css"}
+09:56:44.262 [DEBUG] [unusedFiles     ] BFS 방문  {"step":2,"file":"app\\page.tsx","queueRemaining":6}
+09:56:44.284 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"app\\page.tsx","importCount":9}
+09:56:44.299 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"next/dynamic","from":"app\\page.tsx"}
+09:56:44.349 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"app\\page.tsx"}
+09:56:44.350 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/canvas/DayNightContext","from":"app\\page.tsx","resolved":"src\\components\\canvas\\DayNightContext.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["DayNightProvider"]}
+09:56:44.350 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\canvas\\DayNightContext.tsx"}
+09:56:44.351 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/canvas/WeatherContext","from":"app\\page.tsx","resolved":"src\\components\\canvas\\WeatherContext.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["WeatherProvider"]}
+09:56:44.351 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\canvas\\WeatherContext.tsx"}
+09:56:44.355 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/canvas/DayNightButton","from":"app\\page.tsx","resolved":"src\\components\\canvas\\DayNightButton.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:44.355 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\canvas\\DayNightButton.tsx"}
+09:56:44.359 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/canvas/WeatherButton","from":"app\\page.tsx","resolved":"src\\components\\canvas\\WeatherButton.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:44.359 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\canvas\\WeatherButton.tsx"}
+09:56:44.362 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/ui/PortfolioModal","from":"app\\page.tsx","resolved":"src\\components\\ui\\PortfolioModal.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":["ModalType"]}
+09:56:44.362 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\ui\\PortfolioModal.tsx"}
+09:56:44.362 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/ui/NavigationGuide","from":"app\\page.tsx","resolved":"src\\components\\ui\\NavigationGuide.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:44.362 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\ui\\NavigationGuide.tsx"}
+09:56:44.369 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/canvas/SceneContainer","from":"app\\page.tsx","resolved":"src\\components\\canvas\\SceneContainer.tsx","hasNamespace":true,"hasDefault":false,"isSideEffect":false,"names":[]}
+09:56:44.369 [DEBUG] [unusedFiles     ] namespace/side-effect import → 전체 export safe  {"file":"src\\components\\canvas\\SceneContainer.tsx"}
+09:56:44.369 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\canvas\\SceneContainer.tsx"}
+09:56:44.369 [DEBUG] [unusedFiles     ] BFS 방문  {"step":3,"file":"src\\app\\page.tsx","queueRemaining":12}
+09:56:44.396 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\app\\page.tsx","importCount":9}
+09:56:44.400 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"next/dynamic","from":"src\\app\\page.tsx"}
+09:56:44.401 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\app\\page.tsx"}
+09:56:44.401 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/canvas/DayNightContext","from":"src\\app\\page.tsx","resolved":"src\\components\\canvas\\DayNightContext.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["DayNightProvider"]}
+09:56:44.401 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\canvas\\DayNightContext.tsx"}
+09:56:44.401 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/canvas/WeatherContext","from":"src\\app\\page.tsx","resolved":"src\\components\\canvas\\WeatherContext.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["WeatherProvider"]}
+09:56:44.401 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\canvas\\WeatherContext.tsx"}
+09:56:44.402 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/canvas/DayNightButton","from":"src\\app\\page.tsx","resolved":"src\\components\\canvas\\DayNightButton.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:44.402 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\canvas\\DayNightButton.tsx"}
+09:56:44.402 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/canvas/WeatherButton","from":"src\\app\\page.tsx","resolved":"src\\components\\canvas\\WeatherButton.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:44.402 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\canvas\\WeatherButton.tsx"}
+09:56:44.402 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/ui/PortfolioModal","from":"src\\app\\page.tsx","resolved":"src\\components\\ui\\PortfolioModal.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":["ModalType"]}
+09:56:44.402 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\ui\\PortfolioModal.tsx"}
+09:56:44.402 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/ui/NavigationGuide","from":"src\\app\\page.tsx","resolved":"src\\components\\ui\\NavigationGuide.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:44.402 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\ui\\NavigationGuide.tsx"}
+09:56:44.402 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/canvas/SceneContainer","from":"src\\app\\page.tsx","resolved":"src\\components\\canvas\\SceneContainer.tsx","hasNamespace":true,"hasDefault":false,"isSideEffect":false,"names":[]}
+09:56:44.402 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\canvas\\SceneContainer.tsx"}
+09:56:44.402 [DEBUG] [unusedFiles     ] BFS 방문  {"step":4,"file":"eslint.config.mjs","queueRemaining":18}
+09:56:44.416 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"eslint.config.mjs","importCount":3}
+09:56:44.484 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"eslint/config","from":"eslint.config.mjs"}
+09:56:44.537 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"eslint-config-next/core-web-vitals","from":"eslint.config.mjs"}
+09:56:44.541 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"eslint-config-next/typescript","from":"eslint.config.mjs"}
+09:56:44.541 [DEBUG] [unusedFiles     ] BFS 방문  {"step":5,"file":"next-env.d.ts","queueRemaining":17}
+09:56:44.554 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"next-env.d.ts","importCount":1}
+09:56:44.555 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./.next/dev/types/routes.d.ts","from":"next-env.d.ts","resolved":".next\\dev\\types\\routes.d.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":true,"names":[]}
+09:56:44.555 [DEBUG] [unusedFiles     ] namespace/side-effect import → 전체 export safe  {"file":".next\\dev\\types\\routes.d.ts"}
+09:56:44.555 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":".next\\dev\\types\\routes.d.ts"}
+09:56:44.555 [DEBUG] [unusedFiles     ] BFS 방문  {"step":6,"file":"next.config.ts","queueRemaining":17}
+09:56:44.561 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"next.config.ts","importCount":1}
+09:56:44.562 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"next","from":"next.config.ts"}
+09:56:44.562 [DEBUG] [unusedFiles     ] BFS 방문  {"step":7,"file":"postcss.config.mjs","queueRemaining":16}
+09:56:44.570 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"postcss.config.mjs","importCount":0}
+09:56:44.571 [DEBUG] [unusedFiles     ] BFS 방문  {"step":8,"file":"app\\globals.css","queueRemaining":15}
+09:56:44.571 [DEBUG] [unusedFiles     ] 에셋 파일 - 리프 노드로 처리 (파싱 스킵)  {"file":"app\\globals.css"}
+09:56:44.571 [DEBUG] [unusedFiles     ] BFS 방문  {"step":9,"file":"src\\components\\canvas\\DayNightContext.tsx","queueRemaining":14}
+09:56:44.596 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\canvas\\DayNightContext.tsx","importCount":1}
+09:56:44.599 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\canvas\\DayNightContext.tsx"}
+09:56:44.599 [DEBUG] [unusedFiles     ] BFS 방문  {"step":10,"file":"src\\components\\canvas\\WeatherContext.tsx","queueRemaining":13}
+09:56:44.614 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\canvas\\WeatherContext.tsx","importCount":1}
+09:56:44.616 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\canvas\\WeatherContext.tsx"}
+09:56:44.616 [DEBUG] [unusedFiles     ] BFS 방문  {"step":11,"file":"src\\components\\canvas\\DayNightButton.tsx","queueRemaining":12}
+09:56:44.635 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\canvas\\DayNightButton.tsx","importCount":3}
+09:56:44.637 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./DayNightContext","from":"src\\components\\canvas\\DayNightButton.tsx","resolved":"src\\components\\canvas\\DayNightContext.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["useDayNight"]}
+09:56:44.638 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./WeatherContext","from":"src\\components\\canvas\\DayNightButton.tsx","resolved":"src\\components\\canvas\\WeatherContext.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["useWeather"]}
+09:56:44.638 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\canvas\\DayNightButton.tsx"}
+09:56:44.638 [DEBUG] [unusedFiles     ] BFS 방문  {"step":12,"file":"src\\components\\canvas\\WeatherButton.tsx","queueRemaining":11}
+09:56:44.661 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\canvas\\WeatherButton.tsx","importCount":3}
+09:56:44.664 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./WeatherContext","from":"src\\components\\canvas\\WeatherButton.tsx","resolved":"src\\components\\canvas\\WeatherContext.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["useWeather"]}
+09:56:44.664 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./DayNightContext","from":"src\\components\\canvas\\WeatherButton.tsx","resolved":"src\\components\\canvas\\DayNightContext.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["useDayNight"]}
+09:56:44.665 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\canvas\\WeatherButton.tsx"}
+09:56:44.665 [DEBUG] [unusedFiles     ] BFS 방문  {"step":13,"file":"src\\components\\ui\\PortfolioModal.tsx","queueRemaining":10}
+09:56:44.716 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\ui\\PortfolioModal.tsx","importCount":2}
+09:56:44.731 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\ui\\PortfolioModal.tsx"}
+09:56:44.732 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/room/portfolioData","from":"src\\components\\ui\\PortfolioModal.tsx","resolved":"src\\components\\room\\portfolioData.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["ABOUT_DATA","SKILLS_DATA","PROJECTS_DATA","CONTACT_DATA"]}
+09:56:44.732 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\portfolioData.ts"}
+09:56:44.732 [DEBUG] [unusedFiles     ] BFS 방문  {"step":14,"file":"src\\components\\ui\\NavigationGuide.tsx","queueRemaining":10}
+09:56:44.757 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\ui\\NavigationGuide.tsx","importCount":1}
+09:56:44.765 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\ui\\NavigationGuide.tsx"}
+09:56:44.765 [DEBUG] [unusedFiles     ] BFS 방문  {"step":15,"file":"src\\components\\canvas\\SceneContainer.tsx","queueRemaining":9}
+09:56:44.790 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\canvas\\SceneContainer.tsx","importCount":9}
+09:56:44.794 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\canvas\\SceneContainer.tsx"}
+09:56:44.849 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"@react-three/fiber","from":"src\\components\\canvas\\SceneContainer.tsx"}
+09:56:44.885 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"@react-three/drei","from":"src\\components\\canvas\\SceneContainer.tsx"}
+09:56:44.960 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"three","from":"src\\components\\canvas\\SceneContainer.tsx"}
+09:56:44.961 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/snowBackground/SnowBackground","from":"src\\components\\canvas\\SceneContainer.tsx","resolved":"src\\components\\snowBackground\\SnowBackground.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:44.961 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\snowBackground\\SnowBackground.tsx"}
+09:56:44.961 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/room/Room","from":"src\\components\\canvas\\SceneContainer.tsx","resolved":"src\\components\\room\\Room.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:44.961 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\Room.tsx"}
+09:56:44.962 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/room/AnimatedWrapper","from":"src\\components\\canvas\\SceneContainer.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["PhaseGroup"]}
+09:56:44.962 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\AnimatedWrapper.tsx"}
+09:56:44.963 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/room/layout","from":"src\\components\\canvas\\SceneContainer.tsx","resolved":"src\\components\\room\\layout.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["CAMERA","ORBIT"]}
+09:56:44.963 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\layout.ts"}
+09:56:44.963 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/room/Performance","from":"src\\components\\canvas\\SceneContainer.tsx","resolved":"src\\components\\room\\Performance.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["CANVAS_PERF"]}
+09:56:44.963 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\Performance.ts"}
+09:56:44.963 [DEBUG] [unusedFiles     ] BFS 방문  {"step":16,"file":".next\\dev\\types\\routes.d.ts","queueRemaining":6}
+09:56:44.984 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":".next\\dev\\types\\routes.d.ts","importCount":0}
+09:56:44.985 [DEBUG] [unusedFiles     ] BFS 방문  {"step":17,"file":"src\\components\\room\\portfolioData.ts","queueRemaining":5}
+09:56:45.003 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\portfolioData.ts","importCount":0}
+09:56:45.005 [DEBUG] [unusedFiles     ] BFS 방문  {"step":18,"file":"src\\components\\snowBackground\\SnowBackground.tsx","queueRemaining":4}
+09:56:45.039 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\snowBackground\\SnowBackground.tsx","importCount":16}
+09:56:45.055 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\snowBackground\\SnowBackground.tsx"}
+09:56:45.057 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"@react-three/fiber","from":"src\\components\\snowBackground\\SnowBackground.tsx"}
+09:56:45.058 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"@react-three/drei","from":"src\\components\\snowBackground\\SnowBackground.tsx"}
+09:56:45.060 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"three","from":"src\\components\\snowBackground\\SnowBackground.tsx"}
+09:56:45.070 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./Snow","from":"src\\components\\snowBackground\\SnowBackground.tsx","resolved":"src\\components\\snowBackground\\Snow.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.070 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\snowBackground\\Snow.tsx"}
+09:56:45.071 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./Bonfire","from":"src\\components\\snowBackground\\SnowBackground.tsx","resolved":"src\\components\\snowBackground\\Bonfire.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.071 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\snowBackground\\Bonfire.tsx"}
+09:56:45.071 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./Woodpile","from":"src\\components\\snowBackground\\SnowBackground.tsx","resolved":"src\\components\\snowBackground\\Woodpile.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.071 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\snowBackground\\Woodpile.tsx"}
+09:56:45.072 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./Snowman","from":"src\\components\\snowBackground\\SnowBackground.tsx","resolved":"src\\components\\snowBackground\\Snowman.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.072 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\snowBackground\\Snowman.tsx"}
+09:56:45.072 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./FrozenPond","from":"src\\components\\snowBackground\\SnowBackground.tsx","resolved":"src\\components\\snowBackground\\FrozenPond.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.072 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\snowBackground\\FrozenPond.tsx"}
+09:56:45.075 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./Pedestal","from":"src\\components\\snowBackground\\SnowBackground.tsx","resolved":"src\\components\\snowBackground\\Pedestal.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.075 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\snowBackground\\Pedestal.tsx"}
+09:56:45.076 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./House","from":"src\\components\\snowBackground\\SnowBackground.tsx","resolved":"src\\components\\snowBackground\\House.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.076 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\snowBackground\\House.tsx"}
+09:56:45.077 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./LampPost","from":"src\\components\\snowBackground\\SnowBackground.tsx","resolved":"src\\components\\snowBackground\\LampPost.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.077 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\snowBackground\\LampPost.tsx"}
+09:56:45.077 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./ChristmasTree","from":"src\\components\\snowBackground\\SnowBackground.tsx","resolved":"src\\components\\snowBackground\\ChristmasTree.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.077 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\snowBackground\\ChristmasTree.tsx"}
+09:56:45.077 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../room/AnimatedWrapper","from":"src\\components\\snowBackground\\SnowBackground.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["PhaseGroup"]}
+09:56:45.077 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\AnimatedWrapper.tsx"}
+09:56:45.077 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../canvas/DayNightContext","from":"src\\components\\snowBackground\\SnowBackground.tsx","resolved":"src\\components\\canvas\\DayNightContext.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["useDayNight","PRESETS"]}
+09:56:45.077 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../canvas/WeatherContext","from":"src\\components\\snowBackground\\SnowBackground.tsx","resolved":"src\\components\\canvas\\WeatherContext.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["useWeather"]}
+09:56:45.077 [DEBUG] [unusedFiles     ] BFS 방문  {"step":19,"file":"src\\components\\room\\Room.tsx","queueRemaining":13}
+09:56:45.086 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\Room.tsx","importCount":10}
+09:56:45.087 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./structure/Floor","from":"src\\components\\room\\Room.tsx","resolved":"src\\components\\room\\structure\\Floor.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.087 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\structure\\Floor.tsx"}
+09:56:45.087 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./structure/Walls","from":"src\\components\\room\\Room.tsx","resolved":"src\\components\\room\\structure\\Walls.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.087 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\structure\\Walls.tsx"}
+09:56:45.087 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./structure/Moulding","from":"src\\components\\room\\Room.tsx","resolved":"src\\components\\room\\structure\\Moulding.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.087 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\structure\\Moulding.tsx"}
+09:56:45.088 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./furniture/Desk","from":"src\\components\\room\\Room.tsx","resolved":"src\\components\\room\\furniture\\Desk.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.088 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\furniture\\Desk.tsx"}
+09:56:45.088 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./furniture/Bed","from":"src\\components\\room\\Room.tsx","resolved":"src\\components\\room\\furniture\\Bed.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.088 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\furniture\\Bed.tsx"}
+09:56:45.089 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./furniture/Storage","from":"src\\components\\room\\Room.tsx","resolved":"src\\components\\room\\furniture\\Storage.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":["DrawerChest"]}
+09:56:45.089 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\furniture\\Storage.tsx"}
+09:56:45.099 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./furniture/SunbathingCat","from":"src\\components\\room\\Room.tsx","resolved":"src\\components\\room\\furniture\\SunbathingCat.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.099 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\furniture\\SunbathingCat.tsx"}
+09:56:45.099 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./furniture/CatBowls","from":"src\\components\\room\\Room.tsx","resolved":"src\\components\\room\\furniture\\CatBowls.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.099 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\furniture\\CatBowls.tsx"}
+09:56:45.100 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./furniture/Nightstand","from":"src\\components\\room\\Room.tsx","resolved":"src\\components\\room\\furniture\\Nightstand.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.100 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\furniture\\Nightstand.tsx"}
+09:56:45.100 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./furniture/Trashcan","from":"src\\components\\room\\Room.tsx","resolved":"src\\components\\room\\furniture\\Trashcan.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.100 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\furniture\\Trashcan.tsx"}
+09:56:45.100 [DEBUG] [unusedFiles     ] BFS 방문  {"step":20,"file":"src\\components\\room\\AnimatedWrapper.tsx","queueRemaining":22}
+09:56:45.130 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\AnimatedWrapper.tsx","importCount":3}
+09:56:45.135 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\room\\AnimatedWrapper.tsx"}
+09:56:45.136 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"@react-three/fiber","from":"src\\components\\room\\AnimatedWrapper.tsx"}
+09:56:45.137 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"three","from":"src\\components\\room\\AnimatedWrapper.tsx"}
+09:56:45.137 [DEBUG] [unusedFiles     ] BFS 방문  {"step":21,"file":"src\\components\\room\\layout.ts","queueRemaining":21}
+09:56:45.156 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\layout.ts","importCount":1}
+09:56:45.162 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./constants","from":"src\\components\\room\\layout.ts","resolved":"src\\components\\room\\constants.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["WALL_HALF"]}
+09:56:45.162 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\constants.ts"}
+09:56:45.162 [DEBUG] [unusedFiles     ] BFS 방문  {"step":22,"file":"src\\components\\room\\Performance.ts","queueRemaining":21}
+09:56:45.182 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\Performance.ts","importCount":0}
+09:56:45.183 [DEBUG] [unusedFiles     ] BFS 방문  {"step":23,"file":"src\\components\\snowBackground\\Snow.tsx","queueRemaining":20}
+09:56:45.204 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\snowBackground\\Snow.tsx","importCount":3}
+09:56:45.210 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\snowBackground\\Snow.tsx"}
+09:56:45.211 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"@react-three/fiber","from":"src\\components\\snowBackground\\Snow.tsx"}
+09:56:45.211 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"three","from":"src\\components\\snowBackground\\Snow.tsx"}
+09:56:45.212 [DEBUG] [unusedFiles     ] BFS 방문  {"step":24,"file":"src\\components\\snowBackground\\Bonfire.tsx","queueRemaining":19}
+09:56:45.228 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\snowBackground\\Bonfire.tsx","importCount":5}
+09:56:45.237 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\snowBackground\\Bonfire.tsx"}
+09:56:45.238 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"@react-three/fiber","from":"src\\components\\snowBackground\\Bonfire.tsx"}
+09:56:45.239 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"three","from":"src\\components\\snowBackground\\Bonfire.tsx"}
+09:56:45.240 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../canvas/DayNightContext","from":"src\\components\\snowBackground\\Bonfire.tsx","resolved":"src\\components\\canvas\\DayNightContext.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["useDayNight"]}
+09:56:45.240 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../room/AnimatedWrapper","from":"src\\components\\snowBackground\\Bonfire.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["PhaseGroup"]}
+09:56:45.240 [DEBUG] [unusedFiles     ] BFS 방문  {"step":25,"file":"src\\components\\snowBackground\\Woodpile.tsx","queueRemaining":18}
+09:56:45.262 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\snowBackground\\Woodpile.tsx","importCount":2}
+09:56:45.265 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\snowBackground\\Woodpile.tsx"}
+09:56:45.265 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../room/AnimatedWrapper","from":"src\\components\\snowBackground\\Woodpile.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["PhaseGroup"]}
+09:56:45.265 [DEBUG] [unusedFiles     ] BFS 방문  {"step":26,"file":"src\\components\\snowBackground\\Snowman.tsx","queueRemaining":17}
+09:56:45.280 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\snowBackground\\Snowman.tsx","importCount":2}
+09:56:45.284 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\snowBackground\\Snowman.tsx"}
+09:56:45.285 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../room/AnimatedWrapper","from":"src\\components\\snowBackground\\Snowman.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["PhaseGroup"]}
+09:56:45.285 [DEBUG] [unusedFiles     ] BFS 방문  {"step":27,"file":"src\\components\\snowBackground\\FrozenPond.tsx","queueRemaining":16}
+09:56:45.301 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\snowBackground\\FrozenPond.tsx","importCount":2}
+09:56:45.304 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\snowBackground\\FrozenPond.tsx"}
+09:56:45.305 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../room/AnimatedWrapper","from":"src\\components\\snowBackground\\FrozenPond.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["PhaseGroup"]}
+09:56:45.305 [DEBUG] [unusedFiles     ] BFS 방문  {"step":28,"file":"src\\components\\snowBackground\\Pedestal.tsx","queueRemaining":15}
+09:56:45.314 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\snowBackground\\Pedestal.tsx","importCount":1}
+09:56:45.316 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\snowBackground\\Pedestal.tsx"}
+09:56:45.316 [DEBUG] [unusedFiles     ] BFS 방문  {"step":29,"file":"src\\components\\snowBackground\\House.tsx","queueRemaining":14}
+09:56:45.336 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\snowBackground\\House.tsx","importCount":4}
+09:56:45.342 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\snowBackground\\House.tsx"}
+09:56:45.343 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"@react-three/fiber","from":"src\\components\\snowBackground\\House.tsx"}
+09:56:45.344 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"three","from":"src\\components\\snowBackground\\House.tsx"}
+09:56:45.344 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../room/AnimatedWrapper","from":"src\\components\\snowBackground\\House.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["PhaseGroup"]}
+09:56:45.344 [DEBUG] [unusedFiles     ] BFS 방문  {"step":30,"file":"src\\components\\snowBackground\\LampPost.tsx","queueRemaining":13}
+09:56:45.362 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\snowBackground\\LampPost.tsx","importCount":3}
+09:56:45.366 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\snowBackground\\LampPost.tsx"}
+09:56:45.367 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"three","from":"src\\components\\snowBackground\\LampPost.tsx"}
+09:56:45.367 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../room/AnimatedWrapper","from":"src\\components\\snowBackground\\LampPost.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["PhaseGroup"]}
+09:56:45.367 [DEBUG] [unusedFiles     ] BFS 방문  {"step":31,"file":"src\\components\\snowBackground\\ChristmasTree.tsx","queueRemaining":12}
+09:56:45.396 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\snowBackground\\ChristmasTree.tsx","importCount":3}
+09:56:45.400 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\snowBackground\\ChristmasTree.tsx"}
+09:56:45.401 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"three","from":"src\\components\\snowBackground\\ChristmasTree.tsx"}
+09:56:45.401 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../room/AnimatedWrapper","from":"src\\components\\snowBackground\\ChristmasTree.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["PhaseGroup"]}
+09:56:45.401 [DEBUG] [unusedFiles     ] BFS 방문  {"step":32,"file":"src\\components\\room\\structure\\Floor.tsx","queueRemaining":10}
+09:56:45.413 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\structure\\Floor.tsx","importCount":5}
+09:56:45.416 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"@react-three/drei","from":"src\\components\\room\\structure\\Floor.tsx"}
+09:56:45.416 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../layout","from":"src\\components\\room\\structure\\Floor.tsx","resolved":"src\\components\\room\\layout.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["POS","SIZE"]}
+09:56:45.416 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../AnimatedWrapper","from":"src\\components\\room\\structure\\Floor.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.417 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../materials","from":"src\\components\\room\\structure\\Floor.tsx","resolved":"src\\components\\room\\materials.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["MAT"]}
+09:56:45.417 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\materials.ts"}
+09:56:45.417 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../constants","from":"src\\components\\room\\structure\\Floor.tsx","resolved":"src\\components\\room\\constants.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["COLOR","DELAY","ROOM"]}
+09:56:45.417 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\constants.ts"}
+09:56:45.417 [DEBUG] [unusedFiles     ] BFS 방문  {"step":33,"file":"src\\components\\room\\structure\\Walls.tsx","queueRemaining":11}
+09:56:45.444 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\structure\\Walls.tsx","importCount":7}
+09:56:45.450 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../AnimatedWrapper","from":"src\\components\\room\\structure\\Walls.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["AppearGroup","HoverLift","SceneItem"]}
+09:56:45.451 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../decorations/CatFrames","from":"src\\components\\room\\structure\\Walls.tsx","resolved":"src\\components\\room\\decorations\\CatFrames.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.451 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\decorations\\CatFrames.tsx"}
+09:56:45.451 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../decorations/IconFrames","from":"src\\components\\room\\structure\\Walls.tsx","resolved":"src\\components\\room\\decorations\\IconFrames.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.451 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\decorations\\IconFrames.tsx"}
+09:56:45.451 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../decorations/WallClock","from":"src\\components\\room\\structure\\Walls.tsx","resolved":"src\\components\\room\\decorations\\WallClock.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.451 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\decorations\\WallClock.tsx"}
+09:56:45.451 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../constants","from":"src\\components\\room\\structure\\Walls.tsx","resolved":"src\\components\\room\\constants.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["COLOR","DELAY","ROOM","WALL_HALF","WIN"]}
+09:56:45.451 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\constants.ts"}
+09:56:45.451 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../layout","from":"src\\components\\room\\structure\\Walls.tsx","resolved":"src\\components\\room\\layout.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["POS","SIZE"]}
+09:56:45.452 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../materials","from":"src\\components\\room\\structure\\Walls.tsx","resolved":"src\\components\\room\\materials.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["MAT"]}
+09:56:45.452 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\materials.ts"}
+09:56:45.452 [DEBUG] [unusedFiles     ] BFS 방문  {"step":34,"file":"src\\components\\room\\structure\\Moulding.tsx","queueRemaining":15}
+09:56:45.472 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\structure\\Moulding.tsx","importCount":6}
+09:56:45.478 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\room\\structure\\Moulding.tsx"}
+09:56:45.479 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"@react-three/drei","from":"src\\components\\room\\structure\\Moulding.tsx"}
+09:56:45.479 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../AnimatedWrapper","from":"src\\components\\room\\structure\\Moulding.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["AppearGroup","HoverLift"]}
+09:56:45.479 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../constants","from":"src\\components\\room\\structure\\Moulding.tsx","resolved":"src\\components\\room\\constants.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["COLOR","DELAY","ROOM","WALL_HALF"]}
+09:56:45.479 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\constants.ts"}
+09:56:45.479 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../layout","from":"src\\components\\room\\structure\\Moulding.tsx","resolved":"src\\components\\room\\layout.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["SIGN"]}
+09:56:45.479 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../materials","from":"src\\components\\room\\structure\\Moulding.tsx","resolved":"src\\components\\room\\materials.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["MAT"]}
+09:56:45.479 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\materials.ts"}
+09:56:45.479 [DEBUG] [unusedFiles     ] BFS 방문  {"step":35,"file":"src\\components\\room\\furniture\\Desk.tsx","queueRemaining":16}
+09:56:45.514 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\furniture\\Desk.tsx","importCount":7}
+09:56:45.528 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\room\\furniture\\Desk.tsx"}
+09:56:45.529 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"@react-three/fiber","from":"src\\components\\room\\furniture\\Desk.tsx"}
+09:56:45.530 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"three","from":"src\\components\\room\\furniture\\Desk.tsx"}
+09:56:45.530 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../AnimatedWrapper","from":"src\\components\\room\\furniture\\Desk.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":["SceneItem"]}
+09:56:45.530 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../materials","from":"src\\components\\room\\furniture\\Desk.tsx","resolved":"src\\components\\room\\materials.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["MAT"]}
+09:56:45.530 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\materials.ts"}
+09:56:45.530 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../constants","from":"src\\components\\room\\furniture\\Desk.tsx","resolved":"src\\components\\room\\constants.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["COLOR","DELAY"]}
+09:56:45.530 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\constants.ts"}
+09:56:45.530 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../layout","from":"src\\components\\room\\furniture\\Desk.tsx","resolved":"src\\components\\room\\layout.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["POS","SIZE"]}
+09:56:45.530 [DEBUG] [unusedFiles     ] BFS 방문  {"step":36,"file":"src\\components\\room\\furniture\\Bed.tsx","queueRemaining":17}
+09:56:45.556 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\furniture\\Bed.tsx","importCount":4}
+09:56:45.562 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../AnimatedWrapper","from":"src\\components\\room\\furniture\\Bed.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.562 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../materials","from":"src\\components\\room\\furniture\\Bed.tsx","resolved":"src\\components\\room\\materials.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["MAT"]}
+09:56:45.562 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\materials.ts"}
+09:56:45.562 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../constants","from":"src\\components\\room\\furniture\\Bed.tsx","resolved":"src\\components\\room\\constants.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["COLOR","DELAY"]}
+09:56:45.562 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\constants.ts"}
+09:56:45.562 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../layout","from":"src\\components\\room\\furniture\\Bed.tsx","resolved":"src\\components\\room\\layout.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["POS","SIZE"]}
+09:56:45.562 [DEBUG] [unusedFiles     ] BFS 방문  {"step":37,"file":"src\\components\\room\\furniture\\Storage.tsx","queueRemaining":18}
+09:56:45.582 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\furniture\\Storage.tsx","importCount":8}
+09:56:45.590 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\room\\furniture\\Storage.tsx"}
+09:56:45.591 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"@react-three/fiber","from":"src\\components\\room\\furniture\\Storage.tsx"}
+09:56:45.592 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"three","from":"src\\components\\room\\furniture\\Storage.tsx"}
+09:56:45.592 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../AnimatedWrapper","from":"src\\components\\room\\furniture\\Storage.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["AppearGroup"]}
+09:56:45.592 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../AnimatedWrapper","from":"src\\components\\room\\furniture\\Storage.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.592 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../materials","from":"src\\components\\room\\furniture\\Storage.tsx","resolved":"src\\components\\room\\materials.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["MAT"]}
+09:56:45.592 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\materials.ts"}
+09:56:45.592 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../constants","from":"src\\components\\room\\furniture\\Storage.tsx","resolved":"src\\components\\room\\constants.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["COLOR","DELAY"]}
+09:56:45.592 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\constants.ts"}
+09:56:45.592 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../layout","from":"src\\components\\room\\furniture\\Storage.tsx","resolved":"src\\components\\room\\layout.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["POS","SIZE"]}
+09:56:45.592 [DEBUG] [unusedFiles     ] BFS 방문  {"step":38,"file":"src\\components\\room\\furniture\\SunbathingCat.tsx","queueRemaining":19}
+09:56:45.614 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\furniture\\SunbathingCat.tsx","importCount":4}
+09:56:45.618 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../AnimatedWrapper","from":"src\\components\\room\\furniture\\SunbathingCat.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["SceneItem"]}
+09:56:45.618 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../materials","from":"src\\components\\room\\furniture\\SunbathingCat.tsx","resolved":"src\\components\\room\\materials.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["MAT"]}
+09:56:45.618 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\materials.ts"}
+09:56:45.618 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../constants","from":"src\\components\\room\\furniture\\SunbathingCat.tsx","resolved":"src\\components\\room\\constants.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["COLOR","DELAY"]}
+09:56:45.618 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\constants.ts"}
+09:56:45.618 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../layout","from":"src\\components\\room\\furniture\\SunbathingCat.tsx","resolved":"src\\components\\room\\layout.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["POS","SIZE","ROT"]}
+09:56:45.618 [DEBUG] [unusedFiles     ] BFS 방문  {"step":39,"file":"src\\components\\room\\furniture\\CatBowls.tsx","queueRemaining":20}
+09:56:45.635 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\furniture\\CatBowls.tsx","importCount":3}
+09:56:45.637 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../AnimatedWrapper","from":"src\\components\\room\\furniture\\CatBowls.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["SceneItem"]}
+09:56:45.637 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../constants","from":"src\\components\\room\\furniture\\CatBowls.tsx","resolved":"src\\components\\room\\constants.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["COLOR","DELAY"]}
+09:56:45.637 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\constants.ts"}
+09:56:45.637 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../layout","from":"src\\components\\room\\furniture\\CatBowls.tsx","resolved":"src\\components\\room\\layout.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["POS","SIZE"]}
+09:56:45.637 [DEBUG] [unusedFiles     ] BFS 방문  {"step":40,"file":"src\\components\\room\\furniture\\Nightstand.tsx","queueRemaining":20}
+09:56:45.658 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\furniture\\Nightstand.tsx","importCount":8}
+09:56:45.663 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\room\\furniture\\Nightstand.tsx"}
+09:56:45.664 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"@react-three/fiber","from":"src\\components\\room\\furniture\\Nightstand.tsx"}
+09:56:45.665 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"three","from":"src\\components\\room\\furniture\\Nightstand.tsx"}
+09:56:45.665 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../AnimatedWrapper","from":"src\\components\\room\\furniture\\Nightstand.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["SceneItem"]}
+09:56:45.665 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../constants","from":"src\\components\\room\\furniture\\Nightstand.tsx","resolved":"src\\components\\room\\constants.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["COLOR","DELAY"]}
+09:56:45.665 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\constants.ts"}
+09:56:45.665 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../layout","from":"src\\components\\room\\furniture\\Nightstand.tsx","resolved":"src\\components\\room\\layout.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["POS","SIZE","ROT"]}
+09:56:45.665 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../materials","from":"src\\components\\room\\furniture\\Nightstand.tsx","resolved":"src\\components\\room\\materials.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["MAT"]}
+09:56:45.665 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\materials.ts"}
+09:56:45.666 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"@/components/canvas/DayNightContext","from":"src\\components\\room\\furniture\\Nightstand.tsx","resolved":"src\\components\\canvas\\DayNightContext.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["useDayNight"]}
+09:56:45.666 [DEBUG] [unusedFiles     ] BFS 방문  {"step":41,"file":"src\\components\\room\\furniture\\Trashcan.tsx","queueRemaining":21}
+09:56:45.682 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\furniture\\Trashcan.tsx","importCount":4}
+09:56:45.684 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../layout","from":"src\\components\\room\\furniture\\Trashcan.tsx","resolved":"src\\components\\room\\layout.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["POS","SIZE"]}
+09:56:45.685 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../AnimatedWrapper","from":"src\\components\\room\\furniture\\Trashcan.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["SceneItem"]}
+09:56:45.685 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../constants","from":"src\\components\\room\\furniture\\Trashcan.tsx","resolved":"src\\components\\room\\constants.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["DELAY"]}
+09:56:45.685 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\constants.ts"}
+09:56:45.685 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../materials","from":"src\\components\\room\\furniture\\Trashcan.tsx","resolved":"src\\components\\room\\materials.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["MAT"]}
+09:56:45.685 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\materials.ts"}
+09:56:45.685 [DEBUG] [unusedFiles     ] BFS 방문  {"step":42,"file":"src\\components\\room\\constants.ts","queueRemaining":22}
+09:56:45.704 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\constants.ts","importCount":0}
+09:56:45.706 [DEBUG] [unusedFiles     ] BFS 방문  {"step":43,"file":"src\\components\\room\\materials.ts","queueRemaining":21}
+09:56:45.713 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\materials.ts","importCount":0}
+09:56:45.715 [DEBUG] [unusedFiles     ] BFS 방문  {"step":44,"file":"src\\components\\room\\decorations\\CatFrames.tsx","queueRemaining":19}
+09:56:45.735 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\decorations\\CatFrames.tsx","importCount":8}
+09:56:45.738 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../AnimatedWrapper","from":"src\\components\\room\\decorations\\CatFrames.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["HoverLift"]}
+09:56:45.738 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../constants","from":"src\\components\\room\\decorations\\CatFrames.tsx","resolved":"src\\components\\room\\constants.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["DELAY"]}
+09:56:45.738 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../layout","from":"src\\components\\room\\decorations\\CatFrames.tsx","resolved":"src\\components\\room\\layout.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["POS","SIZE"]}
+09:56:45.738 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../materials","from":"src\\components\\room\\decorations\\CatFrames.tsx","resolved":"src\\components\\room\\materials.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["MAT"]}
+09:56:45.738 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./catTextures","from":"src\\components\\room\\decorations\\CatFrames.tsx","resolved":"src\\components\\room\\decorations\\catTextures.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["CAT_FRAME_META","CAT_URLS"]}
+09:56:45.738 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\decorations\\catTextures.ts"}
+09:56:45.738 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../AnimatedWrapper","from":"src\\components\\room\\decorations\\CatFrames.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["AppearGroup"]}
+09:56:45.738 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../constants","from":"src\\components\\room\\decorations\\CatFrames.tsx","resolved":"src\\components\\room\\constants.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["WALL_HALF","ROOM"]}
+09:56:45.739 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"@react-three/drei","from":"src\\components\\room\\decorations\\CatFrames.tsx"}
+09:56:45.739 [DEBUG] [unusedFiles     ] BFS 방문  {"step":45,"file":"src\\components\\room\\decorations\\IconFrames.tsx","queueRemaining":19}
+09:56:45.759 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\decorations\\IconFrames.tsx","importCount":7}
+09:56:45.762 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"three","from":"src\\components\\room\\decorations\\IconFrames.tsx"}
+09:56:45.762 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../materials","from":"src\\components\\room\\decorations\\IconFrames.tsx","resolved":"src\\components\\room\\materials.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["MAT"]}
+09:56:45.763 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\room\\decorations\\IconFrames.tsx"}
+09:56:45.763 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../AnimatedWrapper","from":"src\\components\\room\\decorations\\IconFrames.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["HoverLift"]}
+09:56:45.763 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../constants","from":"src\\components\\room\\decorations\\IconFrames.tsx","resolved":"src\\components\\room\\constants.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["COLOR"]}
+09:56:45.764 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../layout","from":"src\\components\\room\\decorations\\IconFrames.tsx","resolved":"src\\components\\room\\layout.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["SIZE"]}
+09:56:45.764 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"./iconTextures","from":"src\\components\\room\\decorations\\IconFrames.tsx","resolved":"src\\components\\room\\decorations\\iconTextures.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["ICON_META","getIconTexture"]}
+09:56:45.764 [DEBUG] [unusedFiles     ] 큐에 추가  {"file":"src\\components\\room\\decorations\\iconTextures.ts"}
+09:56:45.764 [DEBUG] [unusedFiles     ] BFS 방문  {"step":46,"file":"src\\components\\room\\decorations\\WallClock.tsx","queueRemaining":19}
+09:56:45.789 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\decorations\\WallClock.tsx","importCount":7}
+09:56:45.794 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"react","from":"src\\components\\room\\decorations\\WallClock.tsx"}
+09:56:45.795 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"@react-three/fiber","from":"src\\components\\room\\decorations\\WallClock.tsx"}
+09:56:45.796 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"three","from":"src\\components\\room\\decorations\\WallClock.tsx"}
+09:56:45.796 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../AnimatedWrapper","from":"src\\components\\room\\decorations\\WallClock.tsx","resolved":"src\\components\\room\\AnimatedWrapper.tsx","hasNamespace":false,"hasDefault":true,"isSideEffect":false,"names":[]}
+09:56:45.796 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../materials","from":"src\\components\\room\\decorations\\WallClock.tsx","resolved":"src\\components\\room\\materials.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["MAT"]}
+09:56:45.796 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../constants","from":"src\\components\\room\\decorations\\WallClock.tsx","resolved":"src\\components\\room\\constants.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["COLOR","DELAY"]}
+09:56:45.797 [DEBUG] [unusedFiles     ] import resolve 성공  {"specifier":"../layout","from":"src\\components\\room\\decorations\\WallClock.tsx","resolved":"src\\components\\room\\layout.ts","hasNamespace":false,"hasDefault":false,"isSideEffect":false,"names":["SIZE"]}
+09:56:45.797 [DEBUG] [unusedFiles     ] BFS 방문  {"step":47,"file":"src\\components\\room\\decorations\\catTextures.ts","queueRemaining":1}
+09:56:45.814 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\decorations\\catTextures.ts","importCount":0}
+09:56:45.815 [DEBUG] [unusedFiles     ] BFS 방문  {"step":48,"file":"src\\components\\room\\decorations\\iconTextures.ts","queueRemaining":0}
+09:56:45.841 [DEBUG] [unusedFiles     ] import 추출 완료  {"file":"src\\components\\room\\decorations\\iconTextures.ts","importCount":1}
+09:56:45.845 [DEBUG] [unusedFiles     ] 외부 패키지 import (resolve 스킵)  {"specifier":"three","from":"src\\components\\room\\decorations\\iconTextures.ts"}
+09:56:45.845 [INFO ] [unusedFiles     ] BFS 도달성 분석 완료  {"reachableCount":48,"dynamicImportDirCount":0,"dynamicImportDirs":[],"importGraphNodeCount":31}
+09:56:45.870 [DEBUG] [unusedFiles     ] 미사용 파일 발견  {"file":"src/components/snowBackground/ForestLights.tsx","size":1967,"confidence":"high"}
+09:56:45.881 [DEBUG] [unusedFiles     ] 미사용 파일 발견  {"file":"src/components/snowBackground/GlassSphere.tsx","size":905,"confidence":"high"}
+09:56:45.881 [INFO ] [unusedFiles     ] 미사용 파일 탐지 완료  {"count":2,"files":["src/components/snowBackground/ForestLights.tsx (high, 1967B)","src/components/snowBackground/GlassSphere.tsx (high, 905B)"]}
+09:56:45.881 [DEBUG] [unusedFiles     ] 진입점 파일 - dead export 분석 스킵  {"file":"app\\layout.tsx"}
+09:56:45.881 [DEBUG] [unusedFiles     ] 진입점 파일 - dead export 분석 스킵  {"file":"app\\page.tsx"}
+09:56:45.881 [DEBUG] [unusedFiles     ] 진입점 파일 - dead export 분석 스킵  {"file":"src\\app\\page.tsx"}
+09:56:45.881 [DEBUG] [unusedFiles     ] 진입점 파일 - dead export 분석 스킵  {"file":"eslint.config.mjs"}
+09:56:45.881 [DEBUG] [unusedFiles     ] 진입점 파일 - dead export 분석 스킵  {"file":"next-env.d.ts"}
+09:56:45.881 [DEBUG] [unusedFiles     ] 진입점 파일 - dead export 분석 스킵  {"file":"next.config.ts"}
+09:56:45.881 [DEBUG] [unusedFiles     ] 진입점 파일 - dead export 분석 스킵  {"file":"postcss.config.mjs"}
+09:56:46.389 [DEBUG] [unusedFiles     ] dead export 발견  {"file":"src/components/canvas/DayNightContext.tsx","deadExports":["Mode"],"usedExports":["DayNightProvider","useDayNight","PRESETS"],"confidence":"high"}
+09:56:46.456 [DEBUG] [unusedFiles     ] dead export 발견  {"file":"src/components/canvas/WeatherContext.tsx","deadExports":["WeatherMode"],"usedExports":["WeatherProvider","useWeather"],"confidence":"high"}
+09:56:51.802 [DEBUG] [unusedFiles     ] namespace import으로 소비된 파일 - dead export 분석 스킵  {"file":"src\\components\\canvas\\SceneContainer.tsx"}
+09:56:51.918 [DEBUG] [unusedFiles     ] namespace import으로 소비된 파일 - dead export 분석 스킵  {"file":".next\\dev\\types\\routes.d.ts"}
+09:56:52.537 [DEBUG] [unusedFiles     ] dead export 발견  {"file":"src/components/room/layout.ts","deadExports":["LIGHTS","FOG","WEATHER"],"usedExports":["CAMERA","ORBIT","POS","SIZE","SIGN","ROT"],"confidence":"high"}
+09:56:52.655 [DEBUG] [unusedFiles     ] dead export 발견  {"file":"src/components/room/Performance.ts","deadExports":["ENV_PERF","FRAMELOOP_ALWAYS","FRAMELOOP_DEMAND"],"usedExports":["CANVAS_PERF"],"confidence":"high"}
+09:56:53.445 [DEBUG] [unusedFiles     ] dead export 발견  {"file":"src/components/snowBackground/House.tsx","deadExports":["HouseProps"],"usedExports":["default"],"confidence":"high"}
+09:56:54.008 [DEBUG] [unusedFiles     ] dead export 발견  {"file":"src/components/room/structure/Moulding.tsx","deadExports":["SIGNS_DATA"],"usedExports":["default"],"confidence":"high"}
+09:56:54.901 [DEBUG] [unusedFiles     ] dead export 발견  {"file":"src/components/room/constants.ts","deadExports":["WALL_LEFT","WALL_BACK"],"usedExports":["WALL_HALF","COLOR","DELAY","ROOM","WIN"],"confidence":"high"}
+09:56:55.007 [DEBUG] [unusedFiles     ] dead export 발견  {"file":"src/components/room/materials.ts","deadExports":["spread","MatProps"],"usedExports":["MAT"],"confidence":"high"}
+09:56:55.511 [DEBUG] [unusedFiles     ] dead export 발견  {"file":"src/components/room/decorations/catTextures.ts","deadExports":["CatFrameKey","getCatTexture"],"usedExports":["CAT_FRAME_META","CAT_URLS"],"confidence":"high"}
+09:56:55.619 [DEBUG] [unusedFiles     ] dead export 발견  {"file":"src/components/room/decorations/iconTextures.ts","deadExports":["IconKey"],"usedExports":["ICON_META","getIconTexture"],"confidence":"high"}
+09:56:55.619 [INFO ] [unusedFiles     ] dead export 탐지 완료  {"count":10,"files":["src/components/canvas/DayNightContext.tsx: [Mode]","src/components/canvas/WeatherContext.tsx: [WeatherMode]","src/components/room/constants.ts: [WALL_LEFT, WALL_BACK]","src/components/room/decorations/catTextures.ts: [CatFrameKey, getCatTexture]","src/components/room/decorations/iconTextures.ts: [IconKey]","src/components/room/layout.ts: [LIGHTS, FOG, WEATHER]","src/components/room/materials.ts: [spread, MatProps]","src/components/room/Performance.ts: [ENV_PERF, FRAMELOOP_ALWAYS, FRAMELOOP_DEMAND]","src/components/room/structure/Moulding.tsx: [SIGNS_DATA]","src/components/snowBackground/House.tsx: [HouseProps]"]}
+09:56:55.619 [INFO ] [unusedFiles     ] 순환 참조 탐지 시작  {"graphNodes":31}
+09:56:55.620 [INFO ] [unusedFiles     ] 순환 참조 탐지 완료  {"count":0}
+09:56:55.620 [INFO ] [unusedFiles     ] 미사용 패키지 탐지 시작
+09:56:55.834 [INFO ] [unusedFiles     ] 미사용 패키지 탐지 완료  {"count":3,"packages":["@nodetoy/react-nodetoy@^0.1.24","@react-three/postprocessing@^3.0.4","react-dom@19.2.3"]}
+09:56:55.835 [INFO ] [unusedFiles     ] 마법 값 탐지 시작
+09:56:56.020 [INFO ] [unusedFiles     ] 마법 값 탐지 완료  {"count":120,"values":["\"0.5\" ×23 (colors) → COLOR_0_5","\"0.05\" ×13 (general) → VALUE_0_05","\"0.22\" ×13 (api) → API_0_22","\"0.08\" ×12 (api) → LERP_APPEAR","\"1.8\" ×12 (colors) → COLOR_1_8","\"0.12\" ×10 (general) → LERP_HOVER","\"0.10\" ×10 (general) → VALUE_0_10","\"0.30\" ×10 (general) → VALUE_0_30","\"0.18\" ×10 (general) → VALUE_0_18","\"1.2\" ×9 (api) → API_1_2","\"0.20\" ×9 (general) → VALUE_0_20","\"0.4\" ×8 (colors) → COLOR_0_4","\"0.8\" ×8 (general) → PEDESTAL_TOP","\"0.28\" ×8 (config) → FONTSIZE_0_28","\"0.40\" ×8 (general) → VALUE_0_40","\"0.14\" ×8 (config) → ICONFONTSIZE_0_14","\"0.07\" ×7 (general) → VALUE_0_07","\"0.2\" ×7 (colors) → COLOR_0_2","\"0.38\" ×7 (config) → SIZEX_0_38","\"0.55\" ×7 (general) → VALUE_0_55","\"0.1\" ×7 (general) → VALUE_0_1","\"#EEF4FF\" ×7 (colors) → COLOR_EEF4FF","\"0.85\" ×6 (general) → VALUE_0_85","\"1.6\" ×6 (general) → VALUE_1_6","\"0.75\" ×6 (general) → VALUE_0_75","\"0.65\" ×6 (general) → VALUE_0_65","\"0.6\" ×6 (general) → VALUE_0_6","\"#2A1A0A\" ×6 (colors) → COLOR_2A1A0A","\"night\" ×6 (general) → KEY_NIGHT","\"0.15\" ×5 (general) → VALUE_0_15","\"#1A1A1A\" ×5 (colors) → COLOR_1A1A1A","\"1.5\" ×5 (general) → VALUE_1_5","\"0.06\" ×5 (general) → VALUE_0_06","\"0.88\" ×5 (config) → SIZEY_0_88","\"0.80\" ×5 (config) → SIZEZ_0_80","\"0.04\" ×5 (general) → VALUE_0_04","\"0.62\" ×5 (general) → VALUE_0_62","\"0.50\" ×5 (general) → VALUE_0_50","\"2.5\" ×5 (general) → VALUE_2_5","\"relative\" ×5 (general) → KEY_RELATIVE","\"50%\" ×5 (colors) → COLOR_50","\"#ffffff\" ×5 (colors) → COLOR_FFFFFF","\"pointer\" ×4 (general) → KEY_POINTER","\"5.5\" ×4 (config) → HEIGHT_5_5","\"#9C7B5A\" ×4 (colors) → COLOR_9C7B5A","\"0.3\" ×4 (general) → VALUE_0_3","\"1.4\" ×4 (general) → VALUE_1_4","\"11\" ×4 (general) → VALUE_11","\"60\" ×4 (config) → SPARK_COUNT","\"0.012\" ×4 (general) → VALUE_0_012","\"0.020\" ×4 (general) → VALUE_0_020","\"0.42\" ×4 (general) → VALUE_0_42","\"0.24\" ×4 (general) → VALUE_0_24","\"0.90\" ×4 (general) → VALUE_0_90","\"0.32\" ×4 (general) → VALUE_0_32","\"0.45\" ×4 (general) → VALUE_0_45","\"absolute\" ×4 (general) → KEY_ABSOLUTE","\"day\" ×4 (general) → KEY_DAY","\"4.5\" ×4 (colors) → COLOR_4_5","\"#3D2B1F\" ×4 (colors) → COLOR_3D2B1F","\"0.001\" ×4 (general) → VALUE_0_001","\"0.25\" ×3 (general) → VALUE_0_25","\"#F5EFE6\" ×3 (colors) → COLOR_F5EFE6","\"40\" ×3 (config) → MAXDISTANCE_40","\"3.5\" ×3 (general) → VALUE_3_5","\"0.005\" ×3 (config) → SIZEY_0_005","\"0.02\" ×3 (general) → VALUE_0_02","\"0.03\" ×3 (api) → API_0_03","\"0.66\" ×3 (general) → VALUE_0_66","\"0.64\" ×3 (general) → VALUE_0_64","\"0.72\" ×3 (general) → VALUE_0_72","\"0.52\" ×3 (general) → VALUE_0_52","\"0.60\" ×3 (general) → VALUE_0_60","\"column\" ×3 (general) → KEY_COLUMN","\"1.4rem\" ×3 (config) → WIDTH_1_4REM","\"2rem\" ×3 (config) → HEIGHT_2REM","\"1px\" ×3 (config) → WIDTH_1PX","\"#CC2200\" ×3 (colors) → COLOR_CC2200","\"0.004\" ×3 (general) → VALUE_0_004","\"@/components/canvas/SceneContainer\" ×2 (config) → IMPORT_COMPONENTS_CANVAS_SCENE_CONTAINER","\"2.6\" ×2 (general) → VALUE_2_6","\"0.9\" ×2 (general) → VALUE_0_9","\"2.8\" ×2 (general) → VALUE_2_8","\"#7C5C3A\" ×2 (colors) → COLOR_7C5C3A","\"#2C1F14\" ×2 (colors) → COLOR_2C1F14","\"#3A2510\" ×2 (colors) → COLOR_3A2510","\"0.7\" ×2 (general) → VALUE_0_7","\"18\" ×2 (general) → VALUE_18","\"2.4\" ×2 (general) → VALUE_2_4","\"1.85\" ×2 (general) → VALUE_1_85","\"0.59\" ×2 (general) → VALUE_0_59","\"0.015\" ×2 (general) → VALUE_0_015","\"72\" ×2 (general) → VALUE_72","\"https://github.com/cjfwls39\" ×2 (api) → API_HTTPS_GITHUB_COM_CJFWLS39","\"1rem\" ×2 (general) → VALUE_1REM","\"0.5rem\" ×2 (general) → VALUE_0_5REM","\"0.2em\" ×2 (general) → VALUE_0_2EM","\"hidden\" ×2 (general) → KEY_HIDDEN","\"PROJECTS\" ×2 (general) → VALUE_PROJECTS","\"SKILLS\" ×2 (general) → VALUE_SKILLS","\"CONTACT\" ×2 (general) → VALUE_CONTACT","\"700\" ×2 (general) → VALUE_700","\"6.5\" ×2 (general) → VALUE_6_5","\"#E0F7FA\" ×2 (colors) → COLOR_E0F7FA","\"13\" ×2 (config) → LINEWIDTH_13","\"0.35\" ×2 (general) → VALUE_0_35","\"rgba(30,40,70,0.82)\" ×2 (general) → VALUE_RGBA_30_40_70_0_82","\"rgba(255,245,220,0.88)\" ×2 (general) → VALUE_RGBA_255_245_220_0_88","\"rgba(40,55,100,0.92)\" ×2 (general) → VALUE_RGBA_40_55_100_0_92","\"rgba(255,252,235,0.95)\" ×2 (general) → VALUE_RGBA_255_252_235_0_95","\"rgba(120,160,255,0.5)\" ×2 (general) → VALUE_RGBA_120_160_255_0_5","\"rgba(220,180,80,0.6)\" ×2 (general) → VALUE_RGBA_220_180_80_0_6","\"rgba(200,225,255,0.95)\" ×2 (general) → VALUE_RGBA_200_225_255_0_95","\"rgba(80,55,20,0.95)\" ×2 (general) → VALUE_RGBA_80_55_20_0_95","\"#5D3A1A\" ×2 (colors) → COLOR_5D3A1A","\"canvas\" ×2 (general) → KEY_CANVAS","\"2d\" ×2 (general) → VALUE_2D","\"98\" ×2 (general) → VALUE_98","\"0.48\" ×2 (general) → VALUE_0_48","\"#888888\" ×2 (colors) → CHAIN_C"]}
+09:56:56.020 [INFO ] [unusedFiles     ] 전체 분석 완료  {"totalScanned":45,"unusedFiles":2,"deadExportFiles":10,"circularDeps":0,"unusedPackages":3,"magicValues":120,"entryPoints":3}
