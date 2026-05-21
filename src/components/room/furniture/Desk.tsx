@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import AnimatedWrapper, { SceneItem } from "../AnimatedWrapper";
@@ -11,6 +11,9 @@ import { POS, SIZE } from "../layout";
 // ─────────────────────────────────────────────────────
 //  팬 블레이드 (회전 애니메이션)
 // ─────────────────────────────────────────────────────
+const BLADE_COUNT  = 6;
+const SCREW_XY     = [[-1,-1],[-1,1],[1,-1],[1,1]] as [number,number][];
+
 function Fan({
   r, speed, glowColor, position, rotation,
 }: {
@@ -20,9 +23,40 @@ function Fan({
   position: [number, number, number];
   rotation: [number, number, number];
 }) {
-  const bladeRef = useRef<THREE.Group>(null!);
+  const bladeRef = useRef<THREE.InstancedMesh>(null!);
+  const screwRef = useRef<THREE.InstancedMesh>(null!);
+  const rot      = useRef(0);
+  const dummy    = useMemo(() => new THREE.Object3D(), []);
+
+  // 나사: 정적 위치, 마운트 1회만 세팅
+  useEffect(() => {
+    const s = screwRef.current;
+    if (!s) return;
+    SCREW_XY.forEach(([sx, sy], i) => {
+      dummy.position.set(sx * r, sy * r, 0.010);
+      dummy.rotation.set(0, 0, 0);
+      dummy.scale.setScalar(1);
+      dummy.updateMatrix();
+      s.setMatrixAt(i, dummy.matrix);
+    });
+    s.instanceMatrix.needsUpdate = true;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // 블레이드: 매 프레임 누적 각도로 행렬 갱신
   useFrame((_, delta) => {
-    if (bladeRef.current) bladeRef.current.rotation.z += delta * speed;
+    const b = bladeRef.current;
+    if (!b) return;
+    rot.current += delta * speed;
+    for (let i = 0; i < BLADE_COUNT; i++) {
+      const angle = (i / BLADE_COUNT) * Math.PI * 2 + rot.current;
+      dummy.position.set(Math.cos(angle) * r * 0.52, Math.sin(angle) * r * 0.52, 0);
+      dummy.rotation.set(0, 0, angle + 0.5);
+      dummy.scale.set(r * 0.42, r * 0.26, 0.004);
+      dummy.updateMatrix();
+      b.setMatrixAt(i, dummy.matrix);
+    }
+    b.instanceMatrix.needsUpdate = true;
   });
 
   return (
@@ -32,46 +66,21 @@ function Fan({
         <boxGeometry args={[r * 2.2, r * 2.2, 0.018]} />
         <meshStandardMaterial color="#0a0a0a" metalness={0.4} roughness={0.6} />
       </mesh>
-      {/* 블레이드 그룹 */}
-      <group ref={bladeRef}>
-        {[0, 1, 2, 3, 4, 5].map((i) => {
-          const angle = (i / 6) * Math.PI * 2;
-          return (
-            <mesh
-              key={i}
-              position={[
-                Math.cos(angle) * r * 0.52,
-                Math.sin(angle) * r * 0.52,
-                0,
-              ]}
-              rotation={[0, 0, angle + 0.5]}
-            >
-              <boxGeometry args={[r * 0.42, r * 0.26, 0.004]} />
-              <meshStandardMaterial
-                color="#1a1a2a"
-                emissive={glowColor}
-                emissiveIntensity={0.35}
-              />
-            </mesh>
-          );
-        })}
-        {/* 허브 */}
-        <mesh>
-          <cylinderGeometry args={[r * 0.11, r * 0.11, 0.006, 12]} />
-          <meshStandardMaterial
-            color="#111"
-            emissive={glowColor}
-            emissiveIntensity={1.0}
-          />
-        </mesh>
-      </group>
-      {/* 코너 나사 4개 */}
-      {([[-1,-1],[-1,1],[1,-1],[1,1]] as [number,number][]).map(([sx,sy], i) => (
-        <mesh key={i} position={[sx * r * 1.0, sy * r * 1.0, 0.010]}>
-          <cylinderGeometry args={[0.004, 0.004, 0.003, 8]} />
-          <meshStandardMaterial color="#2a2a2a" metalness={0.9} />
-        </mesh>
-      ))}
+      {/* 블레이드 — 6 인스턴스 */}
+      <instancedMesh ref={bladeRef} args={[null as any, null as any, BLADE_COUNT]}>
+        <boxGeometry args={[1, 1, 1]} />
+        <meshStandardMaterial color="#1a1a2a" emissive={glowColor} emissiveIntensity={0.35} />
+      </instancedMesh>
+      {/* 허브 */}
+      <mesh>
+        <cylinderGeometry args={[r * 0.11, r * 0.11, 0.006, 12]} />
+        <meshStandardMaterial color="#111" emissive={glowColor} emissiveIntensity={1.0} />
+      </mesh>
+      {/* 코너 나사 — 4 인스턴스 */}
+      <instancedMesh ref={screwRef} args={[null as any, null as any, 4]}>
+        <cylinderGeometry args={[0.004, 0.004, 0.003, 8]} />
+        <meshStandardMaterial color="#2a2a2a" metalness={0.9} />
+      </instancedMesh>
     </group>
   );
 }
@@ -79,10 +88,15 @@ function Fan({
 // ─────────────────────────────────────────────────────
 //  PC 타워
 // ─────────────────────────────────────────────────────
+const HEATSINK_COUNT = 7;
+
 function PcTower({ deskTopY, pcLightRef }: {
   deskTopY: number;
   pcLightRef: React.RefObject<THREE.PointLight>;
 }) {
+  const heatsinkRef = useRef<THREE.InstancedMesh>(null!);
+  const hsDummy     = useMemo(() => new THREE.Object3D(), []);
+
   const { sizeX, sizeY, sizeZ, wallT,
           acrylicOpacity, acrylicRoughness,
           mbX, mbY, mbH, mbD,
@@ -94,6 +108,21 @@ function PcTower({ deskTopY, pcLightRef }: {
 
   const hY = sizeY / 2;
   const t  = wallT;
+
+  // 히트싱크 핀 7개: 정적 위치, 마운트 1회만 세팅
+  useEffect(() => {
+    const m = heatsinkRef.current;
+    if (!m) return;
+    for (let i = 0; i < HEATSINK_COUNT; i++) {
+      hsDummy.position.set(sizeX * 0.10 + i * 0.022, 0.42, 0);
+      hsDummy.rotation.set(0, 0, 0);
+      hsDummy.scale.setScalar(1);
+      hsDummy.updateMatrix();
+      m.setMatrixAt(i, hsDummy.matrix);
+    }
+    m.instanceMatrix.needsUpdate = true;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <group position={[offsetX, deskTopY, offsetZ]} rotation={[0, Math.PI, 0]}>
@@ -248,13 +277,11 @@ function PcTower({ deskTopY, pcLightRef }: {
           rotation={[0, Math.PI / 2, 0]}
         />
       ))}
-      {/* GPU 히트싱크 핀 (측면) */}
-      {([0, 1, 2, 3, 4, 5, 6] as number[]).map((i) => (
-        <mesh key={i} position={[sizeX * 0.10 + i * 0.022, 0.42, 0]}>
-          <boxGeometry args={[0.006, 0.19, sizeZ * 0.82]} />
-          <meshStandardMaterial color="#555" metalness={0.9} roughness={0.15} />
-        </mesh>
-      ))}
+      {/* GPU 히트싱크 핀 (측면) — 7 인스턴스 */}
+      <instancedMesh ref={heatsinkRef} args={[null as any, null as any, HEATSINK_COUNT]}>
+        <boxGeometry args={[0.006, 0.19, sizeZ * 0.82]} />
+        <meshStandardMaterial color="#555" metalness={0.9} roughness={0.15} />
+      </instancedMesh>
 
       {/* ════ 좌하단: SSD / HDD ════ */}
       {/* SSD 슬림 판 2개 */}
@@ -330,6 +357,28 @@ function PcTower({ deskTopY, pcLightRef }: {
 // ─────────────────────────────────────────────────────
 //  모니터
 // ─────────────────────────────────────────────────────
+
+// 별 위치 (화면 로컬 좌표 — 화면 중심 기준)
+const STAR_POSITIONS = [
+  [-0.55,  0.22], [-0.38,  0.08], [-0.20,  0.25], [ 0.02,  0.18],
+  [ 0.18,  0.27], [ 0.35,  0.10], [ 0.52,  0.20], [ 0.60, -0.05],
+  [-0.62, -0.10], [-0.45, -0.20], [-0.28, -0.08], [-0.10, -0.22],
+  [ 0.12, -0.14], [ 0.28, -0.24], [ 0.48, -0.18], [ 0.64,  0.22],
+  [-0.50,  0.01], [ 0.40, -0.06], [-0.15,  0.12], [ 0.22,  0.03],
+  [-0.66,  0.15], [ 0.55, -0.25], [-0.32,  0.20], [ 0.08, -0.05],
+] as [number, number][];
+
+// 색상별 그룹 인덱스 (warm/cool/white)
+const STAR_GROUPS = STAR_POSITIONS.reduce(
+  (acc, _, i) => {
+    if (i % 5 === 0)      acc.warm.push(i);
+    else if (i % 3 === 0) acc.cool.push(i);
+    else                   acc.white.push(i);
+    return acc;
+  },
+  { warm: [] as number[], cool: [] as number[], white: [] as number[] }
+);
+
 function Monitor({ deskTopY }: { deskTopY: number }) {
   const m = SIZE.monitor;
   const screenCY = deskTopY + m.standH + m.riseY + m.frameH / 2;
@@ -338,15 +387,30 @@ function Monitor({ deskTopY }: { deskTopY: number }) {
   const W = m.frameX;  // 1.44
   const H = m.frameH;  // 0.63
 
-  // 별 위치 (화면 로컬 좌표 — 화면 중심 기준)
-  const stars = [
-    [-0.55,  0.22], [-0.38,  0.08], [-0.20,  0.25], [ 0.02,  0.18],
-    [ 0.18,  0.27], [ 0.35,  0.10], [ 0.52,  0.20], [ 0.60, -0.05],
-    [-0.62, -0.10], [-0.45, -0.20], [-0.28, -0.08], [-0.10, -0.22],
-    [ 0.12, -0.14], [ 0.28, -0.24], [ 0.48, -0.18], [ 0.64,  0.22],
-    [-0.50,  0.01], [ 0.40, -0.06], [-0.15,  0.12], [ 0.22,  0.03],
-    [-0.66,  0.15], [ 0.55, -0.25], [-0.32,  0.20], [ 0.08, -0.05],
-  ] as [number, number][];
+  const warmRef  = useRef<THREE.InstancedMesh>(null!);
+  const coolRef  = useRef<THREE.InstancedMesh>(null!);
+  const whiteRef = useRef<THREE.InstancedMesh>(null!);
+
+  // 별 행렬 초기화: 마운트 1회
+  useEffect(() => {
+    const dummy = new THREE.Object3D();
+    const starZ  = sZ + 0.002;
+
+    const setGroup = (ref: THREE.InstancedMesh, positions: [number, number][], size: number) => {
+      positions.forEach(([sx, sy], slot) => {
+        dummy.position.set(sx, screenCY + sy, starZ);
+        dummy.scale.setScalar(size);
+        dummy.updateMatrix();
+        ref.setMatrixAt(slot, dummy.matrix);
+      });
+      ref.instanceMatrix.needsUpdate = true;
+    };
+
+    setGroup(warmRef.current,  STAR_GROUPS.warm.map(i  => STAR_POSITIONS[i]), 0.008);
+    setGroup(coolRef.current,  STAR_GROUPS.cool.map(i  => STAR_POSITIONS[i]), 0.006);
+    setGroup(whiteRef.current, STAR_GROUPS.white.map(i => STAR_POSITIONS[i]), 0.004);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <group position={[m.offsetX, 0, m.offsetZ]}>
@@ -395,18 +459,19 @@ function Monitor({ deskTopY }: { deskTopY: number }) {
         />
       </mesh>
 
-      {/* ── 별들 ── */}
-      {stars.map(([sx, sy], i) => {
-        const size = i % 5 === 0 ? 0.008 : i % 3 === 0 ? 0.006 : 0.004;
-        const bright = i % 4 === 0 ? 4.0 : i % 3 === 0 ? 2.5 : 1.5;
-        const col = i % 5 === 0 ? "#ffe8c0" : i % 3 === 0 ? "#c0d8ff" : "#ffffff";
-        return (
-          <mesh key={i} position={[sx, screenCY + sy, sZ + 0.002]}>
-            <planeGeometry args={[size, size]} />
-            <meshStandardMaterial color={col} emissive={col} emissiveIntensity={bright} depthWrite={false} />
-          </mesh>
-        );
-      })}
+      {/* ── 별들 — 색상별 3 InstancedMesh (24 → 3 draw call) ── */}
+      <instancedMesh ref={warmRef}  args={[null as any, null as any, STAR_GROUPS.warm.length]}>
+        <planeGeometry args={[1, 1]} />
+        <meshStandardMaterial color="#ffe8c0" emissive="#ffe8c0" emissiveIntensity={3.0} depthWrite={false} />
+      </instancedMesh>
+      <instancedMesh ref={coolRef}  args={[null as any, null as any, STAR_GROUPS.cool.length]}>
+        <planeGeometry args={[1, 1]} />
+        <meshStandardMaterial color="#c0d8ff" emissive="#c0d8ff" emissiveIntensity={2.5} depthWrite={false} />
+      </instancedMesh>
+      <instancedMesh ref={whiteRef} args={[null as any, null as any, STAR_GROUPS.white.length]}>
+        <planeGeometry args={[1, 1]} />
+        <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={1.5} depthWrite={false} />
+      </instancedMesh>
 
       {/* ── 행성 1 — 보라빛 가스 행성 (중앙 우상단) ── */}
       <mesh position={[0.28, screenCY + 0.10, sZ + 0.002]}>

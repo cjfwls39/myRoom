@@ -8,6 +8,7 @@ function isLowEndDevice(): boolean {
 }
 
 const LOW_END = isLowEndDevice();
+export const LOW_END_DEVICE = LOW_END;
 
 export const CANVAS_PERF = {
   dpr: [1, LOW_END ? 1 : 2] as [number, number],

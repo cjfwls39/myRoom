@@ -34,7 +34,7 @@ function CameraManager({ isFinished, setIsFinished }: {
       makeDefault
       position={CAMERA_START.toArray() as [number, number, number]}
       fov={CAMERA.fov}
-      far={10000}
+      far={200}
     />
   );
 }

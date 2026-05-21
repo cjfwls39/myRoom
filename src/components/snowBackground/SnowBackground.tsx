@@ -7,6 +7,7 @@ import * as THREE from "three";
 
 import Snow from "./Snow";
 import Bonfire from "./Bonfire";
+import { LOW_END_DEVICE } from "@/components/room/Performance";
 import Woodpile from "./Woodpile";
 import Snowman from "./Snowman";
 import FrozenPond from "./FrozenPond";
@@ -276,7 +277,7 @@ export default function SnowBackground() {
             isStorm={isStorm}
             spawnRadius={GLOBE_RADIUS * 0.85}
             spawnY={GLOBE_RADIUS * 1.8}
-            count={700}
+            count={LOW_END_DEVICE ? 350 : 700}
           />
         </PhaseGroup>
       </group>
