@@ -111,6 +111,36 @@ export const PROJECTS_DATA = [
     link:    "https://shieldbox-io.onrender.com/",
     github:  "https://github.com/cjfwls39/ShieldBox.io.git",
   },
+
+  {
+    title:    "약방 (YackBang)",
+    period:   "2026",
+    status:   "completed" as "completed" | "inprogress",
+
+    // /public/images/projects/ 에 이미지를 넣으세요
+    // 여러 장 넣으면 캐러셀로 표시됩니다. 없으면 placeholder 표시
+    images: [
+      "/images/projects/YackBang1.png",
+      "/images/projects/YackBang2.png",
+    ] as string[],
+
+    summary:
+      "복용 중인 약이 함께 먹어도 되는지, 전문 용어 없이 쉽게 확인하세요.\n" +
+      "식약처 DUR(의약품 사용 재검토) 데이터를 기반으로 의약품 병용금기 정보를\n" +
+      "일반인도 이해할 수 있는 언어로 제공하는 서비스입니다.",
+
+    features: [
+      "의약품 검색 & 병용금기 조회",
+      "실생활 위험 조합 가이드",
+      "URL 공유 & 최근 기록",
+      "모바일 최적화 & PWA",
+    ],
+
+    skills:  ["React", "Tailwind CSS", "Node.js", "Next", "Vercel", "Supabase","TypeScript"],
+    link:    "https://yack-bang.vercel.app/",
+    github:  "https://github.com/cjfwls39/YackBang.git",
+  },
+
   {
     title:    "Cleanse",
     period:   "2026",
@@ -137,7 +167,7 @@ export const PROJECTS_DATA = [
     skills:  ["Electron","React","TypeScript","Tailwind CSS","Zustand","ts-morph","Ollama (Qwen3:4b)"],
     link:    "https://github.com/cjfwls39/cleanse/releases/tag/v1.0.0",
     github:  "https://github.com/cjfwls39/cleanse.git",
-  },
+  }
 ];
 
 // ── Contact ───────────────────────────────────────────────────
