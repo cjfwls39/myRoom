@@ -77,8 +77,9 @@ src/components/
 └── ui/            # 모달, 프로젝트 상세 패널, 안내 UI
 ```
 
-> 📌 **콘텐츠 수정은 `src/components/room/portfolioData.ts` 한 곳**에서 이뤄집니다.
-> 프로젝트를 추가하면 갤러리에 자동 전시됩니다. (전시 개수 변경 시 `museum/GalleryRoom.tsx` 참고)
+> 📌 **모든 콘텐츠는 `src/components/room/portfolioData.ts` 한 곳에서 관리됩니다.**
+> 프로젝트를 추가/삭제하면 갤러리 전시물·위치·통로 길이·조명·상세 패널이 **전부 자동 반영**됩니다.
+> (전시 위치·간격은 코드 수정 없이 자동 계산되며, 손맛 조정이 필요할 때만 `museum/GalleryRoom.tsx`의 `SPACING`·`END_MARGIN` 값을 만지면 됩니다.)
 
 ---
 
@@ -98,6 +99,32 @@ npm run dev
 
 > ⚠️ WebGL을 지원하는 최신 브라우저(Chrome / Firefox / Edge)에서 접속을 권장합니다.
 > ⚠️ A WebGL-compatible modern browser is required.
+
+---
+
+## ✏️ Customizing
+
+포트폴리오 내용은 **`src/components/room/portfolioData.ts` 한 파일**만 수정하면 됩니다.
+
+```ts
+PROJECTS_DATA = [
+  {
+    title:    "프로젝트명",
+    period:   "2026",
+    status:   "completed",        // "completed" | "inprogress"
+    images:   ["/images/projects/example_1.png"],  // public/ 기준 경로
+    summary:  "한 줄 소개",
+    features: ["주요 기능 1", "주요 기능 2"],
+    skills:   ["React", "TypeScript"],
+    link:     "https://...",      // 배포 링크 (없으면 버튼 숨김)
+    github:   "https://github.com/...",
+  },
+  // 항목을 추가하면 갤러리에 자동으로 한 칸 더 전시됩니다
+];
+```
+
+- **About / Skills / Contact** 도 같은 파일의 `ABOUT_DATA` · `SKILLS_DATA` · `CONTACT_DATA` 에서 수정
+- 이미지는 `public/images/projects/` 에 넣고 경로만 맞추면 됩니다
 
 ---
 

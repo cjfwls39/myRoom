@@ -5,16 +5,18 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { useScene } from "@/components/canvas/SceneContext";
 import { useAchievements } from "@/components/achievements/AchievementContext";
+import { GD } from "./GalleryRoom";
 
 const SPEED          = 5;
 const PLAYER_HEIGHT  = 1.7;
 const BOUNDS_X       = 7;
-const BOUNDS_Z       = 24.5;
-const EXIT_TRIGGER_Z = 24.0;
+// 통로 길이(GD)에 맞춰 자동 — 갤러리가 늘어나도 경계/시작점이 따라감
+const BOUNDS_Z       = GD / 2 - 0.5;  // 벽 충돌 한계
+const EXIT_TRIGGER_Z = GD / 2 - 1.0;  // 이 Z를 넘으면 나가기 트리거
 const SENSITIVITY    = 0.0018;
 
-// 박물관 시작 위치 / 방향
-const MUSEUM_START_POS = new THREE.Vector3(0, PLAYER_HEIGHT, -22);
+// 박물관 시작 위치 / 방향 (입구 = -GD/2, 거기서 3 안쪽)
+const MUSEUM_START_POS = new THREE.Vector3(0, PLAYER_HEIGHT, -(GD / 2) + 3);
 const MUSEUM_START_ROT = new THREE.Euler(0, Math.PI, 0, "YXZ"); // 갤러리 안쪽(+Z) 방향
 
 export default function FirstPersonControls({ onExit }: { onExit: () => void }) {
