@@ -21,7 +21,9 @@ Sit at the desk, and step into a virtual gallery rendered inside the monitor to 
 
 ## 📸 Preview
 
-> *`[스크린샷 또는 GIF 추가]`*
+<p align="center">
+  <img src="public/images/projects/myRoom.gif" alt="myRoom preview" width="100%" />
+</p>
 
 ---
 
