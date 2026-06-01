@@ -15,7 +15,7 @@
 *A portfolio you don't just read — you explore.
 Sit at the desk, and step into a virtual gallery rendered inside the monitor to walk through the work.*
 
-**🔗 Live Demo** → `[배포 후 링크 추가]`
+**🔗 Live Demo** → **[my-room-ruddy.vercel.app](https://my-room-ruddy.vercel.app/)**
 
 ---
 

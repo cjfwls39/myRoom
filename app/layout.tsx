@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://my-room-ruddy.vercel.app"),
   title: "myRoom | JCJ Portfolio",
   description: "Next.js + Three.js로 구현한 3D 인터랙티브 포트폴리오. 가상의 방을 직접 탐색하며 포트폴리오를 경험하세요.",
   keywords: ["portfolio", "3D", "Three.js", "Next.js", "interactive", "JCJ", "정철진"],
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "myRoom | JCJ Portfolio",
     description: "Next.js + Three.js로 구현한 3D 인터랙티브 포트폴리오.",
-    url: "https://github.com/cjfwls39/myRoom", //나중에 호스팅하면 여기 호스팅 주소로 변경
+    url: "https://my-room-ruddy.vercel.app/",
     siteName: "myRoom",
     type: "website",
   },
