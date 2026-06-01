@@ -253,14 +253,23 @@ function ProjectsContent() {
 
 // ── Contact ───────────────────────────────────────────────────
 function ContactContent() {
-  const links = [
-    { label: "✉  Email",    href: `mailto:${CONTACT_DATA.email}`,  show: !!CONTACT_DATA.email,    sub: CONTACT_DATA.email    },
-    { label: "☏  Phone",    href: `tel:${CONTACT_DATA.phone}`,     show: !!CONTACT_DATA.phone,    sub: CONTACT_DATA.phone    },
-    { label: "◈  GitHub",   href: CONTACT_DATA.github,             show: !!CONTACT_DATA.github,   sub: CONTACT_DATA.github   },
-    { label: "◈  LinkedIn", href: CONTACT_DATA.linkedin,           show: !!CONTACT_DATA.linkedin, sub: CONTACT_DATA.linkedin },
-    { label: "◈  Twitter",  href: CONTACT_DATA.twitter,            show: !!CONTACT_DATA.twitter,  sub: CONTACT_DATA.twitter  },
-    ...CONTACT_DATA.other.map(o => ({ label: o.label, href: o.url, show: true, sub: o.url })),
+  const [copied, setCopied] = useState<string | null>(null);
+
+  const items = [
+    { label: "✉  Email",    value: CONTACT_DATA.email,    show: !!CONTACT_DATA.email,    link: false },
+    { label: "☏  Phone",    value: CONTACT_DATA.phone,    show: !!CONTACT_DATA.phone,    link: false },
+    { label: "◈  GitHub",   value: CONTACT_DATA.github,   show: !!CONTACT_DATA.github,   link: true  },
+    { label: "◈  LinkedIn", value: CONTACT_DATA.linkedin, show: !!CONTACT_DATA.linkedin, link: false },
+    { label: "◈  Twitter",  value: CONTACT_DATA.twitter,  show: !!CONTACT_DATA.twitter,  link: false },
+    ...CONTACT_DATA.other.map(o => ({ label: o.label, value: o.url, show: true, link: false })),
   ].filter(l => l.show);
+
+  const handleCopy = (value: string) => {
+    navigator.clipboard.writeText(value).then(() => {
+      setCopied(value);
+      setTimeout(() => setCopied(null), 2000);
+    });
+  };
 
   return (
     <div>
@@ -268,11 +277,32 @@ function ContactContent() {
         편하게 연락주세요 :)
       </p>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.7rem" }}>
-        {links.map((l, i) => (
-          <a key={i} href={l.href} target="_blank" rel="noreferrer" style={s.contactLink}>
+        {items.map((l, i) => l.link ? (
+          <a key={i} href={l.value} target="_blank" rel="noreferrer"
+            style={{ ...s.contactLink, cursor: "pointer" }}
+          >
             <span style={{ color: "#C8B8FF", fontWeight: 600, fontSize: "0.9rem" }}>{l.label}</span>
-            <span style={{ color: "#7868A8", fontSize: "0.78rem", marginTop: "0.15rem", display: "block", wordBreak: "break-all" }}>{l.sub}</span>
+            <span style={{ color: "#7868A8", fontSize: "0.78rem", marginTop: "0.15rem", display: "block", wordBreak: "break-all" }}>
+              {l.value}
+            </span>
           </a>
+        ) : (
+          <div key={i} onClick={() => handleCopy(l.value)}
+            style={{ ...s.contactLink, cursor: "pointer", position: "relative" }}
+          >
+            <span style={{ color: "#C8B8FF", fontWeight: 600, fontSize: "0.9rem" }}>{l.label}</span>
+            <span style={{ color: "#7868A8", fontSize: "0.78rem", marginTop: "0.15rem", display: "block", wordBreak: "break-all" }}>
+              {l.value}
+            </span>
+            {copied === l.value && (
+              <span style={{
+                position: "absolute", right: "1rem", top: "50%", transform: "translateY(-50%)",
+                color: "#70D0A0", fontSize: "0.75rem", letterSpacing: "0.08em",
+              }}>
+                복사됨 ✓
+              </span>
+            )}
+          </div>
         ))}
       </div>
     </div>

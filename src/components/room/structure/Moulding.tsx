@@ -20,7 +20,7 @@ export const SIGNS_DATA = [
     label:   "PROJECTS",
     icon:    "💻",
     color:   "#4A6A8A",
-    onClick: () => { (window as any).__openPortfolioModal?.("projects"); },
+    onClick: () => { (window as any).__enterMuseum?.(); },
   },
   {
     id:      "skills",

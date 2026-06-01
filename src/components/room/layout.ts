@@ -29,6 +29,11 @@ export const CAMERA = {
   target: [10, 11, 10] as [number, number, number],  // 도착 위치
   lookAt: [0, 1.8, 0]  as [number, number, number],  // 바라보는 중심
   fov:    34,                                         // FOV (고정)
+  // 모니터 줌인 타깃 (방→박물관 전환)
+  // 모니터 월드 위치: [-1.25, 2.00, -0.77], 법선: +X 방향
+  // 거리 0.75u → 수직 75% fill (FOV=34 기준)
+  monitorPos:    [-0.50, 2.00, -0.77] as [number, number, number],
+  monitorLookAt: [-1.25, 2.00, -0.77] as [number, number, number],
 } as const;
 
 // =======================================================

@@ -84,6 +84,27 @@ export const SKILLS_DATA = [
 ];
 
 // ── Projects ──────────────────────────────────────────────────
+//
+//  이 배열이 두 곳에서 동시에 쓰입니다:
+//    1) 박물관(3D 갤러리)에 전시물(액자)로 자동 전시됨
+//    2) 전시물 클릭 시 뜨는 상세 패널 내용
+//
+//  ▶ 프로젝트 추가/삭제는 이 배열만 수정하면 됩니다.
+//  ▶ 단, 전시물 "개수"를 바꾸면 박물관 전시 위치도 맞춰야 합니다:
+//     → src/components/museum/GalleryRoom.tsx 의 EXHIBIT_ZS / SIDES
+//       (자세한 규칙은 그 파일 상단 주석 참고)
+//
+//  필드 설명:
+//    title    : 프로젝트명 (한글 포함 시 자동으로 한글 폰트 적용)
+//    period   : 기간 표기
+//    status   : "completed"(완료) | "inprogress"(진행중) — 뱃지 색 결정
+//    images   : /public/images/projects/ 경로. 여러 장이면 캐러셀, 없으면 placeholder
+//    summary  : 요약 (줄바꿈은 \n)
+//    features : 주요 기능 목록 (▸ 불릿으로 표시)
+//    skills   : 기술 스택 태그
+//    link     : 배포 사이트 URL (없으면 버튼 숨김)
+//    github   : 저장소 URL (없으면 버튼 숨김)
+//
 export const PROJECTS_DATA = [
   {
     title:    "ShieldBox.io: Security Simulator",

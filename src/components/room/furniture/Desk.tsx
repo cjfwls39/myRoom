@@ -2,11 +2,20 @@
 
 import { useRef, useEffect, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
+import { RenderTexture, PerspectiveCamera } from "@react-three/drei";
+import { useScene } from "@/components/canvas/SceneContext";
 import * as THREE from "three";
 import AnimatedWrapper, { SceneItem } from "../AnimatedWrapper";
 import { MAT } from "../materials";
 import { COLOR, DELAY } from "../constants";
 import { POS, SIZE } from "../layout";
+import MuseumScene from "@/components/museum/MuseumScene";
+import MuseumHUD from "@/components/museum/MuseumHUD";
+import { LOW_END_DEVICE } from "../Performance";
+
+// 모니터 RenderTexture 해상도 (화면비 frameX:frameH ≈ 1.1:0.63 유지)
+const RT_W = LOW_END_DEVICE ? 1024 : 1920;
+const RT_H = Math.round(RT_W * (SIZE.monitor.frameH / SIZE.monitor.frameX));
 
 // ─────────────────────────────────────────────────────
 //  팬 블레이드 (회전 애니메이션)
@@ -355,62 +364,19 @@ function PcTower({ deskTopY, pcLightRef }: {
 }
 
 // ─────────────────────────────────────────────────────
-//  모니터
+//  모니터 (스크린 = RenderTexture → 박물관 씬)
 // ─────────────────────────────────────────────────────
-
-// 별 위치 (화면 로컬 좌표 — 화면 중심 기준)
-const STAR_POSITIONS = [
-  [-0.55,  0.22], [-0.38,  0.08], [-0.20,  0.25], [ 0.02,  0.18],
-  [ 0.18,  0.27], [ 0.35,  0.10], [ 0.52,  0.20], [ 0.60, -0.05],
-  [-0.62, -0.10], [-0.45, -0.20], [-0.28, -0.08], [-0.10, -0.22],
-  [ 0.12, -0.14], [ 0.28, -0.24], [ 0.48, -0.18], [ 0.64,  0.22],
-  [-0.50,  0.01], [ 0.40, -0.06], [-0.15,  0.12], [ 0.22,  0.03],
-  [-0.66,  0.15], [ 0.55, -0.25], [-0.32,  0.20], [ 0.08, -0.05],
-] as [number, number][];
-
-// 색상별 그룹 인덱스 (warm/cool/white)
-const STAR_GROUPS = STAR_POSITIONS.reduce(
-  (acc, _, i) => {
-    if (i % 5 === 0)      acc.warm.push(i);
-    else if (i % 3 === 0) acc.cool.push(i);
-    else                   acc.white.push(i);
-    return acc;
-  },
-  { warm: [] as number[], cool: [] as number[], white: [] as number[] }
-);
-
 function Monitor({ deskTopY }: { deskTopY: number }) {
-  const m = SIZE.monitor;
+  const { museumCamRef, mode } = useScene();
+  // 박물관 모드일 때만 매 프레임 렌더.
+  // room·zooming-in·zooming-out 중에는 박물관 카메라가 정지 상태라
+  // 1프레임만 렌더해도 화면이 동일 → 줌인 구간 부하 급증 방지
+  const rtFrames = mode === "museum" ? Infinity : 1;
+  const m        = SIZE.monitor;
   const screenCY = deskTopY + m.standH + m.riseY + m.frameH / 2;
-  const sZ = m.frameZ * 0.5 + 0.004;
-
-  const W = m.frameX;  // 1.44
-  const H = m.frameH;  // 0.63
-
-  const warmRef  = useRef<THREE.InstancedMesh>(null!);
-  const coolRef  = useRef<THREE.InstancedMesh>(null!);
-  const whiteRef = useRef<THREE.InstancedMesh>(null!);
-
-  // 별 행렬 초기화: 마운트 1회
-  useEffect(() => {
-    const dummy = new THREE.Object3D();
-    const starZ  = sZ + 0.002;
-
-    const setGroup = (ref: THREE.InstancedMesh, positions: [number, number][], size: number) => {
-      positions.forEach(([sx, sy], slot) => {
-        dummy.position.set(sx, screenCY + sy, starZ);
-        dummy.scale.setScalar(size);
-        dummy.updateMatrix();
-        ref.setMatrixAt(slot, dummy.matrix);
-      });
-      ref.instanceMatrix.needsUpdate = true;
-    };
-
-    setGroup(warmRef.current,  STAR_GROUPS.warm.map(i  => STAR_POSITIONS[i]), 0.008);
-    setGroup(coolRef.current,  STAR_GROUPS.cool.map(i  => STAR_POSITIONS[i]), 0.006);
-    setGroup(whiteRef.current, STAR_GROUPS.white.map(i => STAR_POSITIONS[i]), 0.004);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const sZ       = m.frameZ * 0.5 + 0.004;
+  const W = m.frameX;
+  const H = m.frameH;
 
   return (
     <group position={[m.offsetX, 0, m.offsetZ]}>
@@ -430,77 +396,42 @@ function Monitor({ deskTopY }: { deskTopY: number }) {
         <meshStandardMaterial color="#111" />
       </mesh>
 
-      {/* ── 우주 배경 (검은 하늘) ── */}
+      {/* ── 스크린 — RenderTexture로 박물관 씬 표시 ── */}
       <mesh position={[0, screenCY, sZ]}>
-        <boxGeometry args={[W, H, 0.001]} />
-        <meshStandardMaterial color="#03020f" emissive="#03020f" emissiveIntensity={0.3} />
+        <planeGeometry args={[W, H]} />
+        <meshBasicMaterial toneMapped={false}>
+          <RenderTexture
+            attach="map"
+            width={RT_W}
+            height={RT_H}
+            samples={4}
+            anisotropy={16}
+            frames={rtFrames}
+          >
+            {/* 박물관 전용 카메라 — ref를 context로 공유, 초기 위치=갤러리 입구 */}
+            <PerspectiveCamera
+              ref={museumCamRef as any}
+              makeDefault
+              fov={60}
+              near={0.1}
+              far={200}
+              aspect={RT_W / RT_H}
+              position={[0, 1.7, -22]}
+              rotation={[0, Math.PI, 0]}
+            >
+              {/* 화면 고정 HUD (업적 토스트) */}
+              <MuseumHUD />
+            </PerspectiveCamera>
+            <MuseumScene />
+          </RenderTexture>
+        </meshBasicMaterial>
       </mesh>
 
-      {/* ── 성운 글로우 — 보라/파랑 겹쳐서 안개 느낌 ── */}
-      <mesh position={[-0.18, screenCY + 0.06, sZ + 0.001]}>
-        <planeGeometry args={[0.55, 0.32]} />
-        <meshStandardMaterial
-          color="#2a0840" emissive="#5010a0" emissiveIntensity={0.28}
-          transparent opacity={0.45} depthWrite={false}
-        />
-      </mesh>
-      <mesh position={[0.22, screenCY - 0.08, sZ + 0.001]}>
-        <planeGeometry args={[0.48, 0.26]} />
-        <meshStandardMaterial
-          color="#081428" emissive="#1040a0" emissiveIntensity={0.22}
-          transparent opacity={0.40} depthWrite={false}
-        />
-      </mesh>
-      <mesh position={[0.10, screenCY + 0.04, sZ + 0.0015]}>
-        <planeGeometry args={[0.30, 0.20]} />
-        <meshStandardMaterial
-          color="#140828" emissive="#8020c0" emissiveIntensity={0.20}
-          transparent opacity={0.30} depthWrite={false}
-        />
-      </mesh>
-
-      {/* ── 별들 — 색상별 3 InstancedMesh (24 → 3 draw call) ── */}
-      <instancedMesh ref={warmRef}  args={[null as any, null as any, STAR_GROUPS.warm.length]}>
-        <planeGeometry args={[1, 1]} />
-        <meshStandardMaterial color="#ffe8c0" emissive="#ffe8c0" emissiveIntensity={3.0} depthWrite={false} />
-      </instancedMesh>
-      <instancedMesh ref={coolRef}  args={[null as any, null as any, STAR_GROUPS.cool.length]}>
-        <planeGeometry args={[1, 1]} />
-        <meshStandardMaterial color="#c0d8ff" emissive="#c0d8ff" emissiveIntensity={2.5} depthWrite={false} />
-      </instancedMesh>
-      <instancedMesh ref={whiteRef} args={[null as any, null as any, STAR_GROUPS.white.length]}>
-        <planeGeometry args={[1, 1]} />
-        <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={1.5} depthWrite={false} />
-      </instancedMesh>
-
-      {/* ── 행성 1 — 보라빛 가스 행성 (중앙 우상단) ── */}
-      <mesh position={[0.28, screenCY + 0.10, sZ + 0.002]}>
-        <planeGeometry args={[0.18, 0.18]} />
-        <meshStandardMaterial color="#4a2870" emissive="#7030c0" emissiveIntensity={0.55} roughness={0.6} transparent opacity={0.95} depthWrite={false} />
-      </mesh>
-      {/* 행성 1 고리 — 얇은 타원형 플레인 */}
-      <mesh position={[0.28, screenCY + 0.08, sZ + 0.0025]}>
-        <planeGeometry args={[0.34, 0.06]} />
-        <meshStandardMaterial color="#9060d0" emissive="#a070e0" emissiveIntensity={0.6} transparent opacity={0.45} depthWrite={false} />
-      </mesh>
-
-      {/* ── 행성 2 — 파란 얼음 행성 (좌하단) ── */}
-      <mesh position={[-0.38, screenCY - 0.14, sZ + 0.002]}>
-        <planeGeometry args={[0.12, 0.12]} />
-        <meshStandardMaterial color="#1a3a6a" emissive="#2060b0" emissiveIntensity={0.50} roughness={0.5} transparent opacity={0.95} depthWrite={false} />
-      </mesh>
-
-      {/* ── 행성 3 — 작은 붉은 행성 (우하단) ── */}
-      <mesh position={[0.52, screenCY - 0.18, sZ + 0.002]}>
-        <planeGeometry args={[0.07, 0.07]} />
-        <meshStandardMaterial color="#6a1a10" emissive="#c04030" emissiveIntensity={0.55} roughness={0.7} transparent opacity={0.95} depthWrite={false} />
-      </mesh>
-
-      {/* ── 화면 발광 — 보라빛이 책상 앞으로 ── */}
+      {/* ── 화면 발광 — 따뜻한 화이트 빛 ── */}
       <pointLight
         position={[0, screenCY, sZ + 0.18]}
-        color="#6030b0"
-        intensity={0.40}
+        color="#f0f4ff"
+        intensity={0.35}
         distance={1.4}
       />
     </group>
@@ -616,6 +547,7 @@ function DeskBody({ deskTopY }: { deskTopY: number }) {
 // ─────────────────────────────────────────────────────
 export default function Desk() {
   const pcLightRef = useRef<THREE.PointLight>(null!);
+  const { enterMuseum } = useScene();
   const { legH, topH, topW, topD } = SIZE.desk;
   const deskTopY = legH + topH;
 
@@ -638,7 +570,7 @@ export default function Desk() {
       liftHeight={0.05}
       hitbox={[hitW, hitH, hitD] as [number, number, number]}
       hitboxPos={[0, hitH / 2, 0.6] as [number, number, number]}
-      onClick={() => (window as any).__openPortfolioModal?.("projects")}
+      onClick={enterMuseum}
     >
       <group rotation={[0, Math.PI / 2, 0]}>
         <DeskBody deskTopY={deskTopY} />
