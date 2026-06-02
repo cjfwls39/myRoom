@@ -3,15 +3,17 @@
 import { useState, useEffect } from "react";
 
 export interface ProjectDetail {
-  title:    string;
-  period:   string;
-  status:   "completed" | "inprogress";
-  images:   string[];
-  summary:  string;
-  features: string[];
-  skills:   string[];
-  link?:    string;
-  github?:  string;
+  title:       string;
+  period:      string;
+  status:      "completed" | "inprogress";
+  images:      string[];
+  summary:     string;
+  background?: string;  // 💡 왜 만들었나 (없으면 섹션 숨김)
+  approach?:   string;  // 🛠 어떻게 만들었나 (없으면 섹션 숨김)
+  features:    string[];
+  skills:      string[];
+  link?:       string;
+  github?:     string;
 }
 
 interface Props {
@@ -131,6 +133,26 @@ export default function ProjectDetailPanel({ project, onClose }: Props) {
           <p style={{ margin: "0 0 1.2rem", color: "#3a362e", fontSize: "0.95rem", lineHeight: 1.7, whiteSpace: "pre-line" }}>
             {project.summary}
           </p>
+
+          {/* 💡 왜 만들었나 */}
+          {project.background && (
+            <>
+              <SectionLabel>💡 왜 만들었나</SectionLabel>
+              <p style={{ margin: "0 0 1.2rem", color: "#4a463e", fontSize: "0.9rem", lineHeight: 1.75, whiteSpace: "pre-line" }}>
+                {project.background}
+              </p>
+            </>
+          )}
+
+          {/* 🛠 어떻게 만들었나 */}
+          {project.approach && (
+            <>
+              <SectionLabel>🛠 어떻게 만들었나</SectionLabel>
+              <p style={{ margin: "0 0 1.2rem", color: "#4a463e", fontSize: "0.9rem", lineHeight: 1.75, whiteSpace: "pre-line" }}>
+                {project.approach}
+              </p>
+            </>
+          )}
 
           {/* 주요 기능 */}
           {project.features.length > 0 && (

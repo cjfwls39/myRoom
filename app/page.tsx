@@ -13,6 +13,7 @@ import WeatherButton         from "@/components/canvas/WeatherButton";
 import PortfolioModal, { ModalType } from "@/components/ui/PortfolioModal";
 import ProjectDetailPanel    from "@/components/ui/ProjectDetailPanel";
 import NavigationGuide       from "@/components/ui/NavigationGuide";
+import NavMenu               from "@/components/ui/NavMenu";
 import { PROJECTS_DATA }     from "@/components/room/portfolioData";
 
 // ── WebGL 에러 바운더리 ───────────────────────────────────────
@@ -107,6 +108,7 @@ function SceneContent() {
         {/* 방 UI (박물관 모드에서 숨김) */}
         {!inMuseum && (
           <>
+            <NavMenu />
             <DayNightTransition />
             <WeatherButton />
             <NavigationGuide />
