@@ -112,31 +112,69 @@ function AboutContent() {
 }
 
 // ── Skills ────────────────────────────────────────────────────
+// 기술명 → { 로고 slug(simple-icons), 브랜드 컬러 }
+// 매핑에 없는 기술은 기본 보라 배지로 표시됩니다. (새 기술 추가 시 여기에 한 줄)
+const SKILL_META: Record<string, { slug: string; color: string }> = {
+  // Frontend
+  "HTML5":      { slug: "html5",        color: "#E34F26" },
+  "CSS3":       { slug: "css3",         color: "#1572B6" },
+  "Tailwind":   { slug: "tailwindcss",  color: "#06B6D4" },
+  "JavaScript": { slug: "javascript",   color: "#F7DF1E" },
+  "TypeScript": { slug: "typescript",   color: "#3178C6" },
+  // Frameworks & Libraries
+  "React":      { slug: "react",        color: "#61DAFB" },
+  "Next.js":    { slug: "nextdotjs",    color: "#E8E0FF" }, // 원래 검정 로고 → 밝게
+  "Three.js":   { slug: "threedotjs",   color: "#E8E0FF" },
+  "Electron":   { slug: "electron",     color: "#9FEAF9" },
+  "Tauri":      { slug: "tauri",        color: "#FFC131" },
+  // DevOps
+  "AWS":        { slug: "amazonwebservices", color: "#FF9900" },
+  "Render":     { slug: "render",       color: "#E8E0FF" },
+  "Git":        { slug: "git",          color: "#F05032" },
+  // Backend
+  "Node.js":    { slug: "nodedotjs",    color: "#5FA04E" },
+  "Java":       { slug: "openjdk",      color: "#E8E0FF" },
+  "Spring":     { slug: "spring",       color: "#6DB33F" },
+  // "JSP": simple-icons 로고 없음 → 기본 보라 배지로 표시됨
+  "MySQL":      { slug: "mysql",        color: "#4479A1" },
+  "Supabase":   { slug: "supabase",     color: "#3FCF8E" },
+};
+
+function SkillBadge({ name }: { name: string }) {
+  const meta = SKILL_META[name];
+  const accent = meta?.color ?? "#A080FF";
+  return (
+    <span style={{
+      display: "inline-flex", alignItems: "center", gap: "0.4rem",
+      padding: "0.3rem 0.7rem", borderRadius: "7px",
+      background: "rgba(255,255,255,0.05)",
+      border: `1px solid ${accent}55`,
+      fontSize: "0.8rem", color: "#E8E0FF", letterSpacing: "0.02em",
+    }}>
+      {meta && (
+        <img
+          src={`https://cdn.simpleicons.org/${meta.slug}/${meta.color.replace("#", "")}`}
+          alt=""
+          width={14}
+          height={14}
+          style={{ display: "block" }}
+          onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+        />
+      )}
+      {name}
+    </span>
+  );
+}
+
 function SkillsContent() {
   return (
     <div>
       {SKILLS_DATA.map((group, i) => (
-        <div key={i} style={{ marginBottom: "1.6rem" }}>
+        <div key={i} style={{ marginBottom: "1.4rem" }}>
           <SectionLabel>{group.category}</SectionLabel>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.65rem" }}>
+          <div style={s.tagRow}>
             {group.items.map((skill, j) => (
-              <div key={j}>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.3rem" }}>
-                  <span style={{ color: "#D0C8F8", fontSize: "0.88rem" }}>{skill.name}</span>
-                  <span style={{ color: "#7868A8", fontSize: "0.75rem" }}>
-                    {"●".repeat(skill.level)}{"○".repeat(5 - skill.level)}
-                  </span>
-                </div>
-                <div style={{ height: "4px", borderRadius: "2px", background: "rgba(140,100,255,0.15)", overflow: "hidden" }}>
-                  <div style={{
-                    height: "100%",
-                    width:  `${skill.level / 5 * 100}%`,
-                    borderRadius: "2px",
-                    background: "linear-gradient(90deg, #7040CC, #A080FF)",
-                    transition: "width 0.6s ease",
-                  }} />
-                </div>
-              </div>
+              <SkillBadge key={j} name={skill} />
             ))}
           </div>
         </div>

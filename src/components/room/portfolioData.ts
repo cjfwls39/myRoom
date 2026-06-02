@@ -12,7 +12,7 @@
 // ── About Me ──────────────────────────────────────────────────
 export const ABOUT_DATA = {
   name:   "정철진",
-  role:   "empty",
+  role:   "WEB DEVELOPER",
   tagline: "아이디어를 실천으로 만드는 주니어 개발자",
   avatar: "/images/profile.jpg",   // /public/images/ 에 사진 넣으면 표시됩니다. 없으면 이니셜 표시
 
@@ -53,33 +53,29 @@ export const ABOUT_DATA = {
 };
 
 // ── Skills ────────────────────────────────────────────────────
-// level: 1~5 (1=입문, 3=실무, 5=숙련)
+// 카테고리별 기술명만 배열로 나열하면 모달에 배지(로고+색)로 표시됩니다.
+// 기술 추가/삭제는 items 배열에 문자열만 넣고 빼면 됩니다.
+// (로고·색은 PortfolioModal.tsx 의 SKILL_META 에서 관리)
 export const SKILLS_DATA = [
   {
     category: "Frontend",
-    items: [
-      { name: "JavaScript", level: 4 },
-      { name: "TypeScript", level: 3 },
-      { name: "React",      level: 4 },
-      { name: "Next.js",    level: 3 },
-      { name: "Three.js",   level: 2 },
-      { name: "HTML/CSS",   level: 4 },
-    ],
+    items: ["HTML5", "CSS3", "Tailwind", "JavaScript", "TypeScript"],
+  },
+  {
+    category: "Frameworks & Libraries",
+    items: ["React", "Next.js", "Three.js", "Electron", "Tauri"],
+  },
+  {
+    category: "DevOps",
+    items: ["AWS", "Render", "Git"],
   },
   {
     category: "Backend",
-    items: [
-      { name: "Node.js", level: 3 },
-      { name: "Java",    level: 2 },
-    ],
+    items: ["Node.js", "Java", "Spring", "JSP"],
   },
   {
-    category: "DevOps & Tools",
-    items: [
-      { name: "Git",    level: 4 },
-      { name: "AWS",    level: 2 },
-      { name: "Render", level: 3 },
-    ],
+    category: "Database & BaaS",
+    items: ["MySQL", "Supabase"],
   },
 ];
 
