@@ -12,9 +12,11 @@ import DayNightTransition    from "@/components/canvas/DayNightButton";
 import WeatherButton         from "@/components/canvas/WeatherButton";
 import PortfolioModal, { ModalType } from "@/components/ui/PortfolioModal";
 import ProjectDetailPanel    from "@/components/ui/ProjectDetailPanel";
+import MobileProjectList     from "@/components/ui/MobileProjectList";
 import NavigationGuide       from "@/components/ui/NavigationGuide";
 import NavMenu               from "@/components/ui/NavMenu";
 import { PROJECTS_DATA }     from "@/components/room/portfolioData";
+import { useIsMobile }       from "@/hooks/useIsMobile";
 
 // ── WebGL 에러 바운더리 ───────────────────────────────────────
 class WebGLErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
@@ -67,7 +69,9 @@ export default function Home() {
 
 // ── 내부 컨텐츠 (SceneContext 사용) ───────────────────────────
 function SceneContent() {
+  const isMobile = useIsMobile();
   const [modal, setModal] = useState<ModalType | null>(null);
+  const [projectListOpen, setProjectListOpen] = useState(false);
   const { mode, flash, enterMuseum, exitMuseum } = useScene();
   const { unlock } = useAchievements();
   const [isLocked, setIsLocked] = useState(false);
@@ -76,12 +80,13 @@ function SceneContent() {
 
   const inMuseum = mode === "museum";
 
-  // 포인터 락 상태 추적
+  // 포인터 락 상태 추적 (PC 전용)
   useEffect(() => {
+    if (isMobile) return;
     const onChange = () => setIsLocked(!!document.pointerLockElement);
     document.addEventListener("pointerlockchange", onChange);
     return () => document.removeEventListener("pointerlockchange", onChange);
-  }, []);
+  }, [isMobile]);
 
   // 전시물 상세 열기 브릿지 (박물관 → DOM)
   useEffect(() => {
@@ -89,7 +94,7 @@ function SceneContent() {
       setDetailIndex(index);
       visitedExhibits.current.add(index);
       if (visitedExhibits.current.size >= PROJECTS_DATA.length) {
-        unlock("connoisseur"); // Curator's Eye — 모든 작품 감상
+        unlock("connoisseur");
       }
     };
     return () => { (window as any).__openProjectDetail = undefined; };
@@ -98,7 +103,11 @@ function SceneContent() {
   return (
     <>
       {/* 포트폴리오 모달 브릿지 */}
-      <OpenModalBridge onOpen={setModal} onEnterMuseum={enterMuseum} />
+      <OpenModalBridge
+        onOpen={setModal}
+        onEnterMuseum={enterMuseum}
+        onOpenProjectList={() => setProjectListOpen(true)}
+      />
 
       <main style={{ width:"100vw", height:"100vh", overflow:"hidden", position:"relative", backgroundColor:"#000000" }}>
         <WebGLErrorBoundary>
@@ -115,13 +124,12 @@ function SceneContent() {
           </>
         )}
 
-        {/* ── 박물관 UI ── */}
-        {inMuseum && (
+        {/* ── 박물관 UI (PC 전용) ── */}
+        {inMuseum && !isMobile && (
           <>
-            {/* 업적 패널 (트로피 버튼) */}
             <AchievementPanel />
 
-            {/* 포인터 락 안내 — 클릭하면 포인터 락 요청 (상세 패널 열려있으면 숨김) */}
+            {/* 포인터 락 안내 */}
             {!isLocked && detailIndex === null && (
               <div
                 onClick={() => document.querySelector("canvas")?.requestPointerLock()}
@@ -152,20 +160,15 @@ function SceneContent() {
               </div>
             )}
 
-            {/* 크로스헤어 — 포인터 락 중에만 표시 */}
+            {/* 크로스헤어 */}
             {isLocked && (
               <div style={{
-                position: "fixed",
-                top: "50%", left: "50%",
+                position: "fixed", top: "50%", left: "50%",
                 transform: "translate(-50%, -50%)",
-                pointerEvents: "none",
-                zIndex: 50,
+                pointerEvents: "none", zIndex: 50,
               }}>
-                {/* 가로선 */}
                 <div style={{ position: "absolute", width: 14, height: 1.5, background: "rgba(255,255,255,0.85)", top: "50%", left: "50%", transform: "translate(-50%,-50%)", boxShadow: "0 0 2px rgba(0,0,0,0.8)" }} />
-                {/* 세로선 */}
                 <div style={{ position: "absolute", width: 1.5, height: 14, background: "rgba(255,255,255,0.85)", top: "50%", left: "50%", transform: "translate(-50%,-50%)", boxShadow: "0 0 2px rgba(0,0,0,0.8)" }} />
-                {/* 중심 점 */}
                 <div style={{ position: "absolute", width: 3, height: 3, borderRadius: "50%", background: "#fff", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} />
               </div>
             )}
@@ -174,8 +177,7 @@ function SceneContent() {
             <button
               onClick={exitMuseum}
               style={{
-                position: "absolute", top: "1.4rem", left: "1.4rem",
-                zIndex: 40,
+                position: "absolute", top: "1.4rem", left: "1.4rem", zIndex: 40,
                 display: "flex", alignItems: "center", gap: "0.5rem",
                 padding: "0.6rem 1.1rem",
                 background: "rgba(255,255,255,0.88)",
@@ -185,10 +187,7 @@ function SceneContent() {
                 WebkitBackdropFilter: "blur(14px)",
                 boxShadow: "0 2px 12px rgba(0,0,0,0.1)",
                 cursor: "pointer",
-                fontSize: "0.72rem",
-                fontWeight: 700,
-                color: "#333",
-                letterSpacing: "0.08em",
+                fontSize: "0.72rem", fontWeight: 700, color: "#333", letterSpacing: "0.08em",
               }}
             >
               ← 나가기
@@ -206,6 +205,11 @@ function SceneContent() {
         pointerEvents: "none",
       }} />
 
+      {/* 모바일 프로젝트 목록 */}
+      {projectListOpen && (
+        <MobileProjectList onClose={() => setProjectListOpen(false)} />
+      )}
+
       {/* 프로젝트 상세 패널 (박물관 전시물 클릭) */}
       {detailIndex !== null && PROJECTS_DATA[detailIndex] && (
         <ProjectDetailPanel
@@ -222,13 +226,15 @@ function SceneContent() {
   );
 }
 
-function OpenModalBridge({ onOpen, onEnterMuseum }: {
-  onOpen:        (t: ModalType) => void;
-  onEnterMuseum: () => void;
+function OpenModalBridge({ onOpen, onEnterMuseum, onOpenProjectList }: {
+  onOpen:             (t: ModalType) => void;
+  onEnterMuseum:      () => void;
+  onOpenProjectList:  () => void;
 }) {
   if (typeof window !== "undefined") {
     (window as any).__openPortfolioModal = onOpen;
     (window as any).__enterMuseum        = onEnterMuseum;
+    (window as any).__openProjectList    = onOpenProjectList;
   }
   return null;
 }

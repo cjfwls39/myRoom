@@ -7,6 +7,7 @@ import {
   PROJECTS_DATA,
   CONTACT_DATA,
 } from "@/components/room/portfolioData";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export type ModalType = "about" | "projects" | "skills" | "contact";
 
@@ -29,9 +30,7 @@ function AboutContent() {
 
   return (
     <div>
-      {/* 프로필 헤더 */}
       <div style={{ display: "flex", gap: "1.4rem", alignItems: "flex-start", marginBottom: "1.6rem" }}>
-        {/* 아바타 */}
         <div style={{
           width: "80px", height: "80px", borderRadius: "50%",
           flexShrink: 0, overflow: "hidden",
@@ -48,7 +47,6 @@ function AboutContent() {
             <span style={{ color: "#C8B0FF", fontSize: "1.4rem", fontWeight: 700 }}>{initials}</span>
           )}
         </div>
-        {/* 이름/역할 */}
         <div style={{ flex: 1 }}>
           <p style={{ color: "#E8E0FF", fontSize: "1.4rem", fontWeight: 700, margin: "0 0 0.3rem" }}>
             {ABOUT_DATA.name}
@@ -60,10 +58,8 @@ function AboutContent() {
         </div>
       </div>
 
-      {/* 소개 */}
       <p style={s.body}>{ABOUT_DATA.intro}</p>
 
-      {/* 경력 */}
       {ABOUT_DATA.experience.length > 0 && (
         <>
           <SectionLabel>경력</SectionLabel>
@@ -80,7 +76,6 @@ function AboutContent() {
         </>
       )}
 
-      {/* 학력 */}
       {ABOUT_DATA.education.length > 0 && (
         <>
           <SectionLabel>학력</SectionLabel>
@@ -96,7 +91,6 @@ function AboutContent() {
         </>
       )}
 
-      {/* PS */}
       {ABOUT_DATA.ps.length > 0 && (
         <>
           <div style={s.divider} />
@@ -112,30 +106,23 @@ function AboutContent() {
 }
 
 // ── Skills ────────────────────────────────────────────────────
-// 기술명 → { 로고 slug(simple-icons), 브랜드 컬러 }
-// 매핑에 없는 기술은 기본 보라 배지로 표시됩니다. (새 기술 추가 시 여기에 한 줄)
 const SKILL_META: Record<string, { slug: string; color: string }> = {
-  // Frontend
   "HTML5":      { slug: "html5",        color: "#E34F26" },
   "CSS3":       { slug: "css3",         color: "#1572B6" },
   "Tailwind":   { slug: "tailwindcss",  color: "#06B6D4" },
   "JavaScript": { slug: "javascript",   color: "#F7DF1E" },
   "TypeScript": { slug: "typescript",   color: "#3178C6" },
-  // Frameworks & Libraries
   "React":      { slug: "react",        color: "#61DAFB" },
-  "Next.js":    { slug: "nextdotjs",    color: "#E8E0FF" }, // 원래 검정 로고 → 밝게
+  "Next.js":    { slug: "nextdotjs",    color: "#E8E0FF" },
   "Three.js":   { slug: "threedotjs",   color: "#E8E0FF" },
   "Electron":   { slug: "electron",     color: "#9FEAF9" },
   "Tauri":      { slug: "tauri",        color: "#FFC131" },
-  // DevOps
   "AWS":        { slug: "amazonwebservices", color: "#FF9900" },
   "Render":     { slug: "render",       color: "#E8E0FF" },
   "Git":        { slug: "git",          color: "#F05032" },
-  // Backend
   "Node.js":    { slug: "nodedotjs",    color: "#5FA04E" },
   "Java":       { slug: "openjdk",      color: "#E8E0FF" },
   "Spring":     { slug: "spring",       color: "#6DB33F" },
-  // "JSP": simple-icons 로고 없음 → 기본 보라 배지로 표시됨
   "MySQL":      { slug: "mysql",        color: "#4479A1" },
   "Supabase":   { slug: "supabase",     color: "#3FCF8E" },
 };
@@ -154,9 +141,7 @@ function SkillBadge({ name }: { name: string }) {
       {meta && (
         <img
           src={`https://cdn.simpleicons.org/${meta.slug}/${meta.color.replace("#", "")}`}
-          alt=""
-          width={14}
-          height={14}
+          alt="" width={14} height={14}
           style={{ display: "block" }}
           onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
         />
@@ -183,108 +168,25 @@ function SkillsContent() {
   );
 }
 
-// ── Projects ──────────────────────────────────────────────────
-function ImageCarousel({ images }: { images: string[] }) {
-  const [idx, setIdx] = useState(0);
-
-  if (images.length === 0) {
-    return (
-      <div style={{
-        height: "180px", borderRadius: "8px",
-        background: "rgba(100,60,200,0.12)",
-        border: "1px dashed rgba(140,100,255,0.25)",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        marginBottom: "1rem",
-      }}>
-        <span style={{ color: "rgba(140,100,255,0.4)", fontSize: "0.8rem", letterSpacing: "0.1em" }}>
-          NO PREVIEW
-        </span>
-      </div>
-    );
-  }
-
-  return (
-    <div style={{ position: "relative", marginBottom: "1rem" }}>
-      <img
-        src={images[idx]} alt={`screenshot-${idx}`}
-        style={{ width: "100%", height: "180px", objectFit: "cover", borderRadius: "8px", display: "block" }}
-      />
-      {images.length > 1 && (
-        <>
-          <button onClick={() => setIdx(p => (p - 1 + images.length) % images.length)} style={s.carouselBtn("left")}>‹</button>
-          <button onClick={() => setIdx(p => (p + 1) % images.length)} style={s.carouselBtn("right")}>›</button>
-          <div style={{ position: "absolute", bottom: "0.5rem", left: "50%", transform: "translateX(-50%)", display: "flex", gap: "0.3rem" }}>
-            {images.map((_, i) => (
-              <div key={i} onClick={() => setIdx(i)} style={{
-                width: "6px", height: "6px", borderRadius: "50%",
-                background: i === idx ? "#A080FF" : "rgba(140,100,255,0.3)",
-                cursor: "pointer",
-              }} />
-            ))}
-          </div>
-        </>
-      )}
-    </div>
-  );
-}
-
+// ── Projects (모달용 — 박물관 진입 유도) ──────────────────────
 function ProjectsContent() {
   return (
-    <div>
-      {PROJECTS_DATA.map((proj, i) => (
-        <div key={i} style={s.projectCard}>
-          <ImageCarousel images={proj.images} />
-
-          {/* 헤더 */}
-          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "0.5rem", marginBottom: "0.6rem" }}>
-            <div style={{ flex: 1 }}>
-              <p style={{ color: "#D8D0FF", fontSize: "1rem", fontWeight: 700, margin: "0 0 0.2rem" }}>{proj.title}</p>
-              <span style={{
-                fontSize: "0.72rem", letterSpacing: "0.08em",
-                color:  proj.status === "completed" ? "#70D0A0" : "#F0B040",
-                background: proj.status === "completed" ? "rgba(70,200,120,0.12)" : "rgba(240,180,40,0.12)",
-                border: `1px solid ${proj.status === "completed" ? "rgba(70,200,120,0.25)" : "rgba(240,180,40,0.25)"}`,
-                borderRadius: "4px", padding: "0.15rem 0.5rem",
-              }}>
-                {proj.status === "completed" ? "✓ 완료" : "⟳ 진행중"}
-              </span>
-            </div>
-            <span style={{ color: "#7868A8", fontSize: "0.78rem", flexShrink: 0 }}>{proj.period}</span>
-          </div>
-
-          {/* 요약 */}
-          <p style={{ ...s.body, marginBottom: "0.8rem" }}>{proj.summary}</p>
-
-          {/* 주요 기능 */}
-          {proj.features.length > 0 && (
-            <ul style={{ listStyle: "none", padding: 0, margin: "0 0 0.9rem" }}>
-              {proj.features.map((f, j) => (
-                <li key={j} style={{ color: "rgba(200,195,225,0.8)", fontSize: "0.85rem", lineHeight: 1.6, paddingLeft: "1rem", position: "relative" }}>
-                  <span style={{ position: "absolute", left: 0, color: "#8060C0" }}>▸</span>
-                  {f}
-                </li>
-              ))}
-            </ul>
-          )}
-
-          {/* 태그 */}
-          <div style={{ ...s.tagRow, marginBottom: "0.9rem" }}>
-            {proj.skills.map((sk, j) => (
-              <span key={j} style={s.tag}>{sk}</span>
-            ))}
-          </div>
-
-          {/* 링크 */}
-          <div style={{ display: "flex", gap: "0.6rem" }}>
-            {proj.github && (
-              <a href={proj.github} target="_blank" rel="noreferrer" style={s.linkBtn}>◈ GitHub</a>
-            )}
-            {proj.link && (
-              <a href={proj.link} target="_blank" rel="noreferrer" style={{ ...s.linkBtn, background: "rgba(100,60,200,0.25)", borderColor: "rgba(140,100,255,0.4)" }}>↗ 사이트</a>
-            )}
-          </div>
-        </div>
-      ))}
+    <div style={{ textAlign: "center", padding: "2rem 0" }}>
+      <p style={{ color: "rgba(200,195,225,0.7)", fontSize: "0.9rem", lineHeight: 1.7, margin: "0 0 1.6rem" }}>
+        PROJECTS 표지판 또는 모니터를 클릭하면<br />갤러리를 직접 탐험할 수 있습니다.
+      </p>
+      <button
+        onClick={() => (window as any).__enterMuseum?.()}
+        style={{
+          padding: "0.7rem 1.6rem", borderRadius: "999px",
+          background: "rgba(100,60,200,0.3)",
+          border: "1px solid rgba(140,100,255,0.5)",
+          color: "#C8B0FF", fontSize: "0.85rem", fontWeight: 700,
+          letterSpacing: "0.08em", cursor: "pointer",
+        }}
+      >
+        💻 갤러리 입장
+      </button>
     </div>
   );
 }
@@ -361,6 +263,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 // ── 메인 모달 ─────────────────────────────────────────────────
 export default function PortfolioModal({ type, onClose }: Props) {
+  const isMobile   = useIsMobile();
   const overlayRef = useRef<HTMLDivElement>(null);
   const [closing, setClosing] = useState(false);
 
@@ -397,14 +300,59 @@ export default function PortfolioModal({ type, onClose }: Props) {
           from { opacity: 1; transform: scale(1)    translateY(0);     }
           to   { opacity: 0; transform: scale(0.92) translateY(12px);  }
         }
+        @keyframes sheetIn {
+          from { transform: translateY(100%); }
+          to   { transform: translateY(0); }
+        }
+        @keyframes sheetOut {
+          from { transform: translateY(0); }
+          to   { transform: translateY(100%); }
+        }
       `}</style>
-      <div style={{
-        ...s.modal,
-        animation: closing
-          ? "modalOut 0.32s cubic-bezier(0.22, 1, 0.36, 1) both"
-          : "modalIn  0.45s cubic-bezier(0.22, 1, 0.36, 1) both",
-      }}>
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={isMobile ? {
+          // ── 모바일: 하단 Bottom Sheet ──
+          position:       "fixed",
+          bottom:         0,
+          left:           0,
+          right:          0,
+          maxHeight:      "88dvh",
+          backgroundColor: "#09071C",
+          border:         "1px solid rgba(140,100,255,0.35)",
+          borderRadius:   "20px 20px 0 0",
+          boxShadow:      "0 -8px 40px rgba(100,60,255,0.25)",
+          overflow:       "hidden",
+          display:        "flex",
+          flexDirection:  "column",
+          animation:      closing
+            ? "sheetOut 0.32s cubic-bezier(0.22, 1, 0.36, 1) both"
+            : "sheetIn  0.42s cubic-bezier(0.22, 1, 0.36, 1) both",
+        } : {
+          // ── PC: 중앙 팝업 ──
+          position:        "relative",
+          width:           "min(660px, 92vw)",
+          maxHeight:       "85vh",
+          backgroundColor: "#09071C",
+          border:          "1px solid rgba(140,100,255,0.35)",
+          borderRadius:    "18px",
+          boxShadow:       "0 0 50px rgba(100,60,255,0.2), 0 0 100px rgba(60,20,120,0.12)",
+          overflow:        "hidden",
+          display:         "flex",
+          flexDirection:   "column",
+          animation:       closing
+            ? "modalOut 0.32s cubic-bezier(0.22, 1, 0.36, 1) both"
+            : "modalIn  0.45s cubic-bezier(0.22, 1, 0.36, 1) both",
+        }}
+      >
         <div style={s.starsBg} aria-hidden />
+
+        {/* 모바일 드래그 핸들 */}
+        {isMobile && (
+          <div style={{ display: "flex", justifyContent: "center", padding: "0.75rem 0 0" }}>
+            <div style={{ width: "2.5rem", height: "4px", borderRadius: "2px", background: "rgba(140,100,255,0.35)" }} />
+          </div>
+        )}
 
         {/* 헤더 */}
         <div style={s.header}>
@@ -416,7 +364,10 @@ export default function PortfolioModal({ type, onClose }: Props) {
         <div style={s.headerDivider} />
 
         {/* 콘텐츠 */}
-        <div style={s.scrollArea}>
+        <div
+          style={{ ...s.scrollArea, paddingBottom: isMobile ? "calc(env(safe-area-inset-bottom) + 1.6rem)" : "1.6rem" }}
+          className="scroll-momentum"
+        >
           <div style={{ padding: "1.2rem 0 0.4rem" }}>
             {ContentMap[type]}
           </div>
@@ -435,18 +386,6 @@ const s: Record<string, any> = {
     backdropFilter: "blur(5px)",
     WebkitBackdropFilter: "blur(5px)",
   },
-  modal: {
-    position: "relative",
-    width: "min(660px, 92vw)",
-    maxHeight: "85vh",
-    backgroundColor: "#09071C",
-    border: "1px solid rgba(140,100,255,0.35)",
-    borderRadius: "18px",
-    boxShadow: "0 0 50px rgba(100,60,255,0.2), 0 0 100px rgba(60,20,120,0.12)",
-    overflow: "hidden",
-    display: "flex",
-    flexDirection: "column",
-  },
   starsBg: {
     position: "absolute", inset: 0,
     backgroundImage: `
@@ -463,7 +402,7 @@ const s: Record<string, any> = {
   header: {
     position: "relative", zIndex: 1,
     display: "flex", alignItems: "center", justifyContent: "space-between",
-    padding: "1.3rem 1.6rem 0.9rem",
+    padding: "1.1rem 1.4rem 0.9rem",
   },
   title: {
     color: "#C8B0FF", fontSize: "0.85rem", fontWeight: 700,
@@ -481,13 +420,13 @@ const s: Record<string, any> = {
     transition: "all 0.2s",
   },
   headerDivider: {
-    height: "1px", margin: "0 1.6rem",
+    height: "1px", margin: "0 1.4rem",
     background: "linear-gradient(90deg, transparent, rgba(140,100,255,0.45), transparent)",
     position: "relative", zIndex: 1,
   },
   scrollArea: {
     position: "relative", zIndex: 1,
-    overflowY: "auto", padding: "0 1.6rem 1.6rem",
+    overflowY: "auto", padding: "0 1.4rem",
     flex: 1,
     scrollbarWidth: "thin",
     scrollbarColor: "rgba(140,100,255,0.3) transparent",
@@ -513,22 +452,6 @@ const s: Record<string, any> = {
     borderLeft: "2px solid rgba(140,100,255,0.25)",
     paddingLeft: "1rem", marginBottom: "1rem",
   },
-  projectCard: {
-    backgroundColor: "rgba(255,255,255,0.025)",
-    border: "1px solid rgba(140,100,255,0.15)",
-    borderRadius: "12px", padding: "1.1rem",
-    marginBottom: "1.2rem",
-  },
-  linkBtn: {
-    display: "inline-block",
-    color: "#A090FF", fontSize: "0.78rem",
-    textDecoration: "none", letterSpacing: "0.04em",
-    padding: "0.35rem 0.8rem",
-    border: "1px solid rgba(140,100,255,0.3)",
-    borderRadius: "6px",
-    background: "rgba(100,60,200,0.12)",
-    transition: "all 0.2s",
-  },
   contactLink: {
     display: "block", textDecoration: "none",
     padding: "0.8rem 1rem",
@@ -537,13 +460,4 @@ const s: Record<string, any> = {
     backgroundColor: "rgba(100,60,200,0.1)",
     transition: "all 0.2s",
   },
-  carouselBtn: (side: "left" | "right") => ({
-    position: "absolute", top: "50%", transform: "translateY(-50%)",
-    [side]: "0.5rem",
-    background: "rgba(0,0,0,0.55)", border: "none",
-    color: "#fff", fontSize: "1.4rem", cursor: "pointer",
-    width: "2rem", height: "2rem", borderRadius: "50%",
-    display: "flex", alignItems: "center", justifyContent: "center",
-    lineHeight: 1,
-  }),
 };

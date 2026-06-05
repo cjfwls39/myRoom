@@ -3,10 +3,12 @@
 import { useDayNight } from "./DayNightContext";
 import { useWeather } from "./WeatherContext";
 import { useState } from "react";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export default function DayNightButton() {
   const { mode, toggle } = useDayNight();
   const { isStorm }      = useWeather();
+  const isMobile         = useIsMobile();
   const [hovered, setHovered] = useState(false);
 
   const isNight = mode === "night";
@@ -19,6 +21,43 @@ export default function DayNightButton() {
   const shadow      = isDark
     ? "0 2px 12px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)"
     : "0 2px 12px rgba(0,0,0,0.18), 0 1px 3px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.6)";
+
+  // 모바일: 아이콘 전용 원형 버튼, WeatherButton 바로 옆에 위치
+  if (isMobile) {
+    return (
+      <button
+        onClick={toggle}
+        style={{
+          position:     "fixed",
+          top:          "1rem",
+          right:        "4.8rem",
+          zIndex:       40,
+          width:        "2.6rem",
+          height:       "2.6rem",
+          display:      "flex",
+          alignItems:   "center",
+          justifyContent: "center",
+          background:   bg,
+          border:       `1px solid ${borderColor}`,
+          borderRadius: "50%",
+          backdropFilter: "blur(14px)",
+          WebkitBackdropFilter: "blur(14px)",
+          boxShadow:    shadow,
+          cursor:       "pointer",
+          fontSize:     "1.1rem",
+        }}
+        aria-label={isNight ? "낮으로 전환" : "밤으로 전환"}
+      >
+        <span style={{
+          display:    "inline-block",
+          transition: "transform 0.4s ease",
+          transform:  isNight ? "rotate(-15deg)" : "rotate(0deg)",
+        }}>
+          {isNight ? "🌙" : "☀️"}
+        </span>
+      </button>
+    );
+  }
 
   return (
     <button

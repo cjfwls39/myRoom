@@ -4,6 +4,8 @@
 
 function isLowEndDevice(): boolean {
   if (typeof navigator === "undefined") return false;
+  // 터치 디바이스(모바일/태블릿)는 3D 렌더 부담이 크므로 저사양으로 처리
+  if (navigator.maxTouchPoints > 0) return true;
   return (navigator.hardwareConcurrency ?? 4) <= 4;
 }
 
