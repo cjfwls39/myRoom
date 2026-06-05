@@ -31,18 +31,21 @@ Sit at the desk, and step into a virtual gallery rendered inside the monitor to 
 
 | 기능 | 설명 |
 |------|------|
-| 🏠 **3D 인터랙티브 룸** | 마우스 드래그·휠로 아늑한 방을 자유롭게 탐색 |
+| 🏠 **3D 인터랙티브 룸** | 드래그·휠(PC) / 터치·핀치(모바일)로 방을 자유롭게 탐색 |
 | 🎬 **카메라 인트로** | 접속 시 카메라가 방 안으로 부드럽게 진입하는 연출 |
 | 🌙 **낮/밤 · 날씨 전환** | 조명·색상이 실시간 전환, 스노우글로브 겨울 배경 |
-| 🖥️ **모니터 속 갤러리** | 컴퓨터 클릭 시 모니터 화면 안에서 1인칭 갤러리가 열림 |
-| 🚶 **1인칭 탐험** | WASD 이동 + 마우스 시점으로 전시관을 직접 걸어다님 |
-| 🖼️ **프로젝트 전시** | 벽에 걸린 작품을 클릭하면 상세 정보 패널이 펼쳐짐 |
-| 🏆 **숨겨진 업적** | 갤러리 곳곳에 숨은 업적을 발견하는 재미 요소 |
+| 🖥️ **모니터 속 갤러리** | 컴퓨터 클릭 시 모니터 화면 안에서 1인칭 갤러리가 열림 (PC) |
+| 🚶 **1인칭 탐험** | WASD 이동 + 마우스 시점으로 전시관을 직접 걸어다님 (PC) |
+| 🖼️ **프로젝트 전시** | 벽의 작품 클릭 또는 모바일 목록에서 프로젝트 상세를 확인 |
+| 🏆 **숨겨진 업적** | 갤러리 곳곳에 숨은 업적을 발견하는 재미 요소 (PC) |
 | 🕐 **실시간 시계** | 방 안 벽시계가 실제 현재 시각을 표시 |
+| 📱 **모바일 대응** | 터치 조작, 하단 탭바 네비게이션, 슬라이드업 패널 지원 |
 
 ---
 
 ## 🎮 How to Explore
+
+### 🖥️ PC
 
 1. 방을 둘러보다 **책상/모니터** 또는 **PROJECTS 표지판**을 클릭
 2. 카메라가 모니터로 줌인되며 화면 안에 **갤러리**가 열립니다
@@ -51,6 +54,18 @@ Sit at the desk, and step into a virtual gallery rendered inside the monitor to 
 5. **E 키** 또는 출구 문으로 방에 돌아올 수 있습니다
 
 > 💡 갤러리 곳곳에 숨겨진 **업적**이 있습니다. 가만히 있어 보거나, 천장을 올려다보거나, 만지지 말라는 걸 만져보세요.
+
+### 📱 모바일
+
+| 조작 | 동작 |
+|------|------|
+| 한 손가락 드래그 | 3D 방 시점 회전 |
+| 두 손가락 핀치 | 줌 인/아웃 |
+| 오브젝트 탭 | 인터랙션 |
+| 하단 탭바 | ABOUT · PROJECTS · SKILLS · CONTACT 바로 접근 |
+
+> 📌 모바일에서는 1인칭 갤러리 대신 **프로젝트 목록**이 슬라이드업으로 열립니다.
+> 3D 방 탐색과 모든 포트폴리오 콘텐츠는 모바일에서도 동일하게 이용 가능합니다.
 
 ---
 
@@ -70,18 +85,19 @@ Sit at the desk, and step into a virtual gallery rendered inside the monitor to 
 ## 🗂 Structure
 
 ```
-src/components/
-├── canvas/        # Canvas, 카메라, 씬 상태머신, 낮밤·날씨 컨텍스트
-├── room/          # 방 — 가구/구조/장식 + portfolioData.ts (콘텐츠)
-├── snowBackground/# 스노우글로브 겨울 배경
-├── museum/        # 모니터 속 갤러리 — 1인칭, 전시물, 업적 트리거
-├── achievements/  # 업적 시스템
-└── ui/            # 모달, 프로젝트 상세 패널, 안내 UI
+src/
+├── hooks/             # useIsMobile 등 공용 훅
+└── components/
+    ├── canvas/        # Canvas, 카메라, 씬 상태머신, 낮밤·날씨 컨텍스트
+    ├── room/          # 방 — 가구/구조/장식 + portfolioData.ts (콘텐츠)
+    ├── snowBackground/# 스노우글로브 겨울 배경
+    ├── museum/        # 모니터 속 갤러리 — 1인칭, 전시물, 업적 트리거
+    ├── achievements/  # 업적 시스템
+    └── ui/            # 모달, 프로젝트 패널, 네비게이션, 모바일 UI
 ```
 
 > 📌 **모든 콘텐츠는 `src/components/room/portfolioData.ts` 한 곳에서 관리됩니다.**
 > 프로젝트를 추가/삭제하면 갤러리 전시물·위치·통로 길이·조명·상세 패널이 **전부 자동 반영**됩니다.
-> (전시 위치·간격은 코드 수정 없이 자동 계산되며, 손맛 조정이 필요할 때만 `museum/GalleryRoom.tsx`의 `SPACING`·`END_MARGIN` 값을 만지면 됩니다.)
 
 ---
 
@@ -132,5 +148,5 @@ PROJECTS_DATA = [
 
 ## 📄 License
 
-[CC BY-NC 4.0](./LICENSE) · © 2026 JCJ (cjfwls39)
+[CC BY-NC 4.0](./LICENSE) · © 2026 JCJ (cjfwls39)  
 *AI 코딩 도구(Claude by Anthropic) 사용 · Developed with AI coding tools*
