@@ -12,7 +12,7 @@
 // ── About Me ──────────────────────────────────────────────────
 export const ABOUT_DATA = {
   name:   "정철진",
-  role:   "WEB DEVELOPER",
+  role:   "FULL-STACK DEVELOPER",
   tagline: "아이디어를 실천으로 만드는 주니어 개발자",
   avatar: "/images/profile.jpg",   // /public/images/ 에 사진 넣으면 표시됩니다. 없으면 이니셜 표시
 
@@ -198,52 +198,54 @@ export const PROJECTS_DATA = [
   },
 
   {
-    title:    "Cleanse",
+    title:    "Threadia",
     period:   "2026",
     status:   "completed" as "completed" | "inprogress",
 
     // /public/images/projects/ 에 이미지를 넣으세요
     // 여러 장 넣으면 캐러셀로 표시됩니다. 없으면 placeholder 표시
     images: [
-      "/images/projects/cleanse_1.png",
-      "/images/projects/cleanse_2.png",
+      "/images/projects/Threadia1.png",
+      "/images/projects/Threadia2.png",
+      "/images/projects/Threadia3.png",
+      "/images/projects/Threadia4.png",
     ] as string[],
 
     summary:
-      "TypeScript / JavaScript 프로젝트에 쌓인 미사용 코드·패키지와 반복 값을\n" +
-      "자동으로 점검하고, 안전하게 정리하도록 돕는 데스크톱 앱입니다.",
+      "Jira·Confluence·Slack처럼 분리된 협업 도구의 흐름을 하나로 통합한 팀 프로젝트입니다.\n" +
+      "이슈·채팅·쓰레드·문서·그래프·알림을 연결해 업무 맥락이 흩어지지 않게 합니다.",
 
     background:
-      "비슷한 도구가 이미 여럿 있다는 건 알고 있었지만, 직접 만들어보고 싶었습니다.\n" +
-      "주로 웹 개발을 하다 보니 그 환경에 특화된 정리 도구를, 이왕이면 AI까지 더해\n" +
-      "고도화해보자는 생각으로 시작했습니다.",
+      "6인 팀 프로젝트에서 부팀장 겸 Frontend Lead를 맡아 진행했습니다. 협업할 때마다\n" +
+      "이슈는 Jira, 문서는 Confluence, 대화는 Slack으로 흩어지고, 그 사이 맥락을\n" +
+      "따라가려면 매번 여러 탭을 오가야 했습니다. 이 흐름을 하나의 화면에서\n" +
+      "연결해주는 팀 그룹웨어를 직접 만들어보자는 생각으로 시작했습니다.",
 
     approach:
-      "가장 큰 고민은 AI였습니다. 거대 LLM API는 토큰 비용이 부담스러워, 무료로 쓸 수\n" +
-      "있는 로컬 AI(Ollama + Qwen3:4b)를 탑재하기로 했습니다.\n\n" +
-      "처음에는 웹사이트로 호스팅하려 했지만, 용량이 큰 로컬 AI 모델을 서버에 그대로\n" +
-      "올려야 해서 현실적으로 불가능했습니다. 그래서 발상을 바꿔, 사용자의 컴퓨터 자원을\n" +
-      "직접 활용하는 데스크톱 앱(Electron)으로 만들었습니다.\n\n" +
-      "코드 분석은 ts-morph로 AST를 정적 분석해 미사용 파일·export·순환 참조 등을 찾아냅니다.\n" +
-      "다만 코드 정리는 잘못 지우면 치명적이기 때문에, AI와 분석은 '제안'만 하고 최종 판단과\n" +
-      "before/after 미리보기는 개발자에게 맡기도록 설계했습니다.",
+      "저는 프로젝트·문서·그래프 화면 설계와 프론트엔드 아키텍처를 담당했습니다.\n" +
+      "TanStack Query 기반 캐시 아키텍처를 설계해 DM·검색·활동 피드처럼 실시간성이\n" +
+      "필요한 화면의 데이터 최신성 정책을 정의했고, 문서-이슈 연결을 그래프로\n" +
+      "시각화하는 화면(React Three Fiber)도 구현했습니다.\n\n" +
+      "1:1 DM 화면에서 컴포넌트마다 캐시 최신성을 손으로 짠 방어 코드로 각자 판정하다\n" +
+      "보니 같은 버그가 4번 재발했는데, 그 방어 코드를 걷어내고 TanStack Query에\n" +
+      "판정을 위임하는 방식으로 근절했습니다. 그 과정에서 router.push() 같은 side\n" +
+      "effect는 캐시가 자동으로 취소하지 않는다는 gap도 함께 발견해 별도로 막았습니다.",
 
     features: [
-      "미사용 파일 탐지 / 데드 Export 탐지 / 순환 참조 탐지",
-      "미사용 패키지 탐지 / 반복 값 정리",
-      "로컬 AI(Ollama + Qwen3:4b) 기반 반복 값 추출 판정",
-      "모든 정리 작업 적용 전 before / after 미리보기 제공",
+      "프로젝트·이슈·칸반 보드 — 5컬럼 이슈 관리, 스프린트/백로그",
+      "문서 작성·편집 및 문서-이슈 그래프 연결",
+      "프로젝트 채팅(쓰레드 연동), 1:1 DM",
+      "실시간 알림 및 안읽음 카운트",
     ],
 
-    skills:  ["Electron","React","TypeScript","Tailwind CSS","Zustand","ts-morph","Ollama (Qwen3:4b)"],
-    link:    "https://github.com/cjfwls39/cleanse/releases/tag/v1.0.0",
-    github:  "https://github.com/cjfwls39/cleanse.git",
+    skills:  ["Next.js", "React", "TypeScript", "TanStack Query", "React Three Fiber", "Tailwind CSS"],
+    github:  "https://github.com/SEUIL/Threadia",
   }
 ];
 
 // ── Contact ───────────────────────────────────────────────────
 export const CONTACT_DATA = {
-  email:    "cjfwls39@naver.com",
+  email:    "cheoljin.dev@gmail.com",
   phone:    "010-8464-6539",
   github:   "https://github.com/cjfwls39",
   linkedin: "",
